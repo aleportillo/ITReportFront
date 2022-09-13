@@ -1,0 +1,182 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json",
+		  "e2e/tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+		"plugin:@angular-eslint/ng-cli-compat",
+		"plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+		"plugin:@angular-eslint/template/process-inline-templates",
+		"plugin:@typescript-eslint/recommended"
+      ],
+      "rules": {
+		"no-duplicate-imports":"error",
+		"no-template-curly-in-string":"error",
+		"camelcase": "error",
+		"curly": "warn",
+		"id-length": ["error", { "min": 3 }],
+		"no-magic-numbers": "error",
+		"no-lonely-if": "error",
+		"no-console": ["warn", { "allow": ["error"] }],
+		"no-case-declarations":"error",
+		"spaced-comment": ["warn", "always"],
+		"keyword-spacing": "warn",
+		"arrow-spacing": "warn",
+		"lines-between-class-members":"warn",
+		"lines-around-comment": ["warn", { "beforeBlockComment": true }],
+		"@typescript-eslint/no-explicit-any": "off",
+		"arrow-body-style": "off",
+		"guard-for-in": "off",
+
+		"no-underscore-dangle": "off",
+		"no-trailing-spaces": "off",
+		"no-unused-vars": "off",
+		"max-len": ["warn", { "code": 150, "ignoreComments": true }],
+		"quotes": [
+			"error",
+			"single",
+			{ "avoidEscape": true, "allowTemplateLiterals": true }
+		],
+		"comma-dangle": [
+			"error",
+			{ "arrays": "only-multiline", "exports": "only-multiline" }
+		],
+		"array-bracket-spacing": [
+			"error",
+			"always",
+			{ "singleValue": false }
+		],
+		"key-spacing": [
+			"error",
+			{
+				// "mode": "minimum",
+				// "align": {
+				// 	"beforeColon": false,
+				// 	"afterColon": true,
+				// 	"on": "colon"
+				// },
+				"singleLine": {
+					"beforeColon": false,
+					"afterColon": true
+				},
+				"multiLine": {
+					"beforeColon": true,
+					"afterColon": true,
+					"align": "colon"
+				}
+			}
+		],
+		"object-curly-spacing": ["error", "always"],
+		"space-in-parens": [
+			"error",
+			"always"
+		],
+		"template-curly-spacing": ["error", "always"],
+		"indent": [
+			"error",
+			"tab",
+			{
+				"VariableDeclarator": "first",
+				"SwitchCase": 1,
+				"MemberExpression": 1,
+				"FunctionDeclaration": {
+					"parameters": "first",
+					"body": 1
+				},
+				"CallExpression": { "arguments": "first" },
+				"ObjectExpression": 1,
+				"ArrayExpression": 1,
+				"ImportDeclaration": "first",
+				"flatTernaryExpressions": true,
+				"offsetTernaryExpressions": true,
+				"ignoreComments": true
+			}
+		],
+		"array-bracket-newline": [
+			"warn",
+			{ "multiline": true, "minItems": 8 }
+		],
+		"no-await-in-loop": "error",
+		"no-empty-function": ["warn", { "allow": ["constructors"] }],
+		"@angular-eslint/component-class-suffix": [
+			"error",
+			{
+				"suffixes": ["Page", "Component"]
+			}
+		],
+		"@typescript-eslint/type-annotation-spacing": "off",
+		"semi": ["error", "always"],
+		"@typescript-eslint/naming-convention": [
+			"warn",
+			{
+				"selector": "memberLike",
+				"modifiers": ["private"],
+				"format": ["camelCase"],
+				"leadingUnderscore": "require"
+			},
+			{
+				"selector": "variable",
+				"types": ["boolean"],
+				"format": ["PascalCase"],
+				"prefix": [
+					"is",
+					"are",
+					"should",
+					"has",
+					"can",
+					"did",
+					"will",
+					"exists"
+				]
+			}
+		],
+		"@typescript-eslint/no-empty-function": "off",
+		"@typescript-eslint/member-ordering": "off",
+   		"@angular-eslint/directive-selector": [
+			"error",
+			{
+				"type": "attribute",
+				"prefix": "app",
+				"style": "camelCase"
+          	}
+        ],
+        "@angular-eslint/component-selector": [
+        	"error",
+			{
+				"type": "element",
+				"prefix": "app",
+				"style": "kebab-case"
+			}
+        ]
+      }
+    },
+    {
+    //   "files": [
+    //     "*.html"
+    //   ],
+    //   "extends": [
+    //     "plugin:@angular-eslint/template/recommended"
+    //   ],
+    //   "rules": {}
+		"files": ["*.html"],
+		"excludedFiles": ["*inline-template-*.component.html"],
+		"extends": ["plugin:prettier/recommended"],
+		"rules": {
+			// NOTE: WE ARE OVERRIDING THE DEFAULT CONFIG TO ALWAYS SET THE PARSER TO ANGULAR (SEE BELOW)
+			"prettier/prettier": ["error", { "parser": "angular" }]
+		}
+    }
+  ]
+}
