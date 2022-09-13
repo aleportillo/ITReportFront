@@ -1,27 +1,44 @@
 # ITReportFront
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.5.
+> Sistema de reportes de computadoras del ITCJ Campus 1
 
-## Development server
+## 🤖 ¿Qué es ITReportFront?
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+ITReportFront contiene la parte de frontend del sistema de reportes de computadoras utilizado en el Instituto Tecnologico de Ciudad Juarez Campus 1. Con este sistema los alumnos y maestrso podran reportar fallas o realizar solicitudes al departamento de sistemas. Dicho departamento podra darle seguimiento a cada folio que llegue y, de esta forma, optimizar los tiempos de respuesta y solución.
 
-## Code scaffolding
+## 🎨 Especificaciones generales del proyecto
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* Se deben considerar dos tipos de usuarios: Administrador y Usuarios. Sin embargo, unicamente los administradores poseen una cuenta.
+* Del lado de los `usuarios` se debe poder:
+  - Levantar un reporte
+  - Buscar una sala o computadora
+  - Visualizar los componentes de una computadora
+  - Visualizar las computadoras de una sala
+  - Ver los reportes activos
+* Del lado del `administrador` se debe poder:
+  - Visualizar los nuevos reportes y validarlos
+  - Darle seguimiento a los reportes activos
+  - Registrar nuevo inventario (computadoras, componentes, salas)
 
-## Build
+## 🔧 Inicialización
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Development
 
-## Running unit tests
+1. Ejecutar el comando `ng serve`.
+2. Abrir el proyecto en `http://localhost:4200/`. 
+  >La aplicacion se actualizara cada que se guarda un cambio.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Build
 
-## Running end-to-end tests
+1. Ejecutar el comando `ng build`.
+  > El build se almacenara en la carpeta `dist/`.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Ayuda
+1. Ejecutar el comando `ng help`.
+  > Se desplegara una lista de comandos.
 
-## Further help
+## 💬 Colaboradores
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+* **Frontend**: Freida Alejandra Portillo
+* **Backend**: Ricardo Sosa Alvarado
+
