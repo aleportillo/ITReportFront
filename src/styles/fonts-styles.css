@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Baloo 2';
+    src: url('./../assets/fonts/Baloo2-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Baloo 2';
+    src: url('./../assets/fonts/Baloo2-Bold.ttf') format('truetype');
+}
+
+.title-app{
+    font-family: 'Baloo 2';
+    font-size: 50px;
+}
