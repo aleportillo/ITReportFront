@@ -8,7 +8,7 @@
     src: url('./../assets/fonts/Baloo2-Bold.ttf') format('truetype');
 }
 
-.title-app{
+.image__title{
     font-family: 'Baloo 2';
     font-size: 50px;
 }
