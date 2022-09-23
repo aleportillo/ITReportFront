@@ -1,14 +1,21 @@
 @font-face {
     font-family: 'Baloo 2';
     src: url('./../assets/fonts/Baloo2-Regular.ttf') format('truetype');
+    font-weight: 500;
 }
 
 @font-face {
     font-family: 'Baloo 2';
     src: url('./../assets/fonts/Baloo2-Bold.ttf') format('truetype');
+    font-weight: bold;
 }
 
 .image__title{
     font-family: 'Baloo 2';
     font-size: 50px;
+}
+
+.form__subtitle{
+    font-family: 'Baloo 2';
+    font-weight: bold;
 }

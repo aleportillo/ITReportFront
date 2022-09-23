@@ -1,8 +1,7 @@
 p{
-    color: var(--tertiary);
-    font-size: var(--PX-30);
+    color: var(--primary);
+    font-size: var(--PX-20);
     margin: 0;
-    display: none;
 }
 
 .page__container .form__container{
@@ -14,6 +13,15 @@ p{
     transform: translateY(-50%);
     border-radius: 1rem;
     background: var(--background-card);
+    padding: 2rem 4rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.page__container .form__container p:nth-child(2){
+    font-size: var(--PX-30);
+    margin-top: 1rem;
 }
 
 .page__container .image__container{
@@ -49,4 +57,13 @@ p{
     font-size: calc(100% + 2vw);
     color: var(--text-light);
     font-weight: bold;
+}
+
+/* ANCHOR : MEDIA QUERIES */  
+
+@media (max-width: 640px){
+    .page__container .form__container{
+        width: 90%;
+        padding: 2rem;
+    }
 }

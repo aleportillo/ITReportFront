@@ -1,9 +1,16 @@
 <div class="page__container">
-    <p>worksss</p>
     <div class="form__container">
-        <p class="form__subtitle"></p>
+
+        <p class="form__subtitle">
+            Para reportar o solicitar
+        </p>
+
+        <p class="form__subtitle">
+            Busca tu sala <br> o computadora
+        </p>
+
     </div>
-    <div class="image__container">
+    <div *ngIf="!screenSize.small" class="image__container">
         <img src="./../../../assets/images/itcj_placeholder.jpg" alt="Imagen del ITCJ">
         <span>
             <p class="image__title">Sistema de reportes</p>
