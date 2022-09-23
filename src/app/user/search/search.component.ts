@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ScreenSize } from 'src/app/core/models/tools/screen-size.model';
+import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 
 @Component( {
 	selector    : 'app-search',
@@ -7,8 +9,23 @@ import { Component, OnInit } from '@angular/core';
 } )
 export class SearchComponent implements OnInit {
 
-	constructor() { }
+	screenSize: ScreenSize = new ScreenSize();
 
-	ngOnInit(): void { }
+	constructor(
+		private _helpersService : HelpersService
+	) { }
+
+	ngOnInit(): void {
+		this.screenService();
+	}
+
+	// -------------------------------------------------- ANCHOR: SUBS
+
+	screenService(){
+		this._helpersService.screenSize$.subscribe( ( response ) => {
+			this.screenSize = response;
+		} );
+	}
+	
 
 }
