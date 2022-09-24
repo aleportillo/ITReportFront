@@ -17,11 +17,27 @@ p{
     display: flex;
     flex-direction: column;
     text-align: center;
+    gap: 2rem;
 }
 
-.page__container .form__container p:nth-child(2){
+.page__container .form__container .form__subtitle.primary{
     font-size: var(--PX-30);
-    margin-top: 1rem;
+}
+
+.page__container .form__container .inputs__container{
+    display: flex;
+    max-width: 30rem;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.page__container .form__container .inputs__container app-input-select{
+    width: 40%;
+}
+
+.page__container .form__container .inputs__container app-input-text{
+    width: 60%;
 }
 
 .page__container .image__container{
@@ -65,5 +81,6 @@ p{
     .page__container .form__container{
         width: 90%;
         padding: 2rem;
+        gap: 1rem;
     }
 }
