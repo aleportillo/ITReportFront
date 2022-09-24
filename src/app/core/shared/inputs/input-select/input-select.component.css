@@ -1,0 +1,51 @@
+
+
+div[type='search']{
+    width: 100%;
+}
+
+
+::ng-deep div[type='search'] .mat-form-field {
+    width: 100%;
+    background: var(--secondary);
+    border-radius: 1rem 0 0 1rem;
+}
+
+::ng-deep div[type='search'] .mat-form-field-wrapper,
+::ng-deep div[type='search'] .mat-form-field-infix{
+    padding: 0;
+    border: 0;
+}
+
+::ng-deep div[type='search'] .mat-form-field-flex {
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem;
+}
+
+::ng-deep div[type='search'] .mat-form-field-underline{
+    display: none;
+}
+
+::ng-deep div[type='search'] .mat-select-arrow, 
+div[type='search'] .mat-form-field.mat-focused .mat-select-arrow {
+    color: white !important;
+}
+
+::ng-deep div[type='search'] .mat-select-value-text {
+    color: white;
+    font-family: 'Be Vietnam Pro';
+    font-weight: bold;
+}
+
+::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled){
+    color: var(--secondary) !important;
+}
+
+
+
+::ng-deep div[type='search'] .mat-option{
+    font-family: 'Be Vietnam Pro';
+}
