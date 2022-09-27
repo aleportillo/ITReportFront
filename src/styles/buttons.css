@@ -1,0 +1,25 @@
+.button{
+    outline: none;
+    border-radius: 2rem;
+    padding: .5rem;
+    font-family: 'Baloo 2';
+    font-weight: bold;
+    font-size: var(--PX-15);
+    border: none;
+    cursor: not-allowed;
+    background-color: var(--background-disabled);
+    color: var(--text-disabled);
+}
+
+.button:not([disabled]){
+    cursor: pointer;
+}
+
+.button.secondary:not([disabled]){
+    background-color: var(--secondary);
+    color: var(--text-light);
+}
+
+.button.secondary:hover:not([disabled]){
+    background-color: var(--secondary-dark);
+}

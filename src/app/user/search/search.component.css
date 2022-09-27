@@ -1,9 +1,3 @@
-p{
-    color: var(--primary);
-    font-size: var(--PX-20);
-    margin: 0;
-}
-
 .page__container .form__container{
     width: 50%;
     height: 65%;
@@ -18,6 +12,13 @@ p{
     flex-direction: column;
     text-align: center;
     gap: 2rem;
+    justify-content: center;
+}
+
+.page__container .form__container p{
+    color: var(--primary);
+    font-size: var(--PX-20);
+    margin: 0;
 }
 
 .page__container .form__container .form__subtitle.primary{
@@ -38,6 +39,12 @@ p{
 
 .page__container .form__container .inputs__container app-input-text{
     width: 60%;
+}
+
+.page__container .form__container button{
+    width: 60%;
+    margin: 0 auto;
+    max-width: 30rem;
 }
 
 .page__container .image__container{

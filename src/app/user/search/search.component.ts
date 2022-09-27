@@ -47,6 +47,14 @@ export class SearchComponent implements OnInit {
 		
 	}
 
+	// -------------------------------------------------- ANCHOR: API
+
+	search(){
+		console.log( this.form.value );
+		
+	}
+	
+
 	// -------------------------------------------------- ANCHOR: SUBS
 
 	screenService(){

@@ -4,6 +4,7 @@
     --primary-light: #FFCDC1;
     --secondary: #61A8A7;
     --secondary-light: #D4E3DE;
+    --secondary-dark: #4a807f;
     --tertiary: #A3B995;
     --quaternary: #95B7B9;
     --quinary: #A195B9;
@@ -13,12 +14,14 @@
     --background-card: #FFFFFF;
     --background-navbar: #292C2F;
     --background-report-card: #F9F9F9;
+    --background-disabled: #ECE8E8;
 
     --text: #000000;
     --text-light: #FFFFFF;
     --text-dark: #272727;
     --text-light-contrast: #F9F9F9;
     --text-navbar: #FFFAF0;
+    --text-disabled: #2727276e;
 
     --status-attending: #A8BBB9;
     --status-pending: #EBC565;
