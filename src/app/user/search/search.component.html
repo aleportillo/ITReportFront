@@ -14,8 +14,15 @@
             Busca tu sala <br> o computadora
         </p>
         <div class="inputs__container">
-            <app-input-select></app-input-select>
-            <app-input-text></app-input-text>
+            <app-input-select
+                [formInput]="inputs[0]"
+                [form]="form">
+            </app-input-select>
+            <app-input-text
+                [formInput]="inputs[1]"
+                [form]="form"
+            >
+            </app-input-text>
         </div>
     </div>
     <div *ngIf="!screenSize.small" class="image__container">

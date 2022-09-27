@@ -1,13 +1,18 @@
-<div class="input" [attr.type]="'search'">
+<div class="input" [attr.type]="formInput.subtype" [formGroup]="form" *ngIf="form.get(formInput.name)">
 
-	<!-- <label *ngIf="formInput.label" [for]="formInput.name" (click)="debug();">
+	<label *ngIf="formInput.label && formInput.subtype !=='search'" [for]="formInput.name" (click)="debug();">
 		{{ formInput.label }}
-		<span class="obligatory" *ngIf="formInput.optional">(Opc.)</span>
-	</label> -->
+		<span *ngIf="!formInput.optional"> * </span>
+	</label>
 
 	<input
 		type='text'
 		autocomplete="off"
+		[name]="formInput.name"
+		[id]="formInput.name"
+		[formControlName]="formInput.name"
+		[placeholder]="formInput.placeholder ?? ''"
+		[disabled]="formInput.disabled ?? false"
 	/>
 
 </div>
