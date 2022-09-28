@@ -27,7 +27,7 @@
     font-size: 50px;
 }
 
-.form__subtitle{
+.form__subtitle, h1{
     font-family: 'Baloo 2';
     font-weight: bold;
 }

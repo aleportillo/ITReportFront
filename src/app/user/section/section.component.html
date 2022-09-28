@@ -1,1 +1,20 @@
-<p>section works!</p>
+<section class="page__container">
+    <header>
+        <button class="button back" [attr.section]="type">
+            <img src="./../../../assets/icons/icon_arrow_left.svg" alt="flecha">
+        </button>
+        <h1>
+            {{ type === 'room' ? 'Sala' : 'PC'}} {{idSection}}
+        </h1>
+        <button class="button icon report">
+            <img src="./../../../assets/icons/icon_report.svg" alt="" title="Reportar">
+            <ng-container *ngIf="!screenSize.small">
+                Reportar 
+            </ng-container>
+        </button>
+    </header>
+    <section></section>
+    <section></section>
+    <section></section>
+</section>
+
