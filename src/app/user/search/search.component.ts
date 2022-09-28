@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormInput, IFormInput } from 'src/app/core/models/tools/form-input.modal';
+import { Router } from '@angular/router';
+import { IFormInput } from 'src/app/core/models/tools/form-input.modal';
 import { ScreenSize } from 'src/app/core/models/tools/screen-size.model';
 import { FormService } from 'src/app/core/services/internal/form.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
@@ -36,21 +37,23 @@ export class SearchComponent implements OnInit {
 
 	constructor(
 		private _helpersService : HelpersService,
-		private _formService : FormService
+		private _formService : FormService,
+		private _router: Router	
 	) { }
 
 	ngOnInit(): void {
 		this.screenService();
 		this.form = this._formService.createForm( this.inputs );	
-		this.form = this._formService.initForm(this.form, {type: 'computadora'});
-		console.log(this.form);
+		this.form = this._formService.initForm( this.form, { type: 'computadora' } );
+		// console.log( this.form );
 		
 	}
 
 	// -------------------------------------------------- ANCHOR: API
 
 	search(){
-		console.log( this.form.value );
+		// console.log( this.form.value );
+		this._router.navigate( [`/${ this.form.value.type }/${ this.form.value.textSearch }`] );
 		
 	}
 	
