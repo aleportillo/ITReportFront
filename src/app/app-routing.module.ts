@@ -7,6 +7,14 @@ const routes: Routes = [
 		loadChildren : () => import( './user/search/search.module' ).then( module => module.SearchModule )
 	},
 	{
+		path         : 'sala/:id',
+		loadChildren : () => import( './user/section/section.module' ).then( module => module.SectionModule )
+	},
+	{
+		path         : 'computadora/:id',
+		loadChildren : () => import( './user/section/section.module' ).then( module => module.SectionModule )
+	},
+	{
 		path       : '**',
 		redirectTo : ''
 	}
