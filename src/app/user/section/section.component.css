@@ -34,3 +34,41 @@
     height: 1.8rem;
     filter: var(--text-light-contrast-svg);
 }
+
+.page__container .section__resume {
+    background-color: var(--background-card);
+    padding: 1rem;
+}
+
+.page__container .section__resume .section__scroll {
+    display: flex;
+    grid-column: 50%;
+    overflow-x: scroll;
+    align-items: center;
+}
+
+.page__container .section__resume .section__scroll .resume{
+    text-align: center;
+    border-left: 3px solid var(--border);
+    padding: .5rem;
+    margin: .5rem;
+    font-size: 20px;
+}
+
+.page__container .section__resume .section__scroll .resume:first-child{
+    border: 0;
+}
+
+.page__container .section__resume .section__scroll .resume p{
+    margin: 0;
+}
+
+::-webkit-scrollbar {
+    height: 4px;
+    cursor: pointer;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+}

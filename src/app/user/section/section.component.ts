@@ -11,6 +11,14 @@ export class SectionComponent implements OnInit {
 
 	type = 'room';
 	idSection = '478ASD';
+	sectionResume = [
+		{ label: 'Solicitudes de la sala', key: '' },
+		{ label: 'Reportes de la sala', key: '' },
+		{ label: 'Total de PCs', key: '' },
+		{ label: 'Reportes (PCs)', key: '' },
+		{ label: 'Solicitudes de la sala', key: '' },
+		{ label: 'Solicitudes (PCs)', key: '' }
+	];
 	
 	screenSize: ScreenSize = new ScreenSize();
 

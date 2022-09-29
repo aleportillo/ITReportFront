@@ -14,7 +14,7 @@ body{
     margin: 0;
 }
 
-div.page__container{
+.page__container{
     background-color: var(--background);
     height: 100vh;
     width: 100%;

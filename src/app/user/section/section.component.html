@@ -13,8 +13,14 @@
             </ng-container>
         </button>
     </header>
-    <section></section>
-    <section></section>
-    <section></section>
+    <section class="section__resume">
+        <div class="section__scroll">
+            <div *ngFor="let resume of sectionResume" class="resume">
+                <p>{{resume.label}}</p>
+            </div>
+        </div>
+    </section>
+    <section class="section__buttons"></section>
+    <section class="section__subsection"></section>
 </section>
 
