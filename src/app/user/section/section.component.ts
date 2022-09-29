@@ -19,6 +19,13 @@ export class SectionComponent implements OnInit {
 		{ label: 'Solicitudes de la sala', key: '' },
 		{ label: 'Solicitudes (PCs)', key: '' }
 	];
+
+	buttons = [
+		{ label: 'Computadoras', key: 'computadoras' },
+		{ label: 'Reportes', key: 'reportes' }
+	];
+
+	subSectionActive = 'computadoras';
 	
 	screenSize: ScreenSize = new ScreenSize();
 
@@ -28,6 +35,10 @@ export class SectionComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.screenService();
+	}
+
+	changeSubSection( button: {label: string; key: string} ){
+		this.subSectionActive = button.key;
 	}
 
 	// -------------------------------------------------- ANCHOR: SUBS

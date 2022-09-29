@@ -1,3 +1,13 @@
+::-webkit-scrollbar {
+    height: 4px;
+    cursor: pointer;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
 .page__container header{
     background: var(--background-navbar);
     padding: 1.5rem;
@@ -52,7 +62,7 @@
     border-left: 3px solid var(--border);
     padding: .5rem;
     margin: .5rem;
-    font-size: 20px;
+    font-size: 1rem;
 }
 
 .page__container .section__resume .section__scroll .resume:first-child{
@@ -63,12 +73,16 @@
     margin: 0;
 }
 
-::-webkit-scrollbar {
-    height: 4px;
-    cursor: pointer;
+.page__container .section__buttons{
+    width: 100%;
 }
-::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 10px;
-    cursor: pointer;
+
+.page__container .section__buttons button.section[section="room"]{
+    color: var(--tertiary);
+    background-color: var(--background-report-card);
+}
+
+.page__container .section__buttons button.section[section="room"][active=true]{
+    color: var(--text-light);
+    background-color: var(--tertiary);
 }
