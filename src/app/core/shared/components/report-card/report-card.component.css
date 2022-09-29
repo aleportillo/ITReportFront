@@ -1,0 +1,38 @@
+.card .header{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap-reverse;
+}
+
+.card .details{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.card .details .status{
+    font-weight: bold;
+}
+
+.card .details .status[status='pendiente']{
+    font-weight: bold;
+    color: var(--status-pending);
+}
+
+.card .details .status[status='detenido']{
+    font-weight: bold;
+    color: var(--status-stopped);
+}
+
+.card .details .status[status='atendiendo']{
+    font-weight: bold;
+    color: var(--status-attending);
+}
+
+p{
+    margin: .5rem;
+}
+
+p span{
+    text-decoration: underline;
+}

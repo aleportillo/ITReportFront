@@ -26,10 +26,14 @@
             class="button section" 
             [attr.section]="type" 
             [attr.active]="(subSectionActive === button.key)"
-            (click)="changeSubSection(button)">
+            (click)="changeSubSection(button    )">
             {{button.label}}
         </button>
     </section>
-    <section class="section__subsection"></section>
+    <section class="section__subsection">
+        <ng-container *ngIf="subSectionActive==='reportes'">
+            <app-report-card></app-report-card>
+        </ng-container>
+    </section>
 </section>
 
