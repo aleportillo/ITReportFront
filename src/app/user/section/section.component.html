@@ -34,7 +34,12 @@
     </section>
     <section class="section__subsection">
         <ng-container *ngIf="subSectionActive==='reportes'">
-            <app-report-card></app-report-card>
+            <div id="firstColumn" #firstColumn class="column">
+                <app-report-card *ngFor="let report of firstColumnReports" [report]="report"></app-report-card>
+            </div>
+            <div id="secondColumn" #secondColumn class="column">
+                <app-report-card *ngFor="let report of secondColumnReports" [report]="report"></app-report-card>
+            </div>
         </ng-container>
     </section>
 </section>
