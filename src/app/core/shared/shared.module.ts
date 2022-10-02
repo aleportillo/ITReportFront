@@ -5,11 +5,12 @@ import components from './components';
 import { MaterialModule } from 'src/app/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SimplebarAngularModule } from 'simplebar-angular';
+import pipes from './pipes';
 
 @NgModule( {
-	declarations : [ ...inputs, ...components ],
+	declarations : [ ...inputs, ...components, ...pipes ],
 	imports      : [ CommonModule, MaterialModule, FormsModule, ReactiveFormsModule ],
-	exports      : [ ...inputs, ...components, SimplebarAngularModule ]
+	exports      : [ ...inputs, ...components, ...pipes, SimplebarAngularModule ]
 } )
 
 export class SharedModule { }
