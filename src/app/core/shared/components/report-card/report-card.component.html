@@ -1,13 +1,17 @@
 <div class="card">
     <div class="header">
-        <p><b>Folio 5</b></p>
-        <p>{{ 'Wed Sep 28 2022 20:42:14 GMT-0600 (hora de verano de la montaña)' | date: 'dd/MM/yyyy' }}</p>
+        <p><b>Folio {{report._id}}</b></p>
+        <p>{{ report.fechaDeReporte | date: 'dd/MM/yyyy' }}</p>
     </div>
     <div class="details">
-        <p>Solicitud</p>
-        <p>Sin internet</p>
-        <p class="status" [attr.status]="'atendiendo'">Atendiendo</p>
+        <p>{{report.categoria | firstLetterUppercase }}</p>
+        <p>{{report.incidente | firstLetterUppercase }}</p>
+        <p class="status" [attr.status]="report.estado">{{report.estado | firstLetterUppercase}}</p>
     </div>
-    <p> <span> Descripcion:</span> Al encender la computadora tardo mucho tiempo.</p>
-    <p> <span> Comentarios:</span> No ha llegado el cable que se necesita para conectar a internet.</p>
+    <ng-container *ngIf="report.comentariosReporte">
+        <p> <span> Descripcion:</span> {{report.comentariosReporte }}</p>
+    </ng-container>
+    <ng-container *ngIf="report.comentariosAdmin">
+        <p> <span> Comentarios:</span> {{report.comentariosAdmin}} </p>
+    </ng-container>
 </div>
