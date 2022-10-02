@@ -10,7 +10,7 @@ export interface IFormInputButton {
 }
 
 export interface IFormInput {
-	[key: string]  : any;
+	[key: string]      : any;
 	name               : string;
 	type               : string;
 	subtype           ?: string;
@@ -25,7 +25,7 @@ export interface IFormInput {
 
 export class FormInput implements IFormInput {
 	static readonly clean = Object.freeze( new FormInput() );
-	[key: string] : any;
+	[key: string]     : any;
 	name              = '';
 	type              = '';
 	subtype           ?= '';
@@ -45,7 +45,6 @@ export class FormInput implements IFormInput {
 			} else if ( typeof this[key] === 'boolean' ){
 				this[key] = Boolean ( obj[key] ?? FormInput.clean[key] );
 			} 
-			
 		} );
 
 		return this;
