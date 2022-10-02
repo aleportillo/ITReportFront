@@ -14,11 +14,13 @@
         </button>
     </header>
     <section class="section__resume">
-        <div class="section__scroll">
-            <div *ngFor="let resume of sectionResume" class="resume">
-                <p>{{resume.label}}</p>
+        <ngx-simplebar>
+            <div class="section__scroll">
+                <div *ngFor="let resume of sectionResume" class="resume">
+                    <p>{{resume.label}}</p>
+                </div>
             </div>
-        </div>
+            </ngx-simplebar>
     </section>
     <section class="section__buttons">
         <button 

@@ -1,12 +1,3 @@
-::-webkit-scrollbar {
-    height: 4px;
-    cursor: pointer;
-}
-::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 10px;
-    cursor: pointer;
-}
 
 .page__container header{
     background: var(--background-navbar);
@@ -51,9 +42,8 @@
 }
 
 .page__container .section__resume .section__scroll {
-    display: flex;
-    grid-column: 50%;
-    overflow-x: scroll;
+    display: grid;
+    grid-template-columns: repeat(6, auto);
     align-items: center;
 }
 
