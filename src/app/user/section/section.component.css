@@ -79,10 +79,10 @@
 
 .page__container .section__subsection{
     display: flex;
+    background-color: var(--background);
 }
 
 .page__container .section__subsection .column{
     width: 50%;
     height: fit-content;
-    background-color: var(--background);
 }
