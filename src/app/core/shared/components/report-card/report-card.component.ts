@@ -12,6 +12,6 @@ export class ReportCardComponent implements OnInit {
 
 	constructor() { }
 
-	ngOnInit(): void { console.log( this.report ); }
+	ngOnInit(): void { }
 
 }
