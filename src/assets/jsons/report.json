@@ -1,0 +1,33 @@
+[
+    {
+        "label"   : "Tipo de reporte",
+        "name"    : "categoria",
+        "type"    : "select",
+        "options" : [
+            { "text" : "Reporte", "value": "reporte"},
+            { "text" : "Solicitud", "value": "solicitud"}
+        ]
+    },
+    {
+        "label"   : "Problema",
+        "name"    : "incidente",
+        "type"    : "select",
+        "options" : [],
+        "allOptions" : {
+            "reporte": [
+                { "text" : "Sin internet", "value": "sin internet"},
+                { "text" : "No prende", "value": "solicitud"}
+            ],
+            "solicitud": [
+                { "text" : "Instalar", "value": "instalar"},
+                { "text" : "Optimizar", "value": "optimizar"}
+            ]
+        }
+    },
+    {
+        "label"   : "Comentarios",
+        "name"    : "comentarios",
+        "type"    : "textArea",
+        "optional": true
+    }
+]
