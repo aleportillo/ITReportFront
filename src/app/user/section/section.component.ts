@@ -1,7 +1,11 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { IModalData, TYPE_SECTION } from 'src/app/core/models/tools/modal-data';
 import { ViewReport } from 'src/app/core/models/tools/reports/view-report.model';
 import { ScreenSize } from 'src/app/core/models/tools/screen-size.model';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
+import { ModalComponent } from 'src/app/core/shared/components/modal/modal.component';
+import report from './../../../assets/jsons/report.json';
 
 @Component( {
 	selector    : 'app-section',
@@ -38,7 +42,8 @@ export class SectionComponent implements OnInit {
 
 	constructor(
 		private _helpersService : HelpersService,
-		private _cdr: ChangeDetectorRef
+		private _cdr: ChangeDetectorRef,
+		private _dialog: MatDialog
 	) { }
 
 	report = {
@@ -133,6 +138,11 @@ export class SectionComponent implements OnInit {
 		}
 	}
 
+	createReport(){
+		console.log( 'Vamos a reportar' );
+		this.openDialog();
+	}
+
 	// -------------------------------------------------- ANCHOR: SUBS
 
 	screenService(){
@@ -141,5 +151,28 @@ export class SectionComponent implements OnInit {
 			this.fillColumns();
 		} );
 	}
+
+	// -------------------------------------------------- ANCHOR: MODAL
+
+	openDialog() {
+
+		const modalData : IModalData = {
+			title       : `${ this.type === 'room' ? 'Sala' : 'PC' } ${ this.idSection }`,
+			form        : report,
+			values      : [],
+			typeSection : this.type as TYPE_SECTION,
+			typeModal   : 'form',
+			labelButton : 'Reportar'
+		}; 
+
+		const dialogConfig = new MatDialogConfig();
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.panelClass = 'form';
+		dialogConfig.data = modalData;
+
+		this._dialog.open( ModalComponent , dialogConfig );
+	}
+	
 
 }

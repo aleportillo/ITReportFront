@@ -6,7 +6,7 @@
         <h1>
             {{ type === 'room' ? 'Sala' : 'PC'}} {{idSection}}
         </h1>
-        <button class="button icon report">
+        <button class="button icon report" (click)="createReport();">
             <img src="./../../../assets/icons/icon_report.svg" alt="" title="Reportar">
             <ng-container *ngIf="!screenSize.small">
                 Reportar 
