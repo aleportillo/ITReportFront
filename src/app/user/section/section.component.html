@@ -28,7 +28,7 @@
             class="button section" 
             [attr.section]="type" 
             [attr.active]="(subSectionActive === button.key)"
-            (click)="changeSubSection(button    )">
+            (click)="changeSubSection(button)">
             {{button.label}}
         </button>
     </section>
@@ -37,7 +37,7 @@
             <div id="firstColumn" #firstColumn class="column">
                 <app-report-card *ngFor="let report of firstColumnReports" [report]="report"></app-report-card>
             </div>
-            <div id="secondColumn" #secondColumn class="column">
+            <div *ngIf="!screenSize.small" id="secondColumn" #secondColumn class="column">
                 <app-report-card *ngFor="let report of secondColumnReports" [report]="report"></app-report-card>
             </div>
         </ng-container>

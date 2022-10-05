@@ -80,9 +80,11 @@
 .page__container .section__subsection{
     display: flex;
     background-color: var(--background);
+    max-width: 80rem;
+    margin: 0 auto;
 }
 
 .page__container .section__subsection .column{
-    width: 50%;
+    width: 100%;
     height: fit-content;
 }

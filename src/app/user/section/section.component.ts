@@ -76,12 +76,21 @@ export class SectionComponent implements OnInit {
 		const MILLISECONDS_OF_WAITING = 20;
 
 		if ( button.key === 'reportes' ){
-			setTimeout( () => { this.fillColumns(); }, MILLISECONDS_OF_WAITING );
+			setTimeout( () => {
+				this.fillColumns(); 
+			}, MILLISECONDS_OF_WAITING );
 		}
 
 	}
 
 	fillColumns(){
+		this.secondColumnReports = [];
+		this.firstColumnReports = [];
+
+		if ( this.screenSize.small ){
+			this.firstColumnReports = [...this.allCards as ViewReport[]];
+			return;
+		}
 
 		const maxHeightDifference = 110;		
 		const FIRST_COLUMN = 1;
@@ -129,6 +138,7 @@ export class SectionComponent implements OnInit {
 	screenService(){
 		this._helpersService.screenSize$.subscribe( ( response ) => {
 			this.screenSize = response;
+			this.fillColumns();
 		} );
 	}
 
