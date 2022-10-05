@@ -21,6 +21,7 @@ export interface IFormInput {
 	optional          ?: boolean;
 	placeholder		  ?: string;
 	options           ?: IFormInputOption[];
+	allOptions        ?: any;
 }
 
 export class FormInput implements IFormInput {
@@ -36,6 +37,7 @@ export class FormInput implements IFormInput {
 	optional          ?= false;
 	placeholder		  ?= '';
 	options           ?= [];
+	allOptions        ?= [];
 
 	parse( obj: IFormInput ) {
 
