@@ -36,6 +36,10 @@
     filter: var(--text-light-contrast-svg);
 }
 
+.page__container button.report:hover img{
+    filter: var(--primary-svg);
+}
+
 .page__container .section__resume {
     background-color: var(--background-card);
     padding: 1rem;

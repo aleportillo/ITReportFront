@@ -1,0 +1,30 @@
+/*ANCHOR: FORM */
+
+header{
+    display: grid;
+    grid-template-columns: 95% 5%;
+    justify-items: center;
+}
+
+header h1{
+    margin: 0;
+    font-size: var(--PX-26);
+}
+
+header button img{
+    width: 100%;
+    height: 100%;
+}
+
+.modal__buttons{
+    width: 100%;
+    text-align: center;
+}
+
+.type-form header h1[type="room"]{
+    color: var(--tertiary);
+}
+
+/* .form h1 [type="pc"]{
+    color: var(--tertiary);
+} */

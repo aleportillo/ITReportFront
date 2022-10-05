@@ -47,8 +47,33 @@
     height: 2rem;
 }
 
+.button.modal{
+    padding: .3rem 3rem;
+    background-color: var(--primary);
+    color: var(--text-light-contrast);
+}
+
+.button.modal:hover, .button.report:hover{
+    background-color: var(--primary-light);
+    color: var(--primary);
+}
+
 .button.section{
     width: 50%;
     border-radius: 0;
     font-size: 1rem;
+}
+
+.button.close{
+    padding: .5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.2rem;
+    width: 2.2rem;
+    background-color: transparent;
+}
+
+.button.close:hover{
+    background-color: var(--quinary);
 }
