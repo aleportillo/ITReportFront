@@ -19,6 +19,7 @@ body{
     height: 100vh;
     width: 100%;
     position: relative;
+    overflow-y: auto;
 }
 
 .card{
@@ -39,4 +40,15 @@ body{
 
 .mat-dialog-container{
     border-radius: 1.5rem !important;
+}
+
+.input label{
+    display: block;
+    margin-block: .5rem;
+    font-weight: bold;
+    font-family: 'Be Vietnam Pro';
+}
+
+.input label span{
+    color: var(--notice-error);
 }

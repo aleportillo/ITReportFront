@@ -47,13 +47,17 @@
     height: 2rem;
 }
 
+
 .button.modal{
     padding: .3rem 3rem;
+}
+
+.button.modal:not([disabled]){
     background-color: var(--primary);
     color: var(--text-light-contrast);
 }
 
-.button.modal:hover, .button.report:hover{
+.button.modal:not([disabled]):hover, .button.report:hover{
     background-color: var(--primary-light);
     color: var(--primary);
 }

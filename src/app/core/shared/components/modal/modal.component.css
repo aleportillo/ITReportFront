@@ -1,4 +1,4 @@
-/*ANCHOR: FORM */
+/*        ANCHOR: HEADER         */
 
 header{
     display: grid;
@@ -16,11 +16,6 @@ header button img{
     height: 100%;
 }
 
-.modal__buttons{
-    width: 100%;
-    text-align: center;
-}
-
 .type-form header h1[type="room"]{
     color: var(--tertiary);
 }
@@ -28,3 +23,24 @@ header button img{
 /* .form h1 [type="pc"]{
     color: var(--tertiary);
 } */
+
+
+/*        ANCHOR: FORM         */
+
+.modal__form{
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    row-gap: 1rem;
+    margin-block: 1rem;
+}
+
+.form__input{
+    grid-column: span var(--column);
+}
+
+/*        ANCHOR: FOOTER (BUTTONS)         */
+.modal__buttons{
+    width: 100%;
+    text-align: center;
+}
+
