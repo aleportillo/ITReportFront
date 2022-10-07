@@ -10,15 +10,35 @@
     <body>
 
         <div class="modal__form">
-
+            <div 
+                *ngFor="let input of modalData.form"
+                class="form__input"
+                style="--column: {{input.columnSize}};"
+            >
+                <ng-container *ngIf="input.type === 'select'">
+                    <app-input-select
+                        (changeOptionEmmiter)="changeOption(input, $event);"
+                        [formInput]="input"
+                        [form]="form"
+                    ></app-input-select>
+                </ng-container>
+                <ng-container *ngIf="input.type === 'textArea'">
+                    <app-input-area
+                        [formInput]="input"
+                        [form]="form"
+                    ></app-input-area>
+                </ng-container>
+            </div>
         </div>
 
         <div class="modal__buttons">
-            <button class="button modal">
+            <button 
+                class="button modal"
+                (click)="primaryAction();"
+                [disabled]="form.invalid"
+            >
                 {{modalData.labelButton }}
             </button>
         </div>
     </body>
-    <p>modal works!</p>
-    
 </div>
