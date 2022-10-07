@@ -10,6 +10,7 @@
 		name="formInput.name"
 		[id]="formInput.name"
 		[disabled]="formInput.disabled ?? false"
+		(selectionChange)="changeOption($event)"
 	  >
 		<mat-option *ngFor="let option of formInput.options" [value]="option.value">{{option.text}}</mat-option>
 	  </mat-select>
