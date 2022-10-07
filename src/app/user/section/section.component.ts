@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { IModalData, TYPE_SECTION } from 'src/app/core/models/tools/modal-data';
 import { ViewReport } from 'src/app/core/models/tools/reports/view-report.model';
 import { ScreenSize } from 'src/app/core/models/tools/screen-size.model';
+import { FormService } from 'src/app/core/services/internal/form.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 import { ModalComponent } from 'src/app/core/shared/components/modal/modal.component';
 import report from './../../../assets/jsons/report.json';
@@ -43,7 +44,8 @@ export class SectionComponent implements OnInit {
 	constructor(
 		private _helpersService : HelpersService,
 		private _cdr: ChangeDetectorRef,
-		private _dialog: MatDialog
+		private _dialog: MatDialog,
+		private _formService : FormService
 	) { }
 
 	report = {
@@ -73,6 +75,7 @@ export class SectionComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.screenService();
+		this.modalService();
 	}
 
 	changeSubSection( button: {label: string; key: string} ){
@@ -150,6 +153,13 @@ export class SectionComponent implements OnInit {
 			this.screenSize = response;
 			this.fillColumns();
 		} );
+	}
+
+	modalService(){
+		this._formService.formData$.subscribe((response) => {
+			console.log(response);
+			
+		});
 	}
 
 	// -------------------------------------------------- ANCHOR: MODAL

@@ -1,11 +1,22 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 import { IFormInput } from '../../models/tools/form-input.modal';
+import { Report } from '../../models/tools/reports/report.modal';
 
 @Injectable( {
 	providedIn : 'root'
 } )
 export class FormService {
+	// SUBSCRIPTIONS
+	/**
+	 * Loads the new information sent from the sidepanel 
+	 * and the original information sent from the backend.
+	 */
+	 formData$ = new BehaviorSubject<{
+		newData : Report | null;
+		editData: Report | null;
+	}>( { newData: null, editData: null } );
 
 	constructor() { }
 
