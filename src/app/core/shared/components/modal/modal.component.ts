@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { IFormInput } from 'src/app/core/models/tools/form-input.modal';
+import { IFormInput } from 'src/app/core/models/tools/form-input.model';
 import { IModalData } from 'src/app/core/models/tools/modal-data';
 import { FormService } from 'src/app/core/services/internal/form.service';
 

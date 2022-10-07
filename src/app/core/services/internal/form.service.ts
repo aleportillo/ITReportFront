@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { IFormInput } from '../../models/tools/form-input.modal';
-import { Report } from '../../models/tools/reports/report.modal';
+import { IFormInput } from '../../models/tools/form-input.model';
+import { Report } from '../../models/tools/reports/report.model';
 
 @Injectable( {
 	providedIn : 'root'

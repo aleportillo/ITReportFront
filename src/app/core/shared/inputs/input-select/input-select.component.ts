@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IFormInput, FormInput } from 'src/app/core/models/tools/form-input.modal';
+import { IFormInput, FormInput } from 'src/app/core/models/tools/form-input.model';
 
 @Component( {
 	selector    : 'app-input-select',

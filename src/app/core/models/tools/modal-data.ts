@@ -1,4 +1,4 @@
-import { IFormInput } from './form-input.modal';
+import { IFormInput } from './form-input.model';
 
 // const TYPE_SECTION : 'room' | 'pc';
 export type TYPE_SECTION = 'room' | 'pc';

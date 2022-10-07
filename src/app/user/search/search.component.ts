@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IFormInput } from 'src/app/core/models/tools/form-input.modal';
+import { IFormInput } from 'src/app/core/models/tools/form-input.model';
 import { ScreenSize } from 'src/app/core/models/tools/screen-size.model';
 import { FormService } from 'src/app/core/services/internal/form.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
