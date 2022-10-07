@@ -1,0 +1,21 @@
+<div class="input" [attr.type]="formInput.subtype" [formGroup]="form" *ngIf="form.get(formInput.name)">
+
+	<label *ngIf="formInput.label && formInput.subtype !=='search'" [for]="formInput.name" (click)="debug();">
+		{{ formInput.label }}
+		<span *ngIf="!formInput.optional"> * </span>
+	</label>
+
+	<div class="input__area">
+		<textarea
+			autocomplete="off"
+			[name]="formInput.name"
+			[id]="formInput.name"
+			[formControlName]="formInput.name"
+			[placeholder]="formInput.placeholder ?? ''"
+			[disabled]="formInput.disabled ?? false"
+			rows="5"
+		>
+		</textarea>
+	</div>
+
+</div>

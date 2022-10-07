@@ -8,9 +8,10 @@ import inputs from './inputs';
 import pipes from './pipes';
 import components from './components';
 
+
 @NgModule( {
 	declarations : [ ...inputs, ...components, ...pipes ],
-	imports      : [ CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, MatDialogModule ],
+	imports      : [ CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, MatDialogModule, SimplebarAngularModule ],
 	exports      : [ ...inputs, ...components, ...pipes, SimplebarAngularModule ]
 } )
 
