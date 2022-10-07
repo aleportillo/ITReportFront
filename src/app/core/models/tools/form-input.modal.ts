@@ -1,3 +1,4 @@
+
 export interface IFormInputOption {
 	text     : string;
 	value    : any;
@@ -8,6 +9,7 @@ export interface IFormInputButton {
 	type  ?: string;
 	icon  ?: string;
 }
+
 
 export interface IFormInput {
 	[key: string]      : any;
@@ -22,22 +24,24 @@ export interface IFormInput {
 	placeholder		  ?: string;
 	options           ?: IFormInputOption[];
 	allOptions        ?: any;
+	columnSize        ?: number; 
 }
 
 export class FormInput implements IFormInput {
 	static readonly clean = Object.freeze( new FormInput() );
 	[key: string]     : any;
-	name              = '';
-	type              = '';
-	subtype           ?= '';
-	label             ?= '';
-	disabled          ?= false;
-	containerClasses  ?= '';
-	inputClasses      ?= '';
-	optional          ?= false;
-	placeholder		  ?= '';
-	options           ?= [];
-	allOptions        ?= [];
+	name                    = '';
+	type                    = '';
+	subtype                ?= '';
+	label                  ?= '';
+	disabled               ?= false;
+	containerClasses       ?= '';
+	inputClasses           ?= '';
+	optional               ?= false;
+	placeholder		       ?= '';
+	options                ?= [];
+	allOptions             ?= [];
+	columnSize              = 2;
 
 	parse( obj: IFormInput ) {
 

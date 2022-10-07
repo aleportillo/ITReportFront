@@ -1,18 +1,22 @@
 [
     {
-        "label"   : "Tipo de reporte",
-        "name"    : "categoria",
-        "type"    : "select",
-        "options" : [
+        "label"     : "Tipo de reporte",
+        "name"      : "categoria",
+        "type"      : "select",
+        "columnSize": 2,
+        "subtype"   : "normal",
+        "options"   : [
             { "text" : "Reporte", "value": "reporte"},
             { "text" : "Solicitud", "value": "solicitud"}
         ]
     },
     {
-        "label"   : "Problema",
-        "name"    : "incidente",
-        "type"    : "select",
-        "options" : [],
+        "label"     : "Problema",
+        "name"      : "incidente",
+        "type"      : "select",
+        "subtype"   : "normal",
+        "columnSize": 2,
+        "options"   : [],
         "allOptions" : {
             "reporte": [
                 { "text" : "Sin internet", "value": "sin internet"},
@@ -25,9 +29,10 @@
         }
     },
     {
-        "label"   : "Comentarios",
-        "name"    : "comentarios",
-        "type"    : "textArea",
-        "optional": true
+        "label"     : "Comentarios",
+        "name"      : "comentarios",
+        "type"      : "textArea",
+        "optional"  : true,
+        "columnSize": 2
     }
 ]
