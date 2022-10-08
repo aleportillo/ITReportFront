@@ -15,6 +15,10 @@ const routes: Routes = [
 		loadChildren : () => import( './user/section/section.module' ).then( module => module.SectionModule )
 	},
 	{
+		path         : 'admin',
+		loadChildren : () => import( './admin/admin-area/admin-area.module' ).then( module => module.AdminAreaModule )
+	},
+	{
 		path       : '**',
 		redirectTo : ''
 	}
