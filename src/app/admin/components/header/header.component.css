@@ -1,0 +1,75 @@
+header{
+    background: var(--background-navbar);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+header span {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+span h1{
+    margin: 0;
+    padding-right: 1rem;
+    color: var(--text-light);
+    font-size: 1.7rem;
+}
+
+span h1:first-child{
+    border-right: 3px solid var(--text-light);
+}
+
+span button:first-child{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+span button:hover img{
+    filter: var(--primary-light-svg);
+}
+
+button img[section='Dashboard']{
+    height: 120%;
+    width: 120%;
+}
+
+span button img[active='true']{
+    filter: var(--primary-svg);
+}
+
+
+button.mat-menu-item{
+    font-family: 'Be Vietnam Pro';
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+button.mat-menu-item img{
+    width: 1rem;
+    margin-right: .5rem;
+    filter: var(--secondary-light-svg);
+}
+
+button.mat-menu-item:hover img{
+    filter: var(--secondary-svg);
+}
+
+button.mat-menu-item img[section='Dashboard']{
+    height: 1.2rem;
+    width: 1.2rem;
+}
+
+button.mat-menu-item[active='true'] img{
+    filter: var(--secondary-svg);
+}
+
+button.mat-menu-item[active='true']{
+    color: var(--secondary);
+}

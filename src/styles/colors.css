@@ -42,4 +42,7 @@
     --background-navbar-svg: invert(13%) sepia(2%) saturate(2064%) hue-rotate(169deg) brightness(95%) contrast(88%);
     --text-light-contrast-svg: invert(100%) sepia(13%) saturate(59%) hue-rotate(349deg) brightness(114%) contrast(95%);
     --primary-svg: brightness(0) saturate(100%) invert(78%) sepia(33%) saturate(6245%) hue-rotate(320deg) brightness(101%) contrast(84%);
+    --secondary-light-svg: brightness(0) saturate(100%) invert(90%) sepia(5%) saturate(386%) hue-rotate(109deg) brightness(102%) contrast(87%);
+    --secondary-svg: brightness(0) saturate(100%) invert(70%) sepia(7%) saturate(2025%) hue-rotate(130deg) brightness(87%) contrast(87%);
+    --primary-light-svg: brightness(0) saturate(100%) invert(97%) sepia(33%) saturate(1533%) hue-rotate(293deg) brightness(103%) contrast(100%);
 }

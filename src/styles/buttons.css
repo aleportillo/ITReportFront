@@ -11,6 +11,11 @@
     color: var(--text-disabled);
 }
 
+.button img{
+    width: 100%;
+    height: 100%;
+}
+
 .button.icon{
     display: flex;
     align-items: center;
@@ -80,4 +85,15 @@
 
 .button.close:hover{
     background-color: var(--quinary);
+}
+
+.button.header{
+    background: transparent;
+    height: 2.5rem;
+    width: 2.5rem;
+    /* cursor: pointer; */
+    padding: 0;
+    border-radius: .5rem;
+    padding: .3rem;
+    /* border: 1px solid white; */
 }
