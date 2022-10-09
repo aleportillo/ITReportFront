@@ -1,0 +1,40 @@
+<header>
+    <span>
+        <h1>Moises</h1>
+        <h1>{{currentSection}}</h1>
+    </span>
+    <ng-container *ngIf="!screenSize.large; else allIcons">
+        <button class="button header" mat-button [matMenuTriggerFor]="menu">
+            <img src="./../../../../assets/icons/icon_menu.svg" alt="Menu">
+        </button>
+        <mat-menu #menu="matMenu">
+            <button 
+                mat-menu-item 
+                *ngFor="let section of sections" 
+                [attr.active]="section.text === currentSection"
+                (click)="changeSection(section);"
+            >
+                <img [attr.section]="section.text" src="./../../../../assets/icons/icon_{{section.img}}.svg" [alt]="section.text">
+                {{section.text}}
+            </button>
+        </mat-menu>
+    </ng-container>
+    <ng-template #allIcons>
+        <span>
+            <button 
+                *ngFor="let section of sections" 
+                class="button header" 
+                [title]="section.text"
+                (click)="changeSection(section);"
+            >
+                <img
+                    [attr.section]="section.text"
+                    [attr.active]="section.text === currentSection" 
+                    src="./../../../../assets/icons/icon_{{section.img}}.svg" 
+                    [alt]="section.text"
+                />
+            </button>
+        </span>
+    </ng-template>
+</header>
+
