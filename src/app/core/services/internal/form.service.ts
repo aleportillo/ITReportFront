@@ -25,6 +25,7 @@ export class FormService {
 		inputs.forEach( input => {
 			const validations = [];
 			if ( !input.optional ) { validations.push( Validators.required ); }
+			if ( input.minLength ) { validations.push (Validators.minLength(input.minLength));}
 			form.addControl( input.name, new FormControl( '', validations ) );
 		} );
 

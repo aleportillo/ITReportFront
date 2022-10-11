@@ -33,6 +33,7 @@
         "name"      : "comentarios",
         "type"      : "textArea",
         "optional"  : true,
-        "columnSize": 2
+        "columnSize": 2,
+        "maxLength" : 500
     }
 ]

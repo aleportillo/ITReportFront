@@ -1,0 +1,44 @@
+[
+    {
+        "name"        : "nombre",
+        "type"        : "text",
+        "placeholder" : "Ej: Maria",
+        "label"       : "Nombre",
+        "columnSize"  : 1,
+        "optional"    : false
+    },
+    {
+        "name"        : "apellido",
+        "type"        : "text",
+        "placeholder" : "Ej: Ruiz",
+        "label"       : "Apellido",
+        "columnSize"  : 1,
+        "optional"    : false
+    },
+    {
+        "name"        : "usuario",
+        "type"        : "text",
+        "placeholder" : "numero de reloj",
+        "label"       : "Usuario",
+        "columnSize"  : 1,
+        "optional"    : false
+    },
+    {
+        "name"        : "nuevaContraseña",
+        "type"        : "password",
+        "label"       : "Contraseña",
+        "columnSize"  : 1,
+        "subtype"     : "password",
+        "optional"    : false,
+        "minLength"   : 8
+    },
+    {
+        "name"        : "origianlContraseña",
+        "type"        : "password",
+        "label"       : "Ingrese la contraseña actual para actualizar la información",
+        "columnSize"  : 2,
+        "subtype"     : "password",
+        "optional"    : false,
+        "minLength"   : 8
+    }
+]
