@@ -1,0 +1,35 @@
+.profile__container{
+    width: 80%;
+    max-width: 80rem;
+    margin: 2rem auto;
+    background: white;
+    border-radius: 1.5rem;
+    height: 80%;
+    padding: 2rem;
+    height: fit-content;
+}
+
+.profile__container .profile__form{
+    display: grid;
+    grid-template-columns: repeat(2, 48.5%);
+    grid-gap: 1%;
+    gap: 1rem;
+    row-gap: 2rem;  
+}
+
+.form__input{
+    grid-column: span var(--column);
+}
+
+.profile__container .save{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 2rem;
+}
+
+@media (max-width: 700px) {
+    .form__input{
+        grid-column: span 2;
+    }
+}

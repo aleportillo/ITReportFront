@@ -1,0 +1,10 @@
+section{
+    display: flex;
+    flex-direction: column;
+}
+
+app-profile{
+    flex-grow: 1;
+    display: grid;
+    align-items: center;
+}

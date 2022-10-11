@@ -3,12 +3,16 @@ div[type='search']{
 }
 
 div[type='search'] input{
-    border: 0;
-    background: var(--input-background);
     border-radius: 0 1rem 1rem 0;
     height: 100%;
-    padding: 0;
-    width: 100%;
     padding: .5rem;
+}
+
+div input{
+    width: 100%;
+    border: 0;
     outline: none;
+    background: var(--input-background);
+    padding: 1rem;
+    border-radius: 1rem;
 }

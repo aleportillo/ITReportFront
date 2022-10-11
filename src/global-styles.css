@@ -52,3 +52,8 @@ body{
 .input label span{
     color: var(--notice-error);
 }
+
+.error{
+    color: var(--notice-error);
+    font-size: .7rem;
+}

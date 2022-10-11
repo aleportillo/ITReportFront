@@ -53,16 +53,18 @@
 }
 
 
-.button.modal{
+.button.modal, .button.save{
     padding: .3rem 3rem;
 }
 
-.button.modal:not([disabled]){
+.button.modal:not([disabled]), .button.save:not([disabled]){
     background-color: var(--primary);
     color: var(--text-light-contrast);
 }
 
-.button.modal:not([disabled]):hover, .button.report:hover{
+.button.modal:not([disabled]):hover, 
+.button.report:hover,
+.button.save:not([disabled]):hover{
     background-color: var(--primary-light);
     color: var(--primary);
 }
