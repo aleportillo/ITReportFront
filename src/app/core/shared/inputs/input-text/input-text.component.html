@@ -6,7 +6,7 @@
 	</label>
 
 	<input
-		type='text'
+		[type]='formInput.type'
 		autocomplete="off"
 		[name]="formInput.name"
 		[id]="formInput.name"
@@ -14,6 +14,17 @@
 		[placeholder]="formInput.placeholder ?? ''"
 		[disabled]="formInput.disabled ?? false"
 	/>
+
+	<span 
+		class="error"
+		*ngIf="
+		(form.get(formInput.name)?.invalid) &&
+		(form.get(formInput.name)?.errors ) &&
+		(form.get(formInput.name)?.touched)
+		"
+	>
+		{{ form.get(formInput.name)?.errors | inputErrors }}
+	</span>
 
 </div>
 
