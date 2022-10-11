@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ScreenSize } from 'src/app/core/models/tools/screen-size.model';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 
@@ -9,9 +9,9 @@ import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 } )
 export class HeaderComponent implements OnInit {
 
-	@Input() currentSection = 'Dashboard';
+	@Output() changeSectionEmitter = new EventEmitter<string>();
 	screenSize : ScreenSize = new ScreenSize();
-
+	currentSection = 'Perfil';
 	constructor(
 		private _helpersService : HelpersService
 	) { }
@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.screenService();
+		this.changeSectionEmitter.emit( this.currentSection );
 	}
 
 	screenService(){
@@ -36,6 +37,7 @@ export class HeaderComponent implements OnInit {
 
 	changeSection( section: {text:string; img:string} ){
 		this.currentSection = section.text;
+		this.changeSectionEmitter.emit( this.currentSection );
 	}
 
 }

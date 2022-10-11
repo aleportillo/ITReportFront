@@ -8,8 +8,9 @@ import { SectionRoutingModule } from 'src/app/user/section/section-routing.modul
 import { AdminAreaComponent } from './admin-area.component';
 import components from '../components';
 import { MatMenuModule } from '@angular/material/menu';
+import { ProfileComponent } from '../profile/profile.component';
 @NgModule( {
-	declarations : [ AdminAreaComponent, ...components ],
+	declarations : [ AdminAreaComponent, ...components, ProfileComponent ],
 	imports      : [
 		CommonModule,
 		AdminAreaRoutingModule,

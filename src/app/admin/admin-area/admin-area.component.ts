@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls   : ['./admin-area.component.css']
 } )
 export class AdminAreaComponent implements OnInit {
+	currentSection = '';
 
 	constructor() { }
 
 	ngOnInit(): void {
+	}
+
+	changeSection(section: string){
+		this.currentSection = section;
 	}
 
 }

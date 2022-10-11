@@ -1,0 +1,22 @@
+<div class="profile__container">
+    <div class="profile__form">
+        <div 
+            *ngFor="let input of profileInputs"
+            class="form__input"
+            style="--column: {{input.columnSize}};"
+        >
+            <app-input-text
+                [formInput]="input"
+                [form]="form"
+            >
+            </app-input-text>
+        </div>
+    </div>
+    <button 
+        class="button save"
+        [disabled]="form.invalid"
+        (click)="saveData();"
+    >
+        Guardar
+    </button>
+</div>
