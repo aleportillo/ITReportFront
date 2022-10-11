@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit {
 			name        : 'textSearch',
 			type        : 'text',
 			subtype     : 'search',
-			placeholder : 'ej. JUE221'
+			placeholder : 'Ej: 145ER'
 		}
 	];
 

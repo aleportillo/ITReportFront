@@ -9,7 +9,7 @@
         <p class="status" [attr.status]="report.estado">{{report.estado | firstLetterUppercase}}</p>
     </div>
     <ng-container *ngIf="report.comentariosReporte">
-        <p> <span> Descripcion:</span> {{report.comentariosReporte }}</p>
+        <p> <span> Descripción:</span> {{report.comentariosReporte }}</p>
     </ng-container>
     <ng-container *ngIf="report.comentariosAdmin">
         <p> <span> Comentarios:</span> {{report.comentariosAdmin}} </p>
