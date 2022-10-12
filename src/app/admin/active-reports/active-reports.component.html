@@ -1,1 +1,7 @@
-<p>active-reports works!</p>
+<div>
+    <app-list-row 
+        *ngFor="let report of activeReports" 
+        [report]="report"
+        [rowTemplate]="rowTemplate">
+    </app-list-row>
+</div>
