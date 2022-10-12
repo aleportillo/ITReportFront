@@ -93,9 +93,16 @@
     background: transparent;
     height: 2.5rem;
     width: 2.5rem;
-    /* cursor: pointer; */
     padding: 0;
     border-radius: .5rem;
     padding: .3rem;
-    /* border: 1px solid white; */
+}
+
+.button.edit{
+    background-color: var(--button-edit);
+    padding: .6rem;
+}
+
+.button.edit:hover{
+    background-color: var(--button-edit-hover);
 }
