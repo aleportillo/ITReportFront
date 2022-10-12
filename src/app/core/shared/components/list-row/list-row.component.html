@@ -1,1 +1,37 @@
-<p>list-row works!</p>
+<div class="row__container">
+    <span *ngFor="let column of rowTemplate" class="column">
+        <ng-container [ngSwitch]="column">
+            <ng-container *ngSwitchCase="'_id'">
+                <span class="column__id">
+                    <p class="id">#{{report._id}}</p>
+                    <p class="type" [attr.type]="report.tipo">
+                        {{report.tipo}} {{report.idTipo}}
+                    </p>
+                </span>
+            </ng-container>
+            <ng-container *ngSwitchCase="'categoria'">
+                <span class="column__categoria">
+                    <p>{{report.categoria}}</p>
+                    <p>{{report.incidente}}</p>
+                </span>
+            </ng-container>
+            <ng-container *ngSwitchCase="'fechaDeActualizacion'">
+                <span class="column__fecha">
+                    <p>Actualización</p>
+                    <p>{{report.fechaDeActualzacion | date: 'dd/MM/yyyy' }}</p>
+                </span>
+            </ng-container>
+            <ng-container *ngSwitchCase="'estado'">
+                <p class="column__estado" [attr.estado]="report.estado">
+                    {{report.estado}}
+                </p>
+            </ng-container>
+            <ng-container *ngSwitchCase="'edit'">
+                <button class="button icon edit">
+                    <img src="./../../../../../assets/icons/icon_edit.svg" alt="">
+                </button>
+            </ng-container>
+        </ng-container>
+    </span>
+    <p></p>
+</div>
