@@ -1,0 +1,8 @@
+div{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 2rem auto;
+    max-width: 80rem;
+    width: 90%;
+}

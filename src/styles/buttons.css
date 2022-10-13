@@ -106,3 +106,26 @@
 .button.edit:hover{
     background-color: var(--button-edit-hover);
 }
+
+.button.accept, 
+.button.reject{
+    padding: .6rem;
+    height: 2.2rem;
+    width: 2.2rem;
+}
+
+.button.reject{
+    background-color: var(--primary);
+}
+
+.button.accept{
+    background-color: var(--tertiary);
+}
+
+.button.reject:hover{
+    background-color: var(--primary-light);
+}
+
+.button.accept:hover{
+    background-color: var(--secondary-light);
+}

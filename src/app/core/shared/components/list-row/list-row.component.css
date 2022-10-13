@@ -3,9 +3,16 @@
     padding: 1rem;
     border-radius: 1rem;
     display: grid;
-    grid-template-columns: 23% 23% 22% 22% 5%;
     align-items: center;
     gap: .6rem;
+}
+
+.row__container[type='active']{
+    grid-template-columns: 23% 23% 22% 22% 5%;
+}
+
+.row__container[type='new']{
+    grid-template-columns: 20% 30% 42% 5%;
 }
 
 p {
@@ -28,7 +35,8 @@ p {
     margin: 0;
 }
 
-.column__id .type{
+.column__id .type,
+.column__tipo .type{
     font-weight: bold;
     font-size: 1.1rem;
     color: var(--text-light);
@@ -37,11 +45,13 @@ p {
     margin: 0;
 }
 
-.column__id .type[type="sala"]{
+.column__id .type[type="sala"],
+.column__tipo .type[type="sala"]{
     background-color: var(--tertiary);
 }
 
-.column__id .type[type="pc"]{
+.column__id .type[type="pc"],
+.column__tipo .type[type="pc"]{
     background-color: var(--quaternary);
 }
 
@@ -64,9 +74,13 @@ p {
     background-color: var(--status-attending);
 }
 
+.button.icon.reject{
+    margin-bottom: .5rem;
+}
+
 @media (max-width: 768px) {
     .row__container{
-        grid-template-columns: 100%;
+        grid-template-columns: 100% !important;
         width: 90%;
         min-width: 15rem;
         max-width: 20rem;
@@ -76,7 +90,8 @@ p {
 
     .column__id, 
     .column__categoria,
-    .column__fecha {
+    .column__fecha,
+    .column__tipo {
         display: flex;
         flex-direction: column;
         gap: 1rem;
@@ -95,5 +110,17 @@ p {
         position: absolute;
         top: -.6rem;
         right: -.6rem;
+    }
+
+    button.reject{
+        position: absolute;
+        top: -.6rem;
+        right: -.6rem;
+    }
+
+    button.accept{
+        position: absolute;
+        top: -.6rem;
+        left: -.6rem;
     }
 }
