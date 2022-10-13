@@ -1,1 +1,8 @@
-<p>new-reports works!</p>
+<div>
+    <app-list-row 
+        *ngFor="let report of newReports" 
+        [report]="report"
+        [section]="'new'"
+        [rowTemplate]="rowTemplate">
+    </app-list-row>
+</div>

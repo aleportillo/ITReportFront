@@ -9,7 +9,7 @@ import { IActiveReport } from 'src/app/core/models/tools/reports/active-report.m
 export class ActiveReportsComponent implements OnInit {
 
 	// activeReports = []
-	rowTemplate = ['_id', 'categoria', 'fechaDeActualizacion', 'estado', 'edit'];
+	rowTemplate = [ '_id', 'categoria', 'fechaDeActualizacion', 'estado', 'edit' ];
 
 	activeReport1 : IActiveReport = {
 		_id                 : 124,
@@ -31,12 +31,12 @@ export class ActiveReportsComponent implements OnInit {
 		estado              : 'detenido'
 	};
 
-	activeReports = [this.activeReport1, this.activeReport2];
+	activeReports = [ this.activeReport1, this.activeReport2 ];
 
 	constructor() { }
 
 	ngOnInit(): void {
-		console.log(this.activeReports);
+		console.log( this.activeReports );
 		
 	}
 

@@ -1,9 +1,16 @@
-<div class="row__container">
+<div class="row__container" [attr.type]="section">
     <span *ngFor="let column of rowTemplate" class="column">
         <ng-container [ngSwitch]="column">
             <ng-container *ngSwitchCase="'_id'">
                 <span class="column__id">
                     <p class="id">#{{report._id}}</p>
+                    <p class="type" [attr.type]="report.tipo">
+                        {{report.tipo}} {{report.idTipo}}
+                    </p>
+                </span>
+            </ng-container>
+            <ng-container *ngSwitchCase="'tipo'">
+                <span class="column__tipo">
                     <p class="type" [attr.type]="report.tipo">
                         {{report.tipo}} {{report.idTipo}}
                     </p>
@@ -21,6 +28,12 @@
                     <p>{{report.fechaDeActualzacion | date: 'dd/MM/yyyy' }}</p>
                 </span>
             </ng-container>
+            <ng-container *ngSwitchCase="'fechaDeReporte'">
+                <span class="column__fecha">
+                    <p>{{report.fechaDeReporte | date: 'dd/MM/yyyy' }}</p>
+                    <p *ngIf="report.comentariosReporte">{{report.comentariosReporte | cutString}}</p>
+                </span>
+            </ng-container>
             <ng-container *ngSwitchCase="'estado'">
                 <p class="column__estado" [attr.estado]="report.estado">
                     {{report.estado}}
@@ -29,6 +42,14 @@
             <ng-container *ngSwitchCase="'edit'">
                 <button class="button icon edit">
                     <img src="./../../../../../assets/icons/icon_edit.svg" alt="">
+                </button>
+            </ng-container>
+            <ng-container *ngSwitchCase="'buttons'">
+                <button class="button icon reject">
+                    <img src="./../../../../../assets/icons/icon_reject.svg" alt="">
+                </button>
+                <button class="button icon accept">
+                    <img src="./../../../../../assets/icons/icon_accept.svg" alt="">
                 </button>
             </ng-container>
         </ng-container>

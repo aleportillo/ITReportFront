@@ -10,6 +10,7 @@ export class ListRowComponent implements OnInit {
 
 	@Input() report : IActiveReport | any;
 	@Input() rowTemplate : any;
+	@Input() section = '';
 
 	constructor() { }
 

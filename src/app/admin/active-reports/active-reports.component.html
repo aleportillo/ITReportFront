@@ -2,6 +2,7 @@
     <app-list-row 
         *ngFor="let report of activeReports" 
         [report]="report"
+        [section]="'active'"
         [rowTemplate]="rowTemplate">
     </app-list-row>
 </div>
