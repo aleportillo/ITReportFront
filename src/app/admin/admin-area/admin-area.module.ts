@@ -10,8 +10,9 @@ import components from '../components';
 import { MatMenuModule } from '@angular/material/menu';
 import { ProfileComponent } from '../profile/profile.component';
 import { ActiveReportsComponent } from '../active-reports/active-reports.component';
+import { NewReportsComponent } from '../new-reports/new-reports.component';
 @NgModule( {
-	declarations : [ AdminAreaComponent, ...components, ProfileComponent, ActiveReportsComponent ],
+	declarations : [ AdminAreaComponent, ...components, ProfileComponent, ActiveReportsComponent, NewReportsComponent ],
 	imports      : [
 		CommonModule,
 		AdminAreaRoutingModule,

@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
 
 	@Output() changeSectionEmitter = new EventEmitter<string>();
 	screenSize : ScreenSize = new ScreenSize();
-	currentSection = 'Reportes activos';
+	currentSection = 'Reportes nuevos';
 	constructor(
 		private _helpersService : HelpersService
 	) { }
