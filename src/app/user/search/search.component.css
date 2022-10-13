@@ -13,6 +13,7 @@
     text-align: center;
     gap: 2rem;
     justify-content: center;
+    overflow-y: auto;
 }
 
 .page__container .form__container p{
