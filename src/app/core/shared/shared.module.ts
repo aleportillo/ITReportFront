@@ -4,12 +4,13 @@ import { MaterialModule } from 'src/app/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { MatDialogModule } from '@angular/material/dialog';
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import inputs from './inputs';
 import pipes from './pipes';
 import components from './components';
 
 @NgModule( {
-	declarations : [ ...inputs, ...components, ...pipes ],
+	declarations : [ ...inputs, ...components, ...pipes, SnackbarComponent ],
 	imports      : [ CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, MatDialogModule, SimplebarAngularModule ],
 	exports      : [ ...inputs, ...components, ...pipes, SimplebarAngularModule ]
 } )

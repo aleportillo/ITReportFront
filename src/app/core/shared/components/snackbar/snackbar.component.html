@@ -1,0 +1,8 @@
+<div>
+    <span class="content">
+        <img src="./../../../../../assets/icons/icon_{{data.type}}.svg" alt="">
+        <p>{{data.message}}</p>
+    </span>
+    <span class="progress" style="--seconds: {{data.seconds-.3}}s" [attr.type]="data.type">
+    </span>
+</div>

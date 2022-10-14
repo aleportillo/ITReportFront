@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule( {
@@ -11,8 +12,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
+		MatSnackBarModule
 	],
-	exports   : [],
+	exports   : [MatSnackBarModule],
 	providers : [],
 	bootstrap : [AppComponent]
 } )
