@@ -57,3 +57,30 @@ body{
     color: var(--notice-error);
     font-size: .7rem;
 }
+
+.mat-snack-bar-container{
+    margin: 0 !important;
+    padding: 0 !important;
+    top: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) !important;
+    overflow: hidden !important;
+    font-family: 'Baloo 2';
+    color: var(--text-light);
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 0.5rem !important;
+}
+
+.mat-snack-bar-container.warning{
+    background-color: var(--notice-warning);
+}
+
+.mat-snack-bar-container.error{
+    background-color: var(--notice-error);
+}
+
+.mat-snack-bar-container.success{
+    background-color: var(--notice-success);
+}

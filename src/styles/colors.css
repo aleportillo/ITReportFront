@@ -32,6 +32,9 @@
     --input-background: #ECE8E8;
     --button-edit: #404040;
     --button-edit-hover: #A195B9;
+    --snackbar-progress-error: #9e5543;
+    --snackbar-progress-warning:#b3964d;
+    --snackbar-progress-success: #6d7d63;
 
     --notice-warning: #EBC565;
     --notice-error: #EB7F65;

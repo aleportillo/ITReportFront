@@ -1,0 +1,42 @@
+div{
+    display: flex;
+    flex-direction: column;
+}
+
+span.content{
+    display: grid;
+    grid-template-columns: 8% 90%;
+    gap: .5rem;
+    align-items: center;
+    padding-inline: 1rem;
+}
+
+p{
+    margin-block: .5rem;
+}
+
+img{
+    height: 1.5rem;
+}
+
+.progress{
+    height: .3rem;
+    animation: animation_progress var(--seconds) linear 0s 1;
+}
+
+.progress[type='success']{
+    background-color: var(--snackbar-progress-success);
+}
+
+.progress[type='error']{
+    background-color: var(--snackbar-progress-error);
+}
+
+.progress[type='warning']{
+    background-color: var(--snackbar-progress-warning);
+}
+
+@keyframes animation_progress {
+    0% { width: 0 }
+    100% {width: 100%}
+}
