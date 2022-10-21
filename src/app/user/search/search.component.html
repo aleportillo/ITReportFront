@@ -24,7 +24,10 @@
             >
             </app-input-text>
         </div>
-        <button class="button secondary" (click)="search()" [disabled]="form.invalid">Buscar</button>
+        <button class="button secondary" (click)="search()" [disabled]="form.invalid">
+            Buscar
+            <app-loader *ngIf="loaderObject.search"></app-loader>
+        </button>
     </div>
     <div *ngIf="!screenSize.small" class="image__container">
         <img src="./../../../assets/images/itcj_placeholder.jpg" alt="Imagen del ITCJ">
