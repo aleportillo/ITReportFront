@@ -34,12 +34,20 @@
     </section>
     <section class="section__subsection">
         <ng-container *ngIf="subSectionActive==='reportes'">
-            <div id="firstColumn" #firstColumn class="column">
-                <app-report-card *ngFor="let report of firstColumnReports" [report]="report"></app-report-card>
-            </div>
-            <div *ngIf="!screenSize.small" id="secondColumn" #secondColumn class="column">
-                <app-report-card *ngFor="let report of secondColumnReports" [report]="report"></app-report-card>
-            </div>
+            <app-loader *ngIf="loaderObject.getUserReports" [section]="'page'"></app-loader>
+            <ng-container *ngIf="allCards.length > 0; else noReports">
+                <div id="firstColumn" #firstColumn class="column">
+                    <app-report-card *ngFor="let report of firstColumnReports" [report]="report"></app-report-card>
+                </div>
+                <div *ngIf="!screenSize.small" id="secondColumn" #secondColumn class="column">
+                    <app-report-card *ngFor="let report of secondColumnReports" [report]="report"></app-report-card>
+                </div>
+            </ng-container>
+            <ng-template #noReports>
+                <p class="noMessage">
+                    Aún no hay reportes para este elemento
+                </p>
+            </ng-template>
         </ng-container>
     </section>
 </section>

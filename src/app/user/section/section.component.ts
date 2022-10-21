@@ -8,6 +8,9 @@ import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 import { ModalComponent } from 'src/app/core/shared/components/modal/modal.component';
 import report from './../../../assets/jsons/report.json';
 import { Router } from '@angular/router';
+import { SectionService } from 'src/app/core/services/api/section.service';
+import { SnackbarService } from 'src/app/core/services/internal/snackbar.service';
+import { Loader } from 'src/app/core/models/tools/loader.model';
 
 const SECTION_POSITION = 1;
 const ID_SECTION = 2;
@@ -46,6 +49,7 @@ export class SectionComponent implements OnInit {
 	subSectionActive = 'computadoras';
 	
 	screenSize: ScreenSize = new ScreenSize();
+	loaderObject : Loader =  new Loader();
 
 	firstColumnReports : ViewReport[] = [];
 	secondColumnReports : ViewReport[] = [];
@@ -55,7 +59,9 @@ export class SectionComponent implements OnInit {
 		private _cdr: ChangeDetectorRef,
 		private _dialog: MatDialog,
 		private _formService : FormService,
-		private _router: Router
+		private _router: Router,
+		private _sectionService : SectionService,
+		private _snackbarService: SnackbarService
 	) { }
 
 	report = {
@@ -169,6 +175,7 @@ export class SectionComponent implements OnInit {
 	createReport(){
 		this.openDialog();
 	}
+	
 
 	// -------------------------------------------------- ANCHOR: SUBS
 
@@ -181,9 +188,48 @@ export class SectionComponent implements OnInit {
 
 	modalService(){
 		this._formService.formData$.subscribe( ( response ) => {
-			console.log( response );
+			if ( response.newData ){
+				this.saveReport( response );
+			}
 		} );
 	}
+
+	loadService(){
+		this._helpersService.loader$.subscribe( ( response ) => {
+			this.loaderObject = response;
+		} );
+	}
+
+
+	// -------------------------------------------------- ANCHOR: API
+
+	saveReport( formData :  {newData : any; editData : any } ){
+		this._sectionService.saveReport().subscribe(
+			data => {
+				this._dialog.closeAll();
+				console.log( 'save' );
+				formData.newData = null;
+				this._formService.formData$.next( formData );
+			},
+			error => {
+				this._dialog.closeAll();
+				formData.newData = null;
+				this._formService.formData$.next( formData );
+				this._snackbarService.showSnackbar( 'Hubo un error al guardar tu reporte, inténtalo de nuevo más tarde.', 'error' );
+			}
+		);
+	}
+
+	getReports( ){
+		this._sectionService.getReports().subscribe(
+			data => {
+			},
+			error => {
+				this._snackbarService.showSnackbar( '', 'error' );
+			}
+		);
+	}
+	
 
 	// -------------------------------------------------- ANCHOR: MODAL
 

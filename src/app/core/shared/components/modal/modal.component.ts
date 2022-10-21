@@ -2,8 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IFormInput } from 'src/app/core/models/tools/form-input.model';
+import { Loader } from 'src/app/core/models/tools/loader.model';
 import { IModalData } from 'src/app/core/models/tools/modal-data';
 import { FormService } from 'src/app/core/services/internal/form.service';
+import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 
 @Component( {
 	selector    : 'app-modal',
@@ -16,16 +18,21 @@ export class ModalComponent implements OnInit {
 	form : FormGroup  = new FormGroup( {} );
 	editData : any = null;
 
+	loaderObject : Loader =  new Loader();
+
 	constructor(
 		private _formService : FormService,
 		private _dialogRef: MatDialogRef<ModalComponent>,
-        @Inject( MAT_DIALOG_DATA ) data : IModalData
+        @Inject( MAT_DIALOG_DATA ) data : IModalData,
+		private _helpersService : HelpersService
 	) {
 		this.modalData = data;
 		// console.log( data );
 	}
 
 	ngOnInit(): void {
+		this.formDataSuscribe();
+		this.loaderSuscribe();
 		this.form = this._formService.createForm( this.modalData.form );
 	}
 
@@ -54,5 +61,19 @@ export class ModalComponent implements OnInit {
 			incidenteField.options =  incidenteField?.allOptions[event];
 			this.form.get( 'incidente' )?.reset();
 		}
+	}
+
+	formDataSuscribe(){
+		this._formService.formData$.subscribe( ( response ) => {
+			// if(!response.editData && !response.newData){
+			// 	this.closeModal();
+			// }
+		} );
+	}
+
+	loaderSuscribe(){
+		this._helpersService.loader$.subscribe( ( response ) => {
+			this.loaderObject = response;
+		} );
 	}
 }

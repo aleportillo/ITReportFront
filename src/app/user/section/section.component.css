@@ -95,9 +95,14 @@
     background-color: var(--background);
     max-width: 80rem;
     margin: 0 auto;
+    position: relative;
 }
 
 .page__container .section__subsection .column{
     width: 100%;
     height: fit-content;
+}
+
+app-loader{
+    width: 100%;
 }

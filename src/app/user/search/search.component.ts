@@ -61,7 +61,7 @@ export class SearchComponent implements OnInit {
 	search(){
 		this._searchService.search().subscribe(
 			data => {
-				sessionStorage.setItem('IT_REPORT', `/`);
+				sessionStorage.setItem( 'IT_REPORT', `/` );
 				this._router.navigate( [`/${ this.form.value.type }/${ this.form.value.textSearch }`] );
 			},
 			error => {

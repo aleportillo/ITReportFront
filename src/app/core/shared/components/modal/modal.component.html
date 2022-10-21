@@ -38,6 +38,7 @@
                 [disabled]="form.invalid"
             >
                 {{modalData.labelButton }}
+                <app-loader *ngIf="loaderObject.createReport"></app-loader>
             </button>
         </div>
     </body>

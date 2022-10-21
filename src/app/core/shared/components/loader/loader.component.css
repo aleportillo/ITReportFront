@@ -5,6 +5,15 @@
     height: 1.5rem;
     display: block;
   }
+
+  .lds-circle.page{
+    height: 100px;
+    margin: 5rem auto 0;
+    width: 100%;
+    display: grid;
+    place-content: center;
+  }
+
   .lds-circle > div {
     display: inline-block;
     width: 1.5rem;
@@ -15,6 +24,14 @@
     position: absolute;
     left: 10%;
   }
+
+  .lds-circle.page > div{
+    background-color: var(--primary);
+    width: 5rem;
+    height: 5rem;
+    position: inherit;
+  }
+
   @keyframes lds-circle {
     0%, 100% {
       animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
