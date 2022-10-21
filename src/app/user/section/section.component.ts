@@ -7,7 +7,11 @@ import { FormService } from 'src/app/core/services/internal/form.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 import { ModalComponent } from 'src/app/core/shared/components/modal/modal.component';
 import report from './../../../assets/jsons/report.json';
+import { Router } from '@angular/router';
 
+const SECTION_POSITION = 1;
+const ID_SECTION = 2;
+const FIRST_ELEMENT = 0;
 @Component( {
 	selector    : 'app-section',
 	templateUrl : './section.component.html',
@@ -29,8 +33,13 @@ export class SectionComponent implements OnInit {
 		{ label: 'Solicitudes (PCs)', key: '' }
 	];
 
-	buttons = [
+	buttonsRoom = [
 		{ label: 'Computadoras', key: 'computadoras' },
+		{ label: 'Reportes', key: 'reportes' }
+	];
+
+	buttonsPC = [
+		{ label: 'Componentes', key: 'componentes' },
 		{ label: 'Reportes', key: 'reportes' }
 	];
 
@@ -45,7 +54,8 @@ export class SectionComponent implements OnInit {
 		private _helpersService : HelpersService,
 		private _cdr: ChangeDetectorRef,
 		private _dialog: MatDialog,
-		private _formService : FormService
+		private _formService : FormService,
+		private _router: Router
 	) { }
 
 	report = {
@@ -69,13 +79,28 @@ export class SectionComponent implements OnInit {
 	};
 
 	allCards = [
-		this.reporteLargo, this.report, this.reporteLargo, this.report, this.reporteLargo, this.report, this.report, this.reporteLargo, this.report,  this.report, this.report, this.report 
+		this.reporteLargo, this.report, this.reporteLargo, 
+		this.report, this.reporteLargo, this.report, 
+		this.report, this.reporteLargo, this.report,  
+		this.report, this.report, this.report 
 	];
 	
 
 	ngOnInit(): void {
 		this.screenService();
 		this.modalService();
+		this.type = this._router.url.split( '/' )[SECTION_POSITION];
+		this.idSection = this._router.url.split( '/' )[ID_SECTION];
+		this.subSectionActive = ( this.type === 'sala' ) ? 
+			this.buttonsRoom[FIRST_ELEMENT].key : 
+			this.buttonsPC[FIRST_ELEMENT].key ;
+	}
+
+
+	// -------------------------------------------------- ANCHOR: HELPERS
+	
+	goBack(){
+		this._router.navigate( [sessionStorage.getItem( 'IT_REPORT' ) ?? '/'] );
 	}
 
 	changeSubSection( button: {label: string; key: string} ){
@@ -142,7 +167,6 @@ export class SectionComponent implements OnInit {
 	}
 
 	createReport(){
-		console.log( 'Vamos a reportar' );
 		this.openDialog();
 	}
 
@@ -156,10 +180,9 @@ export class SectionComponent implements OnInit {
 	}
 
 	modalService(){
-		this._formService.formData$.subscribe((response) => {
-			console.log(response);
-			
-		});
+		this._formService.formData$.subscribe( ( response ) => {
+			console.log( response );
+		} );
 	}
 
 	// -------------------------------------------------- ANCHOR: MODAL

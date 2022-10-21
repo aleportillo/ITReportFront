@@ -16,11 +16,11 @@
     text-align: center;
 }
 
-.page__container button.back[section="room"]{
+.page__container button.back[section="sala"]{
     background-color: var(--tertiary);
 }
 
-.page__container button.back[section="pc"]{
+.page__container button.back[section="computadora"]{
     background-color: var(--quaternary);
 }
 
@@ -67,16 +67,27 @@
 
 .page__container .section__buttons{
     width: 100%;
+    display: flex;
 }
 
-.page__container .section__buttons button.section[section="room"]{
+.page__container .section__buttons button.section[section="sala"]{
     color: var(--tertiary);
     background-color: var(--background-report-card);
 }
 
-.page__container .section__buttons button.section[section="room"][active=true]{
+.page__container .section__buttons button.section[section="sala"][active=true]{
     color: var(--text-light);
     background-color: var(--tertiary);
+}
+
+.page__container .section__buttons button.section[section="computadora"]{
+    color: var(--quaternary);
+    background-color: var(--background-report-card);
+}
+
+.page__container .section__buttons button.section[section="computadora"][active=true]{
+    color: var(--text-light);
+    background-color: var(--quaternary);
 }
 
 .page__container .section__subsection{

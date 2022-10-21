@@ -1,10 +1,10 @@
 <section class="page__container">
     <header>
-        <button class="button back" [attr.section]="type">
+        <button class="button back" [attr.section]="type" (click)="goBack();">
             <img src="./../../../assets/icons/icon_arrow_left.svg" alt="flecha">
         </button>
         <h1>
-            {{ type === 'room' ? 'Sala' : 'PC'}} {{idSection}}
+            {{ type === 'sala' ? 'Sala' : 'PC'}} {{idSection}}
         </h1>
         <button class="button icon report" (click)="createReport();">
             <img src="./../../../assets/icons/icon_report.svg" alt="" title="Reportar">
@@ -24,7 +24,7 @@
     </section>
     <section class="section__buttons">
         <button 
-            *ngFor="let button of buttons"
+            *ngFor="let button of (type === 'sala' ? buttonsRoom : buttonsPC)"
             class="button section" 
             [attr.section]="type" 
             [attr.active]="(subSectionActive === button.key)"
