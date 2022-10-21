@@ -9,6 +9,10 @@
     cursor: not-allowed;
     background-color: var(--background-disabled);
     color: var(--text-disabled);
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    align-items: center;
 }
 
 .button img{
@@ -17,10 +21,6 @@
 }
 
 .button.icon{
-    display: flex;
-    align-items: center;
-    gap: .4rem;
-    justify-content: center;
     overflow: hidden;
     flex-wrap: wrap;
 }
