@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IActiveReport } from 'src/app/core/models/tools/reports/active-report.modal';
+import { IActiveReport } from 'src/app/core/models/reports/active-report.modal';
 
 @Component( {
 	selector    : 'app-list-row',

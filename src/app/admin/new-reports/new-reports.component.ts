@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { INewReport } from 'src/app/core/models/tools/reports/new-report.modal';
+import { INewReport } from 'src/app/core/models/reports/new-report.modal';
 
 @Component( {
 	selector    : 'app-new-reports',

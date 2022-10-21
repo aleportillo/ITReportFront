@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { IModalData, TYPE_SECTION } from 'src/app/core/models/tools/modal-data';
-import { ViewReport } from 'src/app/core/models/tools/reports/view-report.model';
+import { ViewReport } from 'src/app/core/models/reports/view-report.model';
 import { ScreenSize } from 'src/app/core/models/tools/screen-size.model';
 import { FormService } from 'src/app/core/services/internal/form.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
