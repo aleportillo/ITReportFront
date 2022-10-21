@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IActiveReport } from 'src/app/core/models/reports/active-report.modal';
+import { Loader } from 'src/app/core/models/tools/loader.model';
+import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 
 @Component( {
 	selector    : 'app-list-row',
@@ -11,10 +13,25 @@ export class ListRowComponent implements OnInit {
 	@Input() report : IActiveReport | any;
 	@Input() rowTemplate : any;
 	@Input() section = '';
+	@Output() clickButtonEmitter = new EventEmitter<string>();
 
-	constructor() { }
+	loaderObject : Loader =  new Loader();
+
+	constructor(
+		private _helpersService : HelpersService
+	) { }
 
 	ngOnInit(): void {
+		this.loadService();
 	}
 
+	loadService(){
+		this._helpersService.loader$.subscribe( ( response ) => {
+			this.loaderObject = response;
+		} );
+	}
+
+	clickButton( event : any ){
+		this.clickButtonEmitter.emit( event );
+	}
 }

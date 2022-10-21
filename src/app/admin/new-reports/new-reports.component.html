@@ -1,8 +1,17 @@
 <div>
-    <app-list-row 
-        *ngFor="let report of newReports" 
-        [report]="report"
-        [section]="'new'"
-        [rowTemplate]="rowTemplate">
-    </app-list-row>
+    <app-loader *ngIf="loaderObject.getNewReports" [section]="'page'"></app-loader>
+    <ng-container *ngIf="newReports.length > 0; else noReports">
+        <app-list-row 
+            *ngFor="let report of newReports" 
+            [report]="report"
+            [section]="'new'"
+            [rowTemplate]="rowTemplate"
+            (clickButtonEmitter)="updateReport($event)">
+        </app-list-row>
+    </ng-container>
+    <ng-template #noReports>
+        <p class="noMessage">
+            Aún no hay reportes.
+        </p>
+    </ng-template>
 </div>

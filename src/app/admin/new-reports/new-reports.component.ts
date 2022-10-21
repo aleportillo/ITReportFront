@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { INewReport } from 'src/app/core/models/reports/new-report.modal';
+import { Loader } from 'src/app/core/models/tools/loader.model';
+import { NewReportsService } from 'src/app/core/services/api/new-reports.service';
+import { HelpersService } from 'src/app/core/services/internal/helpers.service';
+import { SnackbarService } from 'src/app/core/services/internal/snackbar.service';
 
 @Component( {
 	selector    : 'app-new-reports',
@@ -8,6 +12,8 @@ import { INewReport } from 'src/app/core/models/reports/new-report.modal';
 } )
 export class NewReportsComponent implements OnInit {
 
+	loaderObject : Loader =  new Loader();
+	
 	rowTemplate = [ 'tipo', 'categoria', 'fechaDeReporte', 'buttons' ];
 
 	newReport1 : INewReport = {
@@ -32,9 +38,47 @@ export class NewReportsComponent implements OnInit {
 
 	newReports = [ this.newReport1, this.newReport2 ];
 
-	constructor() { }
+	constructor(
+		private _helpersService : HelpersService,
+		private _newReportService : NewReportsService,
+		private _snackbarService: SnackbarService
+	) { }
 
 	ngOnInit(): void {
+		this.loadService();  
 	}
+
+
+	// -------------------------------------------------- ANCHOR: SUBS
+
+	loadService(){
+		this._helpersService.loader$.subscribe( ( response ) => {
+			this.loaderObject = response;
+		} );
+	}
+
+	// -------------------------------------------------- ANCHOR: API
+
+	updateReport( event: any ){
+		this._newReportService.updateReport( event ).subscribe(
+			data => {
+				
+			},
+			error => {
+				this._snackbarService.showSnackbar( 'SAVE_REPORT', 'error' );
+			}
+		);
+	}
+
+	getReports( ){
+		this._newReportService.getReports().subscribe(
+			data => {
+			},
+			error => {
+				this._snackbarService.showSnackbar( 'GET_REPORTS', 'error' );
+			}
+		);
+	}
+	
 
 }

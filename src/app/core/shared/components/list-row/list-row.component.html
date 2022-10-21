@@ -40,16 +40,26 @@
                 </p>
             </ng-container>
             <ng-container *ngSwitchCase="'edit'">
-                <button class="button icon edit">
+                <button class="button icon edit" (click)="clickButton('editReport');">
                     <img src="./../../../../../assets/icons/icon_edit.svg" alt="">
                 </button>
             </ng-container>
             <ng-container *ngSwitchCase="'buttons'">
-                <button class="button icon reject">
-                    <img src="./../../../../../assets/icons/icon_reject.svg" alt="">
+                <button class="button icon reject" (click)="clickButton('rejectReport');">
+                    <ng-container *ngIf="loaderObject.acceptReport; else showImageA">
+                        <app-loader></app-loader>
+                    </ng-container>
+                    <ng-template #showImageA>
+                        <img src="./../../../../../assets/icons/icon_reject.svg" alt="">
+                    </ng-template>
                 </button>
-                <button class="button icon accept">
-                    <img src="./../../../../../assets/icons/icon_accept.svg" alt="">
+                <button class="button icon accept" (click)="clickButton('acceptReport');">
+                    <ng-container *ngIf="loaderObject.rejectReport; else showImageB">
+                        <app-loader></app-loader>
+                    </ng-container>
+                    <ng-template #showImageB>
+                        <img src="./../../../../../assets/icons/icon_accept.svg" alt="">
+                    </ng-template>
                 </button>
             </ng-container>
         </ng-container>
