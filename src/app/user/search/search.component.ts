@@ -66,7 +66,7 @@ export class SearchComponent implements OnInit {
 			},
 			error => {
 				this._router.navigate( [`/${ this.form.value.type }/${ this.form.value.textSearch }`] );
-				this._snackbarService.showSnackbar( 'No se encontraron elementos, revisa los parámetros de búsqueda.', 'error' );
+				this._snackbarService.showSnackbar( 'SEARCH', 'error' );
 			}
 		);
 	}

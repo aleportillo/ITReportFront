@@ -215,7 +215,7 @@ export class SectionComponent implements OnInit {
 				this._dialog.closeAll();
 				formData.newData = null;
 				this._formService.formData$.next( formData );
-				this._snackbarService.showSnackbar( 'Hubo un error al guardar tu reporte, inténtalo de nuevo más tarde.', 'error' );
+				this._snackbarService.showSnackbar( 'SAVE_REPORT', 'error' );
 			}
 		);
 	}
@@ -225,7 +225,7 @@ export class SectionComponent implements OnInit {
 			data => {
 			},
 			error => {
-				this._snackbarService.showSnackbar( '', 'error' );
+				this._snackbarService.showSnackbar( 'GET_REPORTS', 'error' );
 			}
 		);
 	}
