@@ -3,9 +3,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
 
 const ERRORS : any = {
-	GET_REPORTS : 'Hubo un problema al cargar los reportes, inténtalo de nuevo más tarde.',
-	SAVE_REPORT : 'Hubo un error al guardar tu reporte, inténtalo de nuevo más tarde.',
-	SEARCH      : 'No se encontraron elementos, revisa los parámetros de búsqueda.'
+	GET_REPORTS    : 'Hubo un problema al cargar los reportes, inténtalo de nuevo más tarde.',
+	SAVE_REPORT    : 'Hubo un error al guardar tu reporte, inténtalo de nuevo más tarde.',
+	SEARCH         : 'No se encontraron elementos, revisa los parámetros de búsqueda.',
+	UPDATE_PROFILE : 'Hubo un problema al actualizar el perfil, inténtalo de nuevo más tarde.',
+	GET_PROFILE    : 'Hubo un problema al obtener el perfil, inténtalo de nuevo más tarde.'
 };
 
 @Injectable( {

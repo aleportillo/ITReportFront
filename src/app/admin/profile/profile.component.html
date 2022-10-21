@@ -18,5 +18,6 @@
         (click)="saveData();"
     >
         Guardar
+        <app-loader *ngIf="!loaderObject.saveProfile"></app-loader>
     </button>
 </div>

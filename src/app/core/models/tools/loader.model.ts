@@ -4,6 +4,8 @@ export interface ILoader {
     getUserReports  : boolean;
     getActiveReports: boolean;
     acceptReport    : boolean;
+    saveProfile     : boolean;
+    getProfile      : boolean;
 }
 
 export class Loader implements ILoader {
@@ -14,4 +16,6 @@ export class Loader implements ILoader {
     getUserReports   = false;
     getActiveReports = false;
     acceptReport     = false;
+    saveProfile      = false;
+    getProfile       = false;
 }
