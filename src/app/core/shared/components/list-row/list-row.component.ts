@@ -22,7 +22,7 @@ export class ListRowComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		console.log(this.report);
+		console.log( this.report );
 		
 		this.loadService();
 	}

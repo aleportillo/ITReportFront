@@ -1,5 +1,6 @@
-import { Incident } from "../incident.model";
-import { categoria } from "../tools/tool-interface.model";
+/* eslint-disable id-length */
+import { Incident } from '../incident.model';
+import { categoria } from '../tools/tool-interface.model';
 
 const INIT_NUMBER_TYPES  = 0;
 const DATE_PROPERTIES = ['fechaDeActualzacion'];
@@ -42,7 +43,6 @@ export class NewReport implements INewReport {
     comentariosReporte         = '';
 
     parse( obj: IBackendNewReport ) {
-        
     	Object.keys( this ).forEach( key  => {
     		if ( typeof this[key] === 'string' ){
     			this[key] = String ( obj[key] ?? NewReport.clean[key] );
@@ -55,11 +55,12 @@ export class NewReport implements INewReport {
     		}
     	} );
 
-        this.categoria = obj.categoria.nombre ?? '';
+    	this.categoria = obj.categoria.nombre ?? '';
     	this.incidente = obj.incidente.nombre ?? '';
-    	this.idTipo    = obj.sala?.nombre.split( ' ' )[1] ?? obj.computadora.gabinete;
+    	const ID_TYPE_POSTION = 1;
+    	this.idTipo    = ( obj.sala !== null ) ? obj.sala?.nombre?.split( ' ' )[ID_TYPE_POSTION] : obj.computadora.gabinete;
     	this.tipo      = obj.salaId ? 'sala' : 'computadora';
-        
+
     	return this;
     }
 

@@ -29,6 +29,7 @@ export class SectionComponent implements OnInit {
 	type = 'room';
 	idSection = '478ASD';
 	sectionResume : any = {};
+	backendId = 0;
 
 	salaResume = [
 		{ label: 'Solicitudes de la sala', key: 'solicitudesSala' },
@@ -75,26 +76,6 @@ export class SectionComponent implements OnInit {
 		private _searchService : SearchService
 	) { }
 
-	xreportx = {
-		_id                : 5,
-		fechaDeReporte     : new Date( '2022-10-02T03:29:17.505Z' ),
-		categoria          : 'Solicitud',
-		incidente          : 'sin internet',
-		estado             : 'pendiente',
-		comentariosReporte : '',
-		comentariosAdmin   : ''
-	};
-
-	reporteLargo = {
-		_id                : 8,
-		fechaDeReporte     : new Date( '2022-10-13T03:29:17.505Z' ),
-		categoria          : 'Solicitud',
-		incidente          : 'sin internet',
-		estado             : 'pendiente',
-		comentariosReporte : 'eqweqweqweqweqe',
-		comentariosAdmin   : 'asdasdasdasda'
-	};
-
 	allCards!: ViewReport[];
 	
 
@@ -109,7 +90,7 @@ export class SectionComponent implements OnInit {
 		this.subSectionActive = ( this.type === 'sala' ) ? 
 			this.buttonsRoom[FIRST_ELEMENT].key : 
 			this.buttonsPC[FIRST_ELEMENT].key ;
-		
+
 		this.sectionResume = {
 			solicitudesSala : 0,
 			reportesSala    : 0,
@@ -146,7 +127,7 @@ export class SectionComponent implements OnInit {
 		if ( button.key === 'reportes' ){
 			this.allCards = [];
 			this.loaderObject.getUserReports = true;
-			this.getReports( this.type, JSON.parse( sessionStorage.getItem( 'IT_ELEMENT' ) ?? '' ).id );
+			this.getReports( this.type, this.backendId.toString() );
 		}
 
 	}
@@ -232,9 +213,10 @@ export class SectionComponent implements OnInit {
 
 	modalService(){
 		this._formService.formData$.subscribe( ( response ) => {
-			if ( response.newData ){
-				this.saveReport( response );
-			}
+			console.log( response );
+			if ( response.newData === null ) { return; }
+			console.log( 'HERE' );
+			this.saveReport( response );
 		} );
 	}
 
@@ -248,6 +230,7 @@ export class SectionComponent implements OnInit {
 		// const FIRST_ELEMENT = 0;
 		this._helpersService.currentElementResume$.subscribe( ( response ) => {
 			if ( response ){
+				this.backendId = response[FIRST_ELEMENT]?.id;
 				this.sectionResume = response[FIRST_ELEMENT];
 			}
 			console.log( 'UPDATE', response[FIRST_ELEMENT] );
@@ -261,18 +244,14 @@ export class SectionComponent implements OnInit {
 	// -------------------------------------------------- ANCHOR: API
 
 	saveReport( formData :  {newData : any; editData : any } ){
-		this._sectionService.saveReport( formData.newData, this.type, JSON.parse( sessionStorage.getItem( 'IT_ELEMENT' ) ?? '' ).id ).subscribe(
+		this._sectionService.saveReport( formData.newData, this.type, this.backendId.toString() ).subscribe(
 			data => {
 				this._dialog.closeAll();
 				console.log( 'save' );
-				formData.newData = null;
-				this._formService.formData$.next( formData );
+				this._formService.formData$.next( { newData: null, editData: null } );
 				this._snackbarService.showSnackbar( 'Tu reporte se ha enviado al departamento de sistemas.', 'success' );
 			},
 			error => {
-				// this._dialog.closeAll();
-				formData.newData = null;
-				this._formService.formData$.next( formData );
 				this._snackbarService.showSnackbar( 'SAVE_REPORT', 'error' );
 			}
 		);
@@ -376,7 +355,7 @@ export class SectionComponent implements OnInit {
 
 		if ( report[INDEX_INPUT_CATEGORY].options?.length !== CLEAN || report[INDEX_INPUT_INCIDENT].allOptions?.reporte.length !== CLEAN ){
 			this._dialog.open( ModalComponent , dialogConfig );
-		} else{
+		} else {
 			this._snackbarService.showSnackbar( 'LOAD_FORM', 'error' );
 		}
 	}

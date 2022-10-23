@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { INewReport, NewReport } from 'src/app/core/models/reports/new-report.model';
+import { INewReport } from 'src/app/core/models/reports/new-report.model';
 import { Loader } from 'src/app/core/models/tools/loader.model';
 import { NewReportsService } from 'src/app/core/services/api/new-reports.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
