@@ -243,7 +243,7 @@ export class SectionComponent implements OnInit {
 	// -------------------------------------------------- ANCHOR: API
 
 	saveReport( formData :  {newData : any; editData : any } ){
-		this._sectionService.saveReport().subscribe(
+		this._sectionService.saveReport( formData.newData, this.type, JSON.parse( sessionStorage.getItem( 'IT_ELEMENT' ) ?? '' ).id ).subscribe(
 			data => {
 				this._dialog.closeAll();
 				console.log( 'save' );
@@ -251,7 +251,7 @@ export class SectionComponent implements OnInit {
 				this._formService.formData$.next( formData );
 			},
 			error => {
-				this._dialog.closeAll();
+				// this._dialog.closeAll();
 				formData.newData = null;
 				this._formService.formData$.next( formData );
 				this._snackbarService.showSnackbar( 'SAVE_REPORT', 'error' );
@@ -286,6 +286,49 @@ export class SectionComponent implements OnInit {
 			}
 		);
 	}
+
+	getIncident( ){
+		this._sectionService.getIncident( ).subscribe(
+			data => {
+				const INDEX_INPUT_INCIDENT = 1;
+				const REPORT_ID = 1;
+				const reportes : any = [];
+				const solicitudes : any = [];
+				data.forEach( ( element : any ) => {
+					const parseElement = { text: element.nombre, value: element.id };
+					if ( element.categoriaReporteId === REPORT_ID ){
+						reportes.push( { ...parseElement } );
+					} else {
+						solicitudes.push( { ...parseElement } );
+					}
+
+					if ( report[INDEX_INPUT_INCIDENT].allOptions?.reporte ){
+						report[INDEX_INPUT_INCIDENT].allOptions!.reporte = reportes ;
+						report[INDEX_INPUT_INCIDENT].allOptions!.solicitud = solicitudes ;
+					}
+				} );
+			},
+			error => {
+				this._snackbarService.showSnackbar( 'GET_REPORTS', 'error' );
+			}
+		);
+	}
+
+	getCategories( ){
+		this._sectionService.getCategories( ).subscribe(
+			data => {
+				const options : any = [];
+				data.forEach( ( element : any ) => {
+					options.push( { text: element.nombre, value: element.id } );
+				} );
+				const INDEX_INPUT_CATEGORY = 0;
+				report[INDEX_INPUT_CATEGORY].options = options;
+			},
+			error => {
+				this._snackbarService.showSnackbar( 'GET_REPORTS', 'error' );
+			}
+		);
+	}
 	
 
 	// -------------------------------------------------- ANCHOR: MODAL
@@ -307,7 +350,17 @@ export class SectionComponent implements OnInit {
 		dialogConfig.panelClass = 'form';
 		dialogConfig.data = modalData;
 
-		this._dialog.open( ModalComponent , dialogConfig );
+		const INDEX_INPUT_INCIDENT = 1;
+		const INDEX_INPUT_CATEGORY = 0;
+		const CLEAN = 0;
+
+		if ( report[INDEX_INPUT_CATEGORY].options?.length === CLEAN || report[INDEX_INPUT_INCIDENT].allOptions?.reporte.length === CLEAN ){
+			this.getCategories();
+			this.getIncident();
+		}
+		if ( report[INDEX_INPUT_CATEGORY].options?.length !== CLEAN || report[INDEX_INPUT_INCIDENT].allOptions?.reporte.length !== CLEAN ){
+			this._dialog.open( ModalComponent , dialogConfig );
+		}
 	}
 	
 

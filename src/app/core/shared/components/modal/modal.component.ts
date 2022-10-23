@@ -58,7 +58,8 @@ export class ModalComponent implements OnInit {
 		if ( input.name === 'categoria' ){
 			const incidenteField = this.modalData.form.find( ( field : IFormInput ) => field.name === 'incidente' );
 			if ( !incidenteField ) { return; }
-			incidenteField.options =  incidenteField?.allOptions[event];
+			const REPORT_ID = 1;
+			incidenteField.options =  incidenteField?.allOptions[event === REPORT_ID ? 'reporte' : 'solicitud'];
 			this.form.get( 'incidente' )?.reset();
 		}
 	}

@@ -5,10 +5,7 @@
         "type"      : "select",
         "columnSize": 2,
         "subtype"   : "normal",
-        "options"   : [
-            { "text" : "Reporte", "value": "reporte"},
-            { "text" : "Solicitud", "value": "solicitud"}
-        ]
+        "options"   : []
     },
     {
         "label"     : "Problema",
@@ -18,14 +15,8 @@
         "columnSize": 2,
         "options"   : [],
         "allOptions" : {
-            "reporte": [
-                { "text" : "Sin internet", "value": "sin internet"},
-                { "text" : "No prende", "value": "solicitud"}
-            ],
-            "solicitud": [
-                { "text" : "Instalar", "value": "instalar"},
-                { "text" : "Optimizar", "value": "optimizar"}
-            ]
+            "reporte": [],
+            "solicitud": []
         }
     },
     {

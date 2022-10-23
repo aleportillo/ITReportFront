@@ -31,6 +31,8 @@ export class Incident implements IIncident {
     	Object.keys( this ).forEach( key  => {
     		if ( typeof this[key] === 'string' ){
     			this[key] = String ( obj[key] ?? Incident.clean[key] );
+    		} else if ( typeof this[key] === 'number' ){
+    			this[key] = Number ( obj[key] ?? Incident.clean[key] );
     		}
     	} );
         
