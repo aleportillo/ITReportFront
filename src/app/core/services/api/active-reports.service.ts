@@ -3,6 +3,7 @@ import { HelpersService } from '../internal/helpers.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { finalize, map } from 'rxjs';
+import { ActiveReport, IBackendActiveReport } from '../../models/reports/active-report.model';
 
 const API_URL = environment.apiURL;
 
@@ -18,11 +19,11 @@ export class ActiveReportsService {
 
 	getReports( ) {
 		this._helpersService.setTrue( 'getActiveReports' );
-		return this._http.get( API_URL, {} )
+		return this._http.post( API_URL + `reportes/filtrar`, { ignorarEstadoId: 0 } )
 			.pipe(
 				finalize( () => this._helpersService.setFalse( 'getActiveReports' ) ),
 				map( ( data: any ) => {
-					return data;
+					return ( data || [] ).map( ( report: IBackendActiveReport ) => new ActiveReport().parse( report ) );
 				} ) 
 			);
 	}

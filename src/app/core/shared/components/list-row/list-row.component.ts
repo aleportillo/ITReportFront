@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IActiveReport } from 'src/app/core/models/reports/active-report.modal';
+import { IActiveReport } from 'src/app/core/models/reports/active-report.model';
 import { Loader } from 'src/app/core/models/tools/loader.model';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 
@@ -22,6 +22,8 @@ export class ListRowComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
+		console.log(this.report);
+		
 		this.loadService();
 	}
 

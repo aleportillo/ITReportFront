@@ -50,8 +50,8 @@ p {
     background-color: var(--tertiary);
 }
 
-.column__id .type[type="pc"],
-.column__tipo .type[type="pc"]{
+.column__id .type[type="computadora"],
+.column__tipo .type[type="computadora"]{
     background-color: var(--quaternary);
 }
 

@@ -3,9 +3,9 @@
         <ng-container [ngSwitch]="column">
             <ng-container *ngSwitchCase="'_id'">
                 <span class="column__id">
-                    <p class="id">#{{report._id}}</p>
+                    <p class="id">#{{report.id}}</p>
                     <p class="type" [attr.type]="report.tipo">
-                        {{report.tipo}} {{report.idTipo}}
+                        {{ (report.tipo === 'computadora' ? 'PC' : 'sala')| firstLetterUppercase }} {{report.idTipo}}
                     </p>
                 </span>
             </ng-container>
@@ -35,7 +35,7 @@
                 </span>
             </ng-container>
             <ng-container *ngSwitchCase="'estado'">
-                <p class="column__estado" [attr.estado]="report.estado">
+                <p class="column__estado" [attr.estado]="report.estado.toLowerCase()">
                     {{report.estado}}
                 </p>
             </ng-container>

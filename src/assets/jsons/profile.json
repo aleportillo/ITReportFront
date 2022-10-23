@@ -29,7 +29,7 @@
         "label"       : "Contraseña",
         "columnSize"  : 1,
         "subtype"     : "password",
-        "optional"    : false,
+        "optional"    : true,
         "minLength"   : 8
     },
     {

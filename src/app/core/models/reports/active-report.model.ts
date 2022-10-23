@@ -1,37 +1,42 @@
+import { Incident } from '../incident.model';
+import { categoria, estado } from '../tools/tool-interface.model';
+
 const INIT_NUMBER_TYPES  = 0;
 const DATE_PROPERTIES = ['fechaDeActualzacion'];
 
 export interface IBackendActiveReport {
     [key: string]       : any;
-    _id                 : number;
+    id                 : number;
     tipo                : string;
     idTipo              : number;
-    incidente           : string;
-    categoria           : string;
+    incidente           : Incident;
+    categoria           : categoria;
     fechaDeActualzacion : Date;
-    estado              : string;
+    estado              : estado;
+    computadoraId       : number;
+    salaId              : number;
 }
 
 export interface IActiveReport {
     [key: string]       : any;
-    _id                 : number;
+    id                 : number;
     tipo                : string;
     idTipo              : number;
     incidente           : string;
     categoria           : string;
-    fechaDeActualzacion : Date;
+    fechaDeActualzacion : Date | null;
     estado              : string;
 }
 
 export class ActiveReport implements IActiveReport {
 	static readonly clean = Object.freeze( new ActiveReport() );
     [key: string]       : any;
-    _id                        = INIT_NUMBER_TYPES ;
+    id                         = INIT_NUMBER_TYPES ;
     tipo                       = '';
     idTipo                     = INIT_NUMBER_TYPES ;
     incidente                  = '';
     categoria                  = '';
-    fechaDeActualzacion: Date  = new Date();
+    fechaDeActualzacion: Date | null  = null;
     estado                     = '';
     
     parse( obj: IBackendActiveReport ) {
@@ -44,9 +49,20 @@ export class ActiveReport implements IActiveReport {
     			this[key] = Number ( obj[key] ?? ActiveReport.clean[key] );
     		}
     		else if ( DATE_PROPERTIES.indexOf( key ) ) {
-    			this[key] = new Date( obj[key] ?? ActiveReport.clean[key] );
+    			this[key] = obj[key] ? new Date( obj[key] ) : null;
     		}
     	} );
+
+    	this.categoria = obj.categoria.nombre ?? '';
+    	this.incidente = obj.incidente.nombre ?? '';
+    	this.estado    = obj.estado.nombre ?? '';
+    	this.idTipo    = obj.salaId ?? obj.computadoraId;
+    	this.tipo      = obj.salaId ? 'sala' : 'computadora';
+        // this.fechaDeActualzacion = 
+
+    	// console.log( obj );
+    	// console.log( this );
+        
         
     	return this;
     }
