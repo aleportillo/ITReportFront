@@ -3,6 +3,7 @@ import { HelpersService } from '../internal/helpers.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { finalize, map } from 'rxjs';
+import { IBackendNewReport, NewReport } from '../../models/reports/new-report.model';
 
 const API_URL = environment.apiURL;
 
@@ -18,11 +19,11 @@ export class NewReportsService {
 
 	getReports( ) {
 		this._helpersService.setTrue( 'getNewReports' );
-		return this._http.get( API_URL, {} )
+		return this._http.post( API_URL + `reportes/filtrar`, { estadoId: 4 } )
 			.pipe(
 				finalize( () => this._helpersService.setFalse( 'getNewReports' ) ),
 				map( ( data: any ) => {
-					return data;
+					return ( data || [] ).map( ( report: IBackendNewReport ) => new NewReport().parse( report ) );
 				} ) 
 			);
 	}

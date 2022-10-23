@@ -58,11 +58,6 @@ export class ActiveReport implements IActiveReport {
     	this.estado    = obj.estado.nombre ?? '';
     	this.idTipo    = obj.salaId ?? obj.computadoraId;
     	this.tipo      = obj.salaId ? 'sala' : 'computadora';
-        // this.fechaDeActualzacion = 
-
-    	// console.log( obj );
-    	// console.log( this );
-        
         
     	return this;
     }

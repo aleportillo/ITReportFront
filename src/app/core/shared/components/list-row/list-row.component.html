@@ -5,14 +5,14 @@
                 <span class="column__id">
                     <p class="id">#{{report.id}}</p>
                     <p class="type" [attr.type]="report.tipo">
-                        {{ (report.tipo === 'computadora' ? 'PC' : 'sala')| firstLetterUppercase }} {{report.idTipo}}
+                        {{ (report.tipo === 'computadora' ? 'PC' : 'sala') | firstLetterUppercase }} {{report.idTipo}}
                     </p>
                 </span>
             </ng-container>
             <ng-container *ngSwitchCase="'tipo'">
                 <span class="column__tipo">
                     <p class="type" [attr.type]="report.tipo">
-                        {{report.tipo}} {{report.idTipo}}
+                        {{ (report.tipo === 'computadora' ? 'PC' : 'sala') | firstLetterUppercase }} {{report.idTipo}}
                     </p>
                 </span>
             </ng-container>
