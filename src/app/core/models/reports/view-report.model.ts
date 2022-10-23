@@ -1,20 +1,23 @@
+import { IIncident } from '../incident.model';
+import { categoria, estado } from '../tools/tool-interface.model';
+
 const INIT_NUMBER_TYPES  = 0;
 const DATE_PROPERTIES = ['fechaDeReporte'];
 
 export interface IBackendViewReport {
     [key: string]     : any;
-    _id               : number;
+    id                : number; 
     fechaDeReporte    : Date;
-    estado            : string;
+    estado            : estado;
     comentariosReporte?: string;
     comentariosAdmin  ?: string;
-    categoria         : string;
-    incidente         : string;
+    categoria         : categoria;
+    incidente         : IIncident;
 }
 
 export interface IViewReport {
     [key: string]     : any;
-    _id               : number;
+    id                : number;
     fechaDeReporte    : Date;
     estado            : string;
     comentariosReporte?: string;
@@ -26,7 +29,7 @@ export interface IViewReport {
 export class ViewReport implements IViewReport {
 	static readonly clean = Object.freeze( new ViewReport() );
     [key: string]      : any;
-    _id                       = INIT_NUMBER_TYPES;
+    id                        = INIT_NUMBER_TYPES;
     fechaDeReporte     : Date = new Date();
     estado                    = '';
     comentariosReporte        = '';
@@ -49,6 +52,10 @@ export class ViewReport implements IViewReport {
     			this[key] = new Date( obj[key] ?? ViewReport.clean[key] );
     		}
     	} );
+
+    	this.categoria  = obj?.categoria.nombre ?? ''; 
+    	this.estado     = obj?.estado.nombre ?? '';
+    	this.incidente  = obj?.incidente.nombre ?? '';        
         
     	return this;
     }

@@ -31,12 +31,9 @@ export class ProfileComponent implements OnInit {
 		this.form = this._formService.createForm( this.profileInputs );
 		this.screenService();
 		this.loaderService();
+		this.getData();
 	}
 
-	saveData(){
-		console.log( this.form.value );
-		this.updateDate();
-	}
 
 	// -------------------------------------------------- ANCHOR: SUBS
 
@@ -46,31 +43,35 @@ export class ProfileComponent implements OnInit {
 		} );
 	}
 
-
-	// -------------------------------------------------- ANCHOR: API
-
-	updateDate(){
-		this._profileService.updateData().subscribe(
-			data => {
-			},
-			error => {
-				this._snackbarService.showSnackbar( 'UPDATE_PROFILE', 'error' );
-			}
-		);
-	}
-
 	loaderService(){
 		this._helpersService.loader$.subscribe( ( response ) => {
 			this.loaderObject = response;
 		} );
 	}
 
-
 	// -------------------------------------------------- ANCHOR: API
+
+	updateData(){
+		this._profileService.updateData( this.form.value ).subscribe(
+			data => {
+				localStorage.setItem( 'IT_USER', JSON.stringify( data ) );
+				this._helpersService.user$.next( data );
+				this._snackbarService.showSnackbar( 'El perfil se ha actualizado correctamente', 'success' );
+				this.form.get( 'password' )?.reset();
+				this.form.get( 'oldPassword' )?.reset();
+			},
+			error => {
+				this._snackbarService.showSnackbar( 'UPDATE_PROFILE', 'error' );
+			}
+		);
+	}
 	
-	getDate(){
+	getData(){
 		this._profileService.getData().subscribe(
 			data => {
+				this._formService.initForm( this.form, data );
+				localStorage.setItem( 'IT_USER', JSON.stringify( data ) );
+				this._helpersService.user$.next( data );
 			},
 			error => {
 				this._snackbarService.showSnackbar( 'GET_PROFILE', 'error' );

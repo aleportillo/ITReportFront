@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HelpersService } from '../internal/helpers.service';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { finalize, map } from 'rxjs';
 
@@ -13,12 +13,12 @@ export class SearchService {
 
 	constructor(
 		private _http   : HttpClient,
-		private _helpersService : HelpersService
+		private _helpersService : HelpersService 
 	) { }
 
-	search( ) {
+	search( params : { type: string; textSearch: string } ) {
 		this._helpersService.setTrue( 'search' );
-		return this._http.get( API_URL  )
+		return this._http.post( API_URL + `${ params.type }s/search`, { value: params.textSearch } )
 			.pipe(
 				finalize( () => this._helpersService.setFalse( 'search' ) ),
 				map( ( data: any ) => {

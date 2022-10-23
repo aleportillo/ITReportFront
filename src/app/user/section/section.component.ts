@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { SectionService } from 'src/app/core/services/api/section.service';
 import { SnackbarService } from 'src/app/core/services/internal/snackbar.service';
 import { Loader } from 'src/app/core/models/tools/loader.model';
+import { SearchService } from 'src/app/core/services/api/search.service';
 
 const SECTION_POSITION = 1;
 const ID_SECTION = 2;
@@ -27,13 +28,22 @@ export class SectionComponent implements OnInit {
 
 	type = 'room';
 	idSection = '478ASD';
-	sectionResume = [
-		{ label: 'Solicitudes de la sala', key: '' },
-		{ label: 'Reportes de la sala', key: '' },
-		{ label: 'Total de PCs', key: '' },
-		{ label: 'Reportes (PCs)', key: '' },
-		{ label: 'Solicitudes de la sala', key: '' },
-		{ label: 'Solicitudes (PCs)', key: '' }
+	sectionResume : any = {};
+
+	salaResume = [
+		{ label: 'Solicitudes de la sala', key: 'solicitudesSala' },
+		{ label: 'Reportes de la sala', key: 'reportesSala' },
+		{ label: 'Total de PCs', key: 'computadoras' },
+		{ label: 'Reportes (PCs)', key: 'reportesPC' },
+		{ label: 'Solicitudes (PCs)', key: 'solicitudesPC' }
+	];
+
+	pcResume = [
+		{ label: 'Solicitudes', key: 'solicitudes' },
+		{ label: 'Reportes', key: 'reportes' },
+		{ label: 'Componentes', key: 'componentes' },
+		{ label: 'Software', key: 'software' },
+		{ label: 'Hardware', key: 'hardware' },
 	];
 
 	buttonsRoom = [
@@ -61,10 +71,11 @@ export class SectionComponent implements OnInit {
 		private _formService : FormService,
 		private _router: Router,
 		private _sectionService : SectionService,
-		private _snackbarService: SnackbarService
+		private _snackbarService: SnackbarService,
+		private _searchService : SearchService
 	) { }
 
-	report = {
+	xreportx = {
 		_id                : 5,
 		fechaDeReporte     : new Date( '2022-10-02T03:29:17.505Z' ),
 		categoria          : 'Solicitud',
@@ -84,22 +95,36 @@ export class SectionComponent implements OnInit {
 		comentariosAdmin   : 'asdasdasdasda'
 	};
 
-	allCards = [
-		this.reporteLargo, this.report, this.reporteLargo, 
-		this.report, this.reporteLargo, this.report, 
-		this.report, this.reporteLargo, this.report,  
-		this.report, this.report, this.report 
-	];
+	allCards!: ViewReport[];
 	
 
 	ngOnInit(): void {
 		this.screenService();
 		this.modalService();
+		this.loadService();
+		this.currentElementService();
 		this.type = this._router.url.split( '/' )[SECTION_POSITION];
 		this.idSection = this._router.url.split( '/' )[ID_SECTION];
 		this.subSectionActive = ( this.type === 'sala' ) ? 
 			this.buttonsRoom[FIRST_ELEMENT].key : 
 			this.buttonsPC[FIRST_ELEMENT].key ;
+		
+		this.sectionResume = {
+			solicitudesSala : 0,
+			reportesSala    : 0,
+			computadoras    : 0,
+			reportesPC      : 0,
+			solicitudesPC   : 0,
+			componentes     : 0,
+			hardware        : 0,
+			reportes        : 0,
+			solicitudes     : 0,
+			software        : 0
+		};
+		const ZERO_VALUES = 0;
+		if ( !this.sectionResume || this.sectionResume.computadoras === ZERO_VALUES || this.sectionResume.software === ZERO_VALUES ){ 
+			this.search();
+		}
 	}
 
 
@@ -112,12 +137,11 @@ export class SectionComponent implements OnInit {
 	changeSubSection( button: {label: string; key: string} ){
 
 		this.subSectionActive = button.key;
-		const MILLISECONDS_OF_WAITING = 20;
 
 		if ( button.key === 'reportes' ){
-			setTimeout( () => {
-				this.fillColumns(); 
-			}, MILLISECONDS_OF_WAITING );
+			this.allCards = [];
+			this.loaderObject.getUserReports = true;
+			this.getReports( this.type, JSON.parse( sessionStorage.getItem( 'IT_ELEMENT' ) ?? '' ).id );
 		}
 
 	}
@@ -125,9 +149,13 @@ export class SectionComponent implements OnInit {
 	fillColumns(){
 		this.secondColumnReports = [];
 		this.firstColumnReports = [];
+		const MIN_REPORTS = 1;
+		if ( !this.allCards || this.allCards?.length < MIN_REPORTS ){
+			return;
+		}
 
 		if ( this.screenSize.small ){
-			this.firstColumnReports = [...this.allCards as ViewReport[]];
+			this.firstColumnReports = [...this.allCards];
 			return;
 		}
 
@@ -140,11 +168,9 @@ export class SectionComponent implements OnInit {
 
 		if ( !this.firstColumn || !this.secondColumn ) { return; }
 
-		this.firstColumnReports.push( new ViewReport().parse( this.allCards[ZERO] ) );
+		this.firstColumnReports.push( this.allCards[ZERO] );
 		
 		for ( let index = 1; index < this.allCards.length ; index++ ) {
-
-			this.allCards[index]._id = index;
 
 			const firstColumnHeight  = this.firstColumn.nativeElement.clientHeight;
 			this._cdr.detectChanges();
@@ -154,19 +180,19 @@ export class SectionComponent implements OnInit {
 			const heightDifference = firstColumnHeight - secondColumnHeight;
  
 			if ( heightDifference > ZERO && heightDifference > maxHeightDifference ){
-				this.secondColumnReports.push( new ViewReport().parse( this.allCards[index] ) );
+				this.secondColumnReports.push( this.allCards[index] );
 				lastColumn = SECOND_COLUMN;
 			} 
 			else if ( heightDifference < ZERO && heightDifference < -maxHeightDifference ) {
-				this.firstColumnReports.push( new ViewReport().parse( this.allCards[index] ) );
+				this.firstColumnReports.push( this.allCards[index] );
 				lastColumn = FIRST_COLUMN;
 			} 
 			else if ( lastColumn === SECOND_COLUMN ){
-				this.firstColumnReports.push( new ViewReport().parse( this.allCards[index] ) );
+				this.firstColumnReports.push( this.allCards[index] );
 				lastColumn = FIRST_COLUMN;
 			} 
 			else {
-				this.secondColumnReports.push( new ViewReport().parse( this.allCards[index] ) );
+				this.secondColumnReports.push( this.allCards[index] );
 				lastColumn = SECOND_COLUMN;
 			}
 		}
@@ -200,6 +226,19 @@ export class SectionComponent implements OnInit {
 		} );
 	}
 
+	currentElementService(){
+		// const FIRST_ELEMENT = 0;
+		this._helpersService.currentElementResume$.subscribe( ( response ) => {
+			if ( response ){
+				this.sectionResume = response[FIRST_ELEMENT];
+			}
+			console.log( 'UPDATE', response[FIRST_ELEMENT] );
+			console.log( this.sectionResume );
+			
+		} );
+	}
+
+
 
 	// -------------------------------------------------- ANCHOR: API
 
@@ -220,9 +259,27 @@ export class SectionComponent implements OnInit {
 		);
 	}
 
-	getReports( ){
-		this._sectionService.getReports().subscribe(
+	search(){
+		this._searchService.search( { type: this.type, textSearch: this.idSection } ).subscribe(
 			data => {
+				// console.log( this.sectionResume );
+				this._helpersService.currentElementResume$.next( data );
+			},
+			error => {
+				this._snackbarService.showSnackbar( error , 'error' );
+			}
+		);
+	}
+
+	getReports( type: string, idElement: string ){
+		this._sectionService.getReports( type, idElement ).subscribe(
+			data => {
+				console.log( data ); 
+				this.allCards = data;
+				const MILLISECONDS_OF_WAITING = 20;
+				setTimeout( () => {
+					this.fillColumns(); 
+				}, MILLISECONDS_OF_WAITING );
 			},
 			error => {
 				this._snackbarService.showSnackbar( 'GET_REPORTS', 'error' );

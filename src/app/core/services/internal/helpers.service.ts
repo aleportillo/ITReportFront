@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { Admin, IAdmin } from '../../models/admin.model';
 import { ILoader, Loader } from '../../models/tools/loader.model';
 import { IScreenSize, ScreenSize } from '../../models/tools/screen-size.model';
 
@@ -8,8 +9,10 @@ import { IScreenSize, ScreenSize } from '../../models/tools/screen-size.model';
 } )
 export class HelpersService {
 
-	screenSize$ = new BehaviorSubject<IScreenSize>( new ScreenSize() );
-	loader$ 	= new BehaviorSubject<ILoader>( new Loader() );
+	screenSize$           = new BehaviorSubject<IScreenSize>( new ScreenSize() );
+	loader$ 	          = new BehaviorSubject<ILoader>( new Loader() );
+	user$ 		          = new BehaviorSubject<IAdmin>( JSON.parse( localStorage.getItem( 'IT_USER' ) ?? '' ) ?? new Admin() );
+	currentElementResume$ = new BehaviorSubject<any>( {} );
 
 	loaderObject : Loader =  new Loader();
 

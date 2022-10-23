@@ -24,7 +24,7 @@
         "optional"    : false
     },
     {
-        "name"        : "nuevaContraseña",
+        "name"        : "password",
         "type"        : "password",
         "label"       : "Contraseña",
         "columnSize"  : 1,
@@ -33,7 +33,7 @@
         "minLength"   : 8
     },
     {
-        "name"        : "origianlContraseña",
+        "name"        : "oldPassword",
         "type"        : "password",
         "label"       : "Ingrese la contraseña actual para actualizar la información",
         "columnSize"  : 2,

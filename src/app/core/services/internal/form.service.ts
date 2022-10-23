@@ -34,6 +34,7 @@ export class FormService {
 
 	initForm( form: FormGroup, values: any ) : FormGroup {
 		Object.keys( values ).forEach( ( keyValue : any ) => {
+			if ( keyValue === 'password' ) { return; }
 			form.controls[keyValue]?.setValue( values[keyValue] );
 		} );
 		return form;

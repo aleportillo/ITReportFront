@@ -59,14 +59,30 @@ export class SearchComponent implements OnInit {
 	// -------------------------------------------------- ANCHOR: API
 
 	search(){
-		this._searchService.search().subscribe(
+		const LIMIT_REPORTS = 1;
+		const FIRST_ELEMENT = 0;
+		this._searchService.search( this.form.value ).subscribe(
 			data => {
+				if ( data.length < LIMIT_REPORTS ){
+					this._snackbarService.showSnackbar( 'SEARCH', 'error' );
+					return;
+				}
+
+				if ( data.length > LIMIT_REPORTS ){
+					this._snackbarService.showSnackbar( 'MULTIPLE_SEARCH', 'error' );
+					return;
+				}
+				console.log(data);
+				
+				const idElement = ( this.form.value.type === 'computadora' ) ? 
+					data[FIRST_ELEMENT].gabinete : data[FIRST_ELEMENT].nombre.split( ' ' )[1] ;
+				this._helpersService.currentElementResume$.next( data );
 				sessionStorage.setItem( 'IT_REPORT', `/` );
-				this._router.navigate( [`/${ this.form.value.type }/${ this.form.value.textSearch }`] );
+				sessionStorage.setItem( 'IT_ELEMENT', JSON.stringify( data[FIRST_ELEMENT] ) );
+				this._router.navigate( [`/${ this.form.value.type }/${ idElement }`] );
 			},
 			error => {
-				this._router.navigate( [`/${ this.form.value.type }/${ this.form.value.textSearch }`] );
-				this._snackbarService.showSnackbar( 'SEARCH', 'error' );
+				this._snackbarService.showSnackbar( error , 'error' );
 			}
 		);
 	}

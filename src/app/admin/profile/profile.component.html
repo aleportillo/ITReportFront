@@ -15,9 +15,9 @@
     <button 
         class="button save"
         [disabled]="form.invalid"
-        (click)="saveData();"
+        (click)="updateData();"
     >
         Guardar
-        <app-loader *ngIf="!loaderObject.saveProfile"></app-loader>
+        <app-loader *ngIf="loaderObject.saveProfile"></app-loader>
     </button>
 </div>

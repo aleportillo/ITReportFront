@@ -16,8 +16,9 @@
     <section class="section__resume">
         <ngx-simplebar>
             <div class="section__scroll">
-                <div *ngFor="let resume of sectionResume" class="resume">
+                <div *ngFor="let resume of (type === 'sala' ? salaResume : pcResume)" class="resume">
                     <p>{{resume.label}}</p>
+                    <p>{{sectionResume[resume.key]}}</p>
                 </div>
             </div>
         </ngx-simplebar>
@@ -34,19 +35,21 @@
     </section>
     <section class="section__subsection">
         <ng-container *ngIf="subSectionActive==='reportes'">
-            <app-loader *ngIf="loaderObject.getUserReports" [section]="'page'"></app-loader>
-            <ng-container *ngIf="allCards.length > 0; else noReports">
-                <div id="firstColumn" #firstColumn class="column">
-                    <app-report-card *ngFor="let report of firstColumnReports" [report]="report"></app-report-card>
-                </div>
-                <div *ngIf="!screenSize.small" id="secondColumn" #secondColumn class="column">
-                    <app-report-card *ngFor="let report of secondColumnReports" [report]="report"></app-report-card>
-                </div>
-            </ng-container>
-            <ng-template #noReports>
-                <p class="noMessage">
-                    Aún no hay reportes para este elemento
-                </p>
+            <app-loader *ngIf="loaderObject.getUserReports; else showReports" [section]="'page'"></app-loader>
+            <ng-template #showReports>
+                <ng-container *ngIf="allCards.length > 0; else noReports">
+                    <div id="firstColumn" #firstColumn class="column">
+                        <app-report-card *ngFor="let report of firstColumnReports" [report]="report"></app-report-card>
+                    </div>
+                    <div *ngIf="!screenSize.small" id="secondColumn" #secondColumn class="column">
+                        <app-report-card *ngFor="let report of secondColumnReports" [report]="report"></app-report-card>
+                    </div>
+                </ng-container>
+                <ng-template #noReports>
+                    <p class="noMessage">
+                        Aún no hay reportes para este elemento
+                    </p>
+                </ng-template>
             </ng-template>
         </ng-container>
     </section>

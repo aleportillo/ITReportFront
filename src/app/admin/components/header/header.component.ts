@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Admin, IAdmin } from 'src/app/core/models/admin.model';
 import { ScreenSize } from 'src/app/core/models/tools/screen-size.model';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 
@@ -11,7 +12,9 @@ export class HeaderComponent implements OnInit {
 
 	@Output() changeSectionEmitter = new EventEmitter<string>();
 	screenSize : ScreenSize = new ScreenSize();
-	currentSection = 'Reportes nuevos';
+	currentSection = 'Perfil';
+	user : IAdmin = new Admin();
+
 	constructor(
 		private _helpersService : HelpersService
 	) { }
@@ -26,12 +29,19 @@ export class HeaderComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.screenService();
+		this.userService();
 		this.changeSectionEmitter.emit( this.currentSection );
 	}
 
 	screenService(){
 		this._helpersService.screenSize$.subscribe( ( response ) => {
 			this.screenSize = response;
+		} );
+	}
+
+	userService(){
+		this._helpersService.user$.subscribe( ( response ) => {
+			this.user = response;
 		} );
 	}
 
