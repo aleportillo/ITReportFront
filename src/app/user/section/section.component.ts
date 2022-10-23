@@ -16,6 +16,8 @@ import { SearchService } from 'src/app/core/services/api/search.service';
 const SECTION_POSITION = 1;
 const ID_SECTION = 2;
 const FIRST_ELEMENT = 0;
+const DEFAULT_VALUE = 0;
+const ZERO_VALUES = 0;
 @Component( {
 	selector    : 'app-section',
 	templateUrl : './section.component.html',
@@ -29,8 +31,19 @@ export class SectionComponent implements OnInit {
 	type = 'room';
 	idSection = '478ASD';
 	sectionResume : any = {};
-	backendId = 0;
+	backendId = DEFAULT_VALUE;
+	subSectionActive = 'computadoras';
 
+	// SUBS
+	screenSize: ScreenSize = new ScreenSize();
+	loaderObject : Loader =  new Loader();
+
+	// COLUMNS
+	firstColumnReports : ViewReport[] = [];
+	secondColumnReports : ViewReport[] = [];
+	allCards!: ViewReport[];
+
+	// RESUME
 	salaResume = [
 		{ label: 'Solicitudes de la sala', key: 'solicitudesSala' },
 		{ label: 'Reportes de la sala', key: 'reportesSala' },
@@ -38,7 +51,6 @@ export class SectionComponent implements OnInit {
 		{ label: 'Reportes (PCs)', key: 'reportesPC' },
 		{ label: 'Solicitudes (PCs)', key: 'solicitudesPC' }
 	];
-
 	pcResume = [
 		{ label: 'Solicitudes', key: 'solicitudes' },
 		{ label: 'Reportes', key: 'reportes' },
@@ -47,23 +59,16 @@ export class SectionComponent implements OnInit {
 		{ label: 'Hardware', key: 'hardware' },
 	];
 
+	// BUTTONS
 	buttonsRoom = [
 		{ label: 'Computadoras', key: 'computadoras' },
 		{ label: 'Reportes', key: 'reportes' }
 	];
-
 	buttonsPC = [
 		{ label: 'Componentes', key: 'componentes' },
 		{ label: 'Reportes', key: 'reportes' }
 	];
 
-	subSectionActive = 'computadoras';
-	
-	screenSize: ScreenSize = new ScreenSize();
-	loaderObject : Loader =  new Loader();
-
-	firstColumnReports : ViewReport[] = [];
-	secondColumnReports : ViewReport[] = [];
 
 	constructor(
 		private _helpersService : HelpersService,
@@ -74,10 +79,7 @@ export class SectionComponent implements OnInit {
 		private _sectionService : SectionService,
 		private _snackbarService: SnackbarService,
 		private _searchService : SearchService
-	) { }
-
-	allCards!: ViewReport[];
-	
+	) { }	
 
 	ngOnInit(): void {
 		this.screenService();
@@ -85,6 +87,8 @@ export class SectionComponent implements OnInit {
 		this.modalService();
 		this.loadService();
 		this.currentElementService();
+
+		// INIT VARS
 		this.type = this._router.url.split( '/' )[SECTION_POSITION];
 		this.idSection = this._router.url.split( '/' )[ID_SECTION];
 		this.subSectionActive = ( this.type === 'sala' ) ? 
@@ -103,8 +107,6 @@ export class SectionComponent implements OnInit {
 			solicitudes     : 0,
 			software        : 0
 		};
-		const ZERO_VALUES = 0;
-
 		if ( !this.sectionResume || 
 			this.sectionResume.computadoras === ZERO_VALUES 
 			|| this.sectionResume.software === ZERO_VALUES 
@@ -227,7 +229,6 @@ export class SectionComponent implements OnInit {
 	}
 
 	currentElementService(){
-		// const FIRST_ELEMENT = 0;
 		this._helpersService.currentElementResume$.subscribe( ( response ) => {
 			if ( response ){
 				this.backendId = response[FIRST_ELEMENT]?.id;
@@ -238,7 +239,6 @@ export class SectionComponent implements OnInit {
 			
 		} );
 	}
-
 
 
 	// -------------------------------------------------- ANCHOR: API
@@ -260,7 +260,7 @@ export class SectionComponent implements OnInit {
 	search(){
 		this._searchService.search( { type: this.type, textSearch: this.idSection } ).subscribe(
 			data => {
-				// console.log( this.sectionResume );
+				console.log( this.sectionResume );
 				this._helpersService.currentElementResume$.next( data );
 			},
 			error => {
