@@ -58,10 +58,12 @@ export class ProfileComponent implements OnInit {
 				this._helpersService.user$.next( data );
 				this._snackbarService.showSnackbar( 'El perfil se ha actualizado correctamente', 'success' );
 				this.form.get( 'password' )?.reset();
-				this.form.get( 'oldPassword' )?.reset();
+				this.form.get( 'newPassword' )?.reset();
 			},
 			error => {
-				this._snackbarService.showSnackbar( 'UPDATE_PROFILE', 'error' );
+				const stringError = 
+					( error.error.message === 'La contraseña es incorrecta' ) ? 'ERR_PASSWORD' : 'UPDATE_PROFILE' ;
+				this._snackbarService.showSnackbar( stringError , 'error' );
 			}
 		);
 	}

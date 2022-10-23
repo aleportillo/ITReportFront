@@ -2,7 +2,7 @@ import { Incident } from '../incident.model';
 import { categoria, estado } from '../tools/tool-interface.model';
 
 const INIT_NUMBER_TYPES  = 0;
-const DATE_PROPERTIES = ['fechaDeActualzacion'];
+const DATE_PROPERTIES = ['fechaDeActualizacion'];
 
 export interface IBackendActiveReport {
     [key: string]       : any;
@@ -11,20 +11,22 @@ export interface IBackendActiveReport {
     idTipo              : number;
     incidente           : Incident;
     categoria           : categoria;
-    fechaDeActualzacion : Date;
+    fechaActualizacion  : Date;
     estado              : estado;
     computadoraId       : number;
     salaId              : number;
+    sala                : any;
+    computadora         : any;
 }
 
 export interface IActiveReport {
     [key: string]       : any;
-    id                 : number;
+    id                  : number;
     tipo                : string;
     idTipo              : number;
     incidente           : string;
     categoria           : string;
-    fechaDeActualzacion : Date | null;
+    fechaActualizacion  : Date | null;
     estado              : string;
 }
 
@@ -36,7 +38,7 @@ export class ActiveReport implements IActiveReport {
     idTipo                     = INIT_NUMBER_TYPES ;
     incidente                  = '';
     categoria                  = '';
-    fechaDeActualzacion: Date | null  = null;
+    fechaActualizacion: Date | null  = null;
     estado                     = '';
     
     parse( obj: IBackendActiveReport ) {
@@ -56,7 +58,7 @@ export class ActiveReport implements IActiveReport {
     	this.categoria = obj.categoria.nombre ?? '';
     	this.incidente = obj.incidente.nombre ?? '';
     	this.estado    = obj.estado.nombre ?? '';
-    	this.idTipo    = obj.salaId ?? obj.computadoraId;
+    	this.idTipo    = obj.sala?.nombre.split( ' ' )[1] ?? obj.computadora.gabinete;
     	this.tipo      = obj.salaId ? 'sala' : 'computadora';
         
     	return this;

@@ -2,11 +2,11 @@
     <app-loader *ngIf="loaderObject.getNewReports" [section]="'page'"></app-loader>
     <ng-container *ngIf="newReports.length > 0; else noReports">
         <app-list-row 
-            *ngFor="let report of newReports" 
+            *ngFor="let report of newReports; let index " 
             [report]="report"
             [section]="'new'"
             [rowTemplate]="rowTemplate"
-            (clickButtonEmitter)="updateReport($event)">
+            (clickButtonEmitter)="updateReport($event, report)">
         </app-list-row>
     </ng-container>
     <ng-template #noReports>

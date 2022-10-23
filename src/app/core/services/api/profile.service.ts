@@ -18,6 +18,8 @@ export class ProfileService {
 	) { }
 
 	updateData( adminData : IAdmin ) {
+		const params : any = { ...adminData };
+		params.password = adminData.password ?? null;
 		this._helpersService.setTrue( 'saveProfile' ); 
 		return this._http.put( API_URL + `admins/1`, { ...adminData } )
 			.pipe(

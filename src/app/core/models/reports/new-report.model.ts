@@ -13,8 +13,10 @@ export interface IBackendNewReport {
     categoria           : categoria;
     fechaDeReporte      : Date;
     comentariosReporte  : string;
-    computadoraId       : number;
+    computadora         : any;
+    sala                : any;
     salaId              : number;
+    computadoraId       : number;
 }
 
 export interface INewReport {
@@ -55,7 +57,7 @@ export class NewReport implements INewReport {
 
         this.categoria = obj.categoria.nombre ?? '';
     	this.incidente = obj.incidente.nombre ?? '';
-    	this.idTipo    = obj.salaId ?? obj.computadoraId;
+    	this.idTipo    = obj.sala?.nombre.split( ' ' )[1] ?? obj.computadora.gabinete;
     	this.tipo      = obj.salaId ? 'sala' : 'computadora';
         
     	return this;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { INewReport } from 'src/app/core/models/reports/new-report.model';
+import { INewReport, NewReport } from 'src/app/core/models/reports/new-report.model';
 import { Loader } from 'src/app/core/models/tools/loader.model';
 import { NewReportsService } from 'src/app/core/services/api/new-reports.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
@@ -41,9 +41,11 @@ export class NewReportsComponent implements OnInit {
 
 	// -------------------------------------------------- ANCHOR: API
 
-	updateReport( event: any ){
-		this._newReportService.updateReport( event ).subscribe(
+	updateReport( event: any, report : INewReport ) {
+		this._newReportService.updateReport( event, report.id ).subscribe(
 			data => {
+				this.newReports = this.newReports.filter( ( newReport : INewReport ) => newReport.id !== report.id );
+				this._snackbarService.showSnackbar( 'El reporte ha sido aceptado correctamente', 'success' );
 			},
 			error => {
 				this._snackbarService.showSnackbar( 'SAVE_REPORT', 'error' );

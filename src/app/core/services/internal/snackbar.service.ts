@@ -8,7 +8,9 @@ const ERRORS : any = {
 	SEARCH          : 'No se encontraron elementos, revisa los parámetros de búsqueda.',
 	UPDATE_PROFILE  : 'Hubo un problema al actualizar el perfil, inténtalo de nuevo más tarde.',
 	GET_PROFILE     : 'Hubo un problema al obtener el perfil, inténtalo de nuevo más tarde.',
-	MULTIPLE_SEARCH : 'Hay múltiples resultados con los parámetros introducidos, sé más específico.'
+	MULTIPLE_SEARCH : 'Hay múltiples resultados con los parámetros introducidos, sé más específico.',
+	ERR_PASSWORD    : 'La contraseña es incorrecta',
+	LOAD_FORM       : 'Hubo un problema al cargar el formulario,  inténtalo de nuevo más tarde.'
 };
 
 @Injectable( {

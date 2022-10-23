@@ -28,9 +28,9 @@ export class NewReportsService {
 			);
 	}
 
-	updateReport( section: string ) {
+	updateReport( section: string, idReport: number ) {
 		this._helpersService.setTrue( section );
-		return this._http.put( API_URL, {} )
+		return this._http.put( API_URL + `reportes/${ idReport }`, { estadoId: 1 } )
 			.pipe(
 				finalize( () => this._helpersService.setFalse( section ) ),
 				map( ( data: any ) => {

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { IModalData, TYPE_SECTION } from 'src/app/core/models/tools/modal-data';
-import { ViewReport } from 'src/app/core/models/reports/view-report.model';
+import { IViewReport, ViewReport } from 'src/app/core/models/reports/view-report.model';
 import { ScreenSize } from 'src/app/core/models/tools/screen-size.model';
 import { FormService } from 'src/app/core/services/internal/form.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
@@ -100,6 +100,7 @@ export class SectionComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.screenService();
+		this.loadOptions();
 		this.modalService();
 		this.loadService();
 		this.currentElementService();
@@ -122,7 +123,11 @@ export class SectionComponent implements OnInit {
 			software        : 0
 		};
 		const ZERO_VALUES = 0;
-		if ( !this.sectionResume || this.sectionResume.computadoras === ZERO_VALUES || this.sectionResume.software === ZERO_VALUES ){ 
+
+		if ( !this.sectionResume || 
+			this.sectionResume.computadoras === ZERO_VALUES 
+			|| this.sectionResume.software === ZERO_VALUES 
+		){ 
 			this.search();
 		}
 	}
@@ -144,6 +149,19 @@ export class SectionComponent implements OnInit {
 			this.getReports( this.type, JSON.parse( sessionStorage.getItem( 'IT_ELEMENT' ) ?? '' ).id );
 		}
 
+	}
+
+	loadOptions(){
+		const INDEX_INPUT_INCIDENT = 1;
+		const INDEX_INPUT_CATEGORY = 0;
+		const CLEAN = 0;
+
+		if ( report[INDEX_INPUT_CATEGORY].options?.length === CLEAN 
+			|| report[INDEX_INPUT_INCIDENT].allOptions?.reporte.length === CLEAN 
+		){
+			this.getCategories();
+			this.getIncident();
+		}
 	}
 
 	fillColumns(){
@@ -249,6 +267,7 @@ export class SectionComponent implements OnInit {
 				console.log( 'save' );
 				formData.newData = null;
 				this._formService.formData$.next( formData );
+				this._snackbarService.showSnackbar( 'Tu reporte se ha enviado al departamento de sistemas.', 'success' );
 			},
 			error => {
 				// this._dialog.closeAll();
@@ -275,6 +294,7 @@ export class SectionComponent implements OnInit {
 		this._sectionService.getReports( type, idElement ).subscribe(
 			data => {
 				console.log( data ); 
+				data = data.filter( ( activeReport : IViewReport ) => activeReport.estado !== 'Nuevo' );
 				this.allCards = data;
 				const MILLISECONDS_OF_WAITING = 20;
 				setTimeout( () => {
@@ -309,7 +329,7 @@ export class SectionComponent implements OnInit {
 				} );
 			},
 			error => {
-				this._snackbarService.showSnackbar( 'GET_REPORTS', 'error' );
+				// this._snackbarService.showSnackbar( 'GET_REPORTS', 'error' );
 			}
 		);
 	}
@@ -325,7 +345,7 @@ export class SectionComponent implements OnInit {
 				report[INDEX_INPUT_CATEGORY].options = options;
 			},
 			error => {
-				this._snackbarService.showSnackbar( 'GET_REPORTS', 'error' );
+				// this._snackbarService.showSnackbar( 'GET_REPORTS', 'error' );
 			}
 		);
 	}
@@ -336,7 +356,7 @@ export class SectionComponent implements OnInit {
 	openDialog() {
 
 		const modalData : IModalData = {
-			title       : `${ this.type === 'room' ? 'Sala' : 'PC' } ${ this.idSection }`,
+			title       : `${ this.type === 'sala' ? 'Sala' : 'PC' } ${ this.idSection }`,
 			form        : report,
 			values      : [],
 			typeSection : this.type as TYPE_SECTION,
@@ -354,12 +374,10 @@ export class SectionComponent implements OnInit {
 		const INDEX_INPUT_CATEGORY = 0;
 		const CLEAN = 0;
 
-		if ( report[INDEX_INPUT_CATEGORY].options?.length === CLEAN || report[INDEX_INPUT_INCIDENT].allOptions?.reporte.length === CLEAN ){
-			this.getCategories();
-			this.getIncident();
-		}
 		if ( report[INDEX_INPUT_CATEGORY].options?.length !== CLEAN || report[INDEX_INPUT_INCIDENT].allOptions?.reporte.length !== CLEAN ){
 			this._dialog.open( ModalComponent , dialogConfig );
+		} else{
+			this._snackbarService.showSnackbar( 'LOAD_FORM', 'error' );
 		}
 	}
 	
