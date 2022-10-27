@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { INewReport } from 'src/app/core/models/reports/new-report.model';
 import { Loader } from 'src/app/core/models/tools/loader.model';
 import { NewReportsService } from 'src/app/core/services/api/new-reports.service';
@@ -10,14 +10,15 @@ import { SnackbarService } from 'src/app/core/services/internal/snackbar.service
 	templateUrl : './new-reports.component.html',
 	styleUrls   : ['./new-reports.component.css']
 } )
-export class NewReportsComponent implements OnInit {
+export class NewReportsComponent implements OnInit, OnDestroy {
 
 	loaderObject : Loader =  new Loader();
 	
 	rowTemplate = [ 'tipo', 'categoria', 'fechaDeReporte', 'buttons' ];
 
-
 	newReports : INewReport [ ] = [ ];
+	
+	getNewReportInterval : any ;
 
 	constructor(
 		private _helpersService : HelpersService,
@@ -28,6 +29,12 @@ export class NewReportsComponent implements OnInit {
 	ngOnInit(): void {
 		this.loadService();  
 		this.getReports();
+		const MILISECONDS = 60000;
+		this.getNewReportInterval = setInterval( () => {this.getReports();}, MILISECONDS );
+	}
+	
+	ngOnDestroy(): void {
+		clearInterval( this.getNewReportInterval );
 	}
 
 

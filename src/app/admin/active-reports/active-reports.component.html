@@ -1,16 +1,18 @@
 <div>
-    <app-loader *ngIf="loaderObject.getActiveReports" [section]="'page'"></app-loader>
-    <ng-container *ngIf="activeReports.length > 0; else noReports">
-        <app-list-row 
-            *ngFor="let report of activeReports" 
-            [report]="report"
-            [section]="'active'"
-            [rowTemplate]="rowTemplate">
-        </app-list-row>
-    </ng-container> 
-    <ng-template #noReports>
-        <p class="noMessage">
-            Aún no hay reportes.
-        </p>
+    <app-loader *ngIf="loaderObject.getActiveReports; else content" [section]="'page'"></app-loader>
+    <ng-template #content>        
+        <ng-container *ngIf="activeReports.length > 0; else noReports">
+            <app-list-row 
+                *ngFor="let report of activeReports" 
+                [report]="report"
+                [section]="'active'"
+                [rowTemplate]="rowTemplate">
+            </app-list-row>
+        </ng-container> 
+        <ng-template #noReports>
+            <p class="noMessage">
+                Aún no hay reportes.
+            </p>
+        </ng-template>
     </ng-template>
 </div>
