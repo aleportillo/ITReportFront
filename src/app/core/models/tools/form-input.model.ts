@@ -26,7 +26,8 @@ export interface IFormInput {
 	allOptions        ?: any;
 	columnSize        ?: number;
 	maxLength         ?: number;
-	minLength         ?: number; 
+	minLength         ?: number;
+	image             ?: string; 
 }
 
 export class FormInput implements IFormInput {
@@ -46,6 +47,7 @@ export class FormInput implements IFormInput {
 	columnSize              = 2;
 	maxLength         		= 500;
 	minLength         		= 8;
+	image                  ?= '';
 
 	parse( obj: IFormInput ) {
 

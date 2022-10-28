@@ -5,15 +5,18 @@
 		<span *ngIf="!formInput.optional"> * </span>
 	</label>
 
-	<input
-		[type]='formInput.type'
-		autocomplete="off"
-		[name]="formInput.name"
-		[id]="formInput.name"
-		[formControlName]="formInput.name"
-		[placeholder]="formInput.placeholder ?? ''"
-		[disabled]="formInput.disabled ?? false"
-	/>
+	<div>
+		<img *ngIf="formInput.image" src="./../../../../../assets/icons/icon_{{formInput.image}}.svg" alt="">
+		<input
+			[type]='formInput.type'
+			autocomplete="off"
+			[name]="formInput.name"
+			[id]="formInput.name"
+			[formControlName]="formInput.name"
+			[placeholder]="formInput.placeholder ?? ''"
+			[disabled]="formInput.disabled ?? false"
+		/>
+	</div>
 
 	<span 
 		class="error"

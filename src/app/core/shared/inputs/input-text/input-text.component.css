@@ -1,3 +1,16 @@
+div input{
+    width: 100%;
+    border: 0;
+    outline: none;
+    background: var(--input-background);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+div div{
+    height: 100%;
+}
+
 div[type='search']{
     height: 100%;
 }
@@ -8,11 +21,19 @@ div[type='search'] input{
     padding: .5rem;
 }
 
-div input{
-    width: 100%;
-    border: 0;
-    outline: none;
+div[type='login'] label{
+    width: fit-content;
+    color: var(--primary);
+    font-size: var(--PX-18);
+}
+
+div[type='login'] label span{
+    display: none;
+}
+
+div[type='login'] div{
+    display: flex;
     background: var(--input-background);
-    padding: 1rem;
+    padding: 0 1rem;
     border-radius: 1rem;
 }
