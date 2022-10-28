@@ -51,37 +51,18 @@ export class LoginComponent implements OnInit {
 		this.screenService();
 		this.loaderService();
 		this.form = this._formService.createForm( this.inputs );	
-		this.form = this._formService.initForm( this.form, { type: 'computadora' } );
-		// console.log( this.form );
-		
 	}
 
 	// -------------------------------------------------- ANCHOR: API
 
 	search(){
-		const LIMIT_REPORTS = 1;
-		const FIRST_ELEMENT = 0;
 		this._searchService.search( this.form.value ).subscribe(
 			data => {
-				if ( data.length < LIMIT_REPORTS ){
-					this._snackbarService.showSnackbar( 'SEARCH', 'error' );
-					return;
-				}
-
-				if ( data.length > LIMIT_REPORTS ){
-					this._snackbarService.showSnackbar( 'MULTIPLE_SEARCH', 'error' );
-					return;
-				}
-				console.log( data );
-				
-				const idElement = ( this.form.value.type === 'computadora' ) ? 
-					data[FIRST_ELEMENT].gabinete : data[FIRST_ELEMENT].nombre.split( ' ' )[1] ;
-				this._helpersService.currentElementResume$.next( data );
-				sessionStorage.setItem( 'IT_REPORT', `/` );
-				sessionStorage.setItem( 'IT_ELEMENT', JSON.stringify( data[FIRST_ELEMENT] ) );
-				this._router.navigate( [`/${ this.form.value.type }/${ idElement }`] );
+				localStorage.setItem( 'IT_REPORT_T', String( 'A' ) );
+				this._router.navigate( [`/admin/home`] );
 			},
 			error => {
+				this._router.navigate( [`/admin/home`] );
 				this._snackbarService.showSnackbar( error , 'error' );
 			}
 		);

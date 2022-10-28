@@ -8,6 +8,7 @@ export interface ILoader {
     rejectReport    : boolean;
     saveProfile     : boolean;
     getProfile      : boolean;
+    login           : boolean;
 }
 
 export class Loader implements ILoader {
@@ -22,4 +23,5 @@ export class Loader implements ILoader {
     rejectReport     = false;
     saveProfile      = false;
     getProfile       = false;
+    login            = false;
 }

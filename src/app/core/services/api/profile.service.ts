@@ -40,4 +40,19 @@ export class ProfileService {
 				} ) 
 			);
 	}
+	
+	login( usuario: string, password: string ){
+		this._helpersService.setTrue( 'login' );
+		return this._http.post( API_URL + `admins/1`, { usuario, password } )
+			.pipe(
+				finalize( () => this._helpersService.setFalse( 'login' ) ),
+				map( ( data : any ) => {
+					return new Admin().parse( data );
+				} ) 
+			);
+	}
+	
+	isLogged(): boolean {
+		return Boolean( localStorage.getItem( 'IT_REPORT_T' ) );
+	}
 }

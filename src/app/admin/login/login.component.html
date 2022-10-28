@@ -16,7 +16,7 @@
         </div>
         <button class="button secondary" (click)="search()" [disabled]="form.invalid">
             Ingresar
-            <app-loader *ngIf="loaderObject.search"></app-loader>
+            <app-loader *ngIf="loaderObject.login"></app-loader>
         </button>
     </div>
     <div *ngIf="!screenSize.small" class="image__container">
