@@ -82,6 +82,7 @@ export class SearchComponent implements OnInit {
 				this._router.navigate( [`/${ this.form.value.type }/${ idElement }`] );
 			},
 			error => {
+				this._router.navigate( [`/${ this.form.value.type }/${ this.form.value.textSearch }`] );
 				this._snackbarService.showSnackbar( error , 'error' );
 			}
 		);

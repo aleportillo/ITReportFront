@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { IViewInventory, ViewInventory } from 'src/app/core/models/inventory/view-inventory.model';
 
 @Component( {
 	selector    : 'app-inventory-card',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 } )
 export class InventoryCardComponent implements OnInit {
 
+	@Input() inventoryData : IViewInventory = new ViewInventory();
+	
 	constructor() { }
 
 	ngOnInit(): void {
+		console.log(this.inventoryData);
+		
 	}
 
 }

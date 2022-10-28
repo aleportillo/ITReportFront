@@ -1,1 +1,11 @@
-<p>inventory-card works!</p>
+<div class="card">
+    <span [attr.type]="inventoryData.type">
+        <img src="./../../../../../assets/icons/icon_{{inventoryData.type}}.svg" alt="">
+    </span>
+    <h3>
+        {{inventoryData.title | firstLetterUppercase }}
+    </h3>
+    <p>
+        {{inventoryData.subtitle1}}
+    </p>
+</div>

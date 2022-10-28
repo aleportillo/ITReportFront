@@ -12,6 +12,7 @@ import { SectionService } from 'src/app/core/services/api/section.service';
 import { SnackbarService } from 'src/app/core/services/internal/snackbar.service';
 import { Loader } from 'src/app/core/models/tools/loader.model';
 import { SearchService } from 'src/app/core/services/api/search.service';
+import { ViewInventory } from 'src/app/core/models/inventory/view-inventory.model';
 
 const SECTION_POSITION = 1;
 const ID_SECTION = 2;
@@ -42,6 +43,7 @@ export class SectionComponent implements OnInit {
 	firstColumnReports : ViewReport[] = [];
 	secondColumnReports : ViewReport[] = [];
 	allCards!: ViewReport[];
+	allCardsInventory!: ViewInventory[];
 
 	// RESUME
 	salaResume = [
@@ -87,6 +89,28 @@ export class SectionComponent implements OnInit {
 		this.modalService();
 		this.loadService();
 		this.currentElementService();
+		
+		const card = new ViewInventory();
+		card.type = 'hardware';
+		card.title = 'hardware';
+		card.subtitle1 = 'Visual Studio Code';
+		
+		const card2 = new ViewInventory();
+		card2.type = 'software';
+		card2.title = 'software';
+		card2.subtitle1 = 'Microsoft Office';
+		
+		const card3 = new ViewInventory();
+		card3.type = 'pc';
+		card3.title = 'hardware';
+		card3.subtitle1 = 'Monitor';
+		
+		const card4 = new ViewInventory();
+		card4.type = 'delete';
+		card4.title = 'hardware';
+		card4.subtitle1 = 'cable ethernet para conectar';
+		
+		this.allCardsInventory = [ card, card2, card3, card4 ];
 
 		// INIT VARS
 		this.type = this._router.url.split( '/' )[SECTION_POSITION];

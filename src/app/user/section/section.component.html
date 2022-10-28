@@ -34,7 +34,7 @@
         </button>
     </section>
     <section class="section__subsection">
-        <ng-container *ngIf="subSectionActive==='reportes'">
+        <ng-container *ngIf="subSectionActive==='reportes'; else inventoryCards">
             <app-loader *ngIf="loaderObject.getUserReports; else showReports" [section]="'page'"></app-loader>
             <ng-template #showReports>
                 <ng-container *ngIf="allCards.length > 0; else noReports">
@@ -52,6 +52,25 @@
                 </ng-template>
             </ng-template>
         </ng-container>
+        <ng-template #inventoryCards>
+            <!-- <app-loader *ngIf="loaderObject.getUserReports; else showReports" [section]="'page'"></app-loader> -->
+            <!-- <ng-template #showReports> -->
+                <!-- <ng-container *ngIf="allCards.length > 0; else noReports"> -->
+                    <div class="section-inventory">
+                        <app-inventory-card 
+                            *ngFor="let cardInventory of allCardsInventory"
+                            [inventoryData] = "cardInventory"
+                        >
+                        </app-inventory-card>
+                    </div>
+                <!-- </ng-container> -->
+                <!-- <ng-template #noReports>
+                    <p class="noMessage">
+                        Aún no hay reportes para este elemento
+                    </p>
+                </ng-template> -->
+            <!-- </ng-template> -->
+        </ng-template>
     </section>
 </section>
 
