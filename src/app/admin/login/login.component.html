@@ -1,1 +1,30 @@
-<p>login works!</p>
+<div class="page__container">
+    <div class="form__container">
+        <p class="form__subtitle primary">
+            Hola, Admin
+        </p>
+        <div class="inputs__container">
+            <app-input-text
+                [formInput]="inputs[0]"
+                [form]="form">
+            </app-input-text>
+            <app-input-text
+                [formInput]="inputs[1]"
+                [form]="form"
+            >
+            </app-input-text>
+        </div>
+        <button class="button secondary" (click)="search()" [disabled]="form.invalid">
+            Ingresar
+            <app-loader *ngIf="loaderObject.search"></app-loader>
+        </button>
+    </div>
+    <div *ngIf="!screenSize.small" class="image__container">
+        <img src="./../../../assets/images/itcj_placeholder.jpg" alt="Imagen del ITCJ">
+        <span>
+            <p class="image__title">Sistema de reportes</p>
+            <p class="image__title">de computadoras</p>
+            <p class="image__title">del ITCJ</p>
+        </span>
+    </div>
+</div>
