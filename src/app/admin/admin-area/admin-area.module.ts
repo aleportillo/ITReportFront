@@ -12,9 +12,19 @@ import { ProfileComponent } from '../profile/profile.component';
 import { ActiveReportsComponent } from '../active-reports/active-reports.component';
 import { NewReportsComponent } from '../new-reports/new-reports.component';
 import { LoginComponent } from '../login/login.component';
+import { InventoryComponent } from '../inventory/inventory.component';
+
 @NgModule( {
-	declarations : [ AdminAreaComponent, ...components, ProfileComponent, ActiveReportsComponent, NewReportsComponent, LoginComponent ],
-	imports      : [
+	declarations : [ 
+		...components,
+		AdminAreaComponent,
+		ProfileComponent, 
+		ActiveReportsComponent, 
+		NewReportsComponent, 
+		LoginComponent, 
+		InventoryComponent 
+	],
+	imports : [
 		CommonModule,
 		AdminAreaRoutingModule,
 		SectionRoutingModule,
