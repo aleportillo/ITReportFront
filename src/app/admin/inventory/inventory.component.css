@@ -1,5 +1,5 @@
 .navbar{
-    background-color: #393C3F;
+    background-color: var(--background-navbar-inventory);
     padding: 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
