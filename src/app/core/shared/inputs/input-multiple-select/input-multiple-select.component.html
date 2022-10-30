@@ -1,0 +1,19 @@
+<div class="input" [attr.type]="formInput.subtype"  [formGroup]="form" *ngIf="form.get(formInput.name)">	
+	<mat-form-field>
+		<label *ngIf="formInput.label && formInput.subtype !=='search'" [for]="formInput.name">
+			{{ formInput.label }}
+			<span *ngIf="!formInput.optional"> * </span>
+		</label>
+
+	  <mat-select
+		[formControlName]="formInput.name"
+		name="formInput.name"
+		[id]="formInput.name"
+		[disabled]="formInput.disabled ?? false"
+		(selectionChange)="changeOption($event)"
+        multiple
+	  >
+		<mat-option *ngFor="let option of formInput.options" [value]="option.value">{{option.text}}</mat-option>
+	  </mat-select>
+	</mat-form-field>
+</div>

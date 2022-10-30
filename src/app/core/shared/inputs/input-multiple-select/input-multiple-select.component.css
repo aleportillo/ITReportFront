@@ -1,0 +1,36 @@
+::ng-deep div .mat-form-field {
+    width: 100%;
+}
+
+::ng-deep div.input .mat-form-field-wrapper,
+::ng-deep div.input .mat-form-field-infix{
+    padding: 0;
+    border: 0;
+}
+
+::ng-deep div .mat-form-field-underline{
+    display: none;
+}
+
+::ng-deep .mat-select-value-text {
+    font-family: 'Be Vietnam Pro';
+}
+
+::ng-deep div[type='normal'] .mat-select-trigger{
+    background-color: var(--input-background);
+    padding: 1.6rem 1rem;
+    border-radius: 1rem;
+}
+
+::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled){
+    color: var(--secondary) !important;
+}
+
+::ng-deep .mat-primary .mat-pseudo-checkbox-checked, .mat-primary .mat-pseudo-checkbox-indeterminate{
+    background: var(--button-edit);
+    border-radius: .3rem;
+}
+
+::ng-deep .mat-pseudo-checkbox {
+    border-radius: .3rem !important;
+}
