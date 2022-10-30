@@ -43,7 +43,7 @@ export class ModalComponent implements OnInit {
 		
 		if ( 
 			this.loaderObject.createReport || this.loaderObject.saveRoom ||
-			this.loaderObject.saveComponent 
+			this.loaderObject.saveComponent || this.loaderObject.saveComputer
 		) { return; }
 		
 		this._formService.formData$.next( {

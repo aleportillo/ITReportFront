@@ -8,8 +8,10 @@ import { FormService } from 'src/app/core/services/internal/form.service';
 import { SnackbarService } from 'src/app/core/services/internal/snackbar.service';
 import { ModalComponent } from 'src/app/core/shared/components/modal/modal.component';
 import { ComponentsService } from 'src/app/core/services/api/components.service';
+import { ComputersService } from 'src/app/core/services/api/computers.service';
 import rooms from 'src/assets/jsons/rooms.json';
 import components from 'src/assets/jsons/components.json';
+import computers from 'src/assets/jsons/computers.json';
 
 @Component( {
 	selector    : 'app-inventory',
@@ -20,7 +22,7 @@ export class InventoryComponent implements OnInit {
 	
 	buttonsTemplate = [ 
 		{ text: 'Salas', form: rooms },
-		{ text: 'Computadoras', form: components },
+		{ text: 'Computadoras', form: computers },
 		{ text: 'Componentes', form: components }
 	];
 	
@@ -31,6 +33,7 @@ export class InventoryComponent implements OnInit {
 		private _formService: FormService,
 		private _roomsService: RoomsService,
 		private _componentsService: ComponentsService,
+		private _computersService: ComputersService,
 		private _snackbarService: SnackbarService
 	) { }
 
@@ -60,7 +63,7 @@ export class InventoryComponent implements OnInit {
 	saveElement( saveData : any ){
 		switch ( this.currentSection ){
 			case 'Salas': this.saveRoom( saveData ); break;
-			case 'Computadoras':  break;
+			case 'Computadoras': this.saveComputer( saveData ); break;
 			case 'Componentes': this.saveComponent( saveData ); break;
 		}
 	}
@@ -95,6 +98,19 @@ export class InventoryComponent implements OnInit {
 		);
 	}
 	
+	saveComputer( saveData: any ){
+		this._computersService.saveElement( { ...saveData } ).subscribe(
+			( res ) => {
+				console.log( res );
+				this._snackbarService.showSnackbar( 'La computadora se ha guardado correctamente.', 'success' );
+				this._dialog.closeAll();
+			}, 
+			( err ) => {
+				this._snackbarService.showSnackbar( 'SAVE_REPORT', 'error' );
+			}
+		);
+	}
+	
 	
 	
 	// -------------------------------------------------- ANCHOR: FORM
@@ -109,7 +125,7 @@ export class InventoryComponent implements OnInit {
 			values      : [],
 			typeSection : '',
 			typeModal   : 'form',
-			labelButton : 'Reportar'
+			labelButton : 'Guardar'
 		}; 
 
 		const dialogConfig = new MatDialogConfig();

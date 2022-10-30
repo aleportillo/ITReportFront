@@ -22,6 +22,12 @@
                         [form]="form"
                     ></app-input-select>
                 </ng-container>
+                <ng-container *ngIf="input.type === 'multiple'">
+                    <app-input-multiple-select
+                        [formInput]="input"
+                        [form]="form"
+                    ></app-input-multiple-select>
+                </ng-container>
                 <ng-container *ngIf="input.type === 'textArea'">
                     <app-input-area
                         [formInput]="input"
@@ -43,10 +49,10 @@
                 (click)="primaryAction();"
                 [disabled]="form.invalid"
             >
-                {{modalData.labelButton }}
+                {{ modalData.labelButton }}
                 <app-loader 
                     *ngIf="loaderObject.createReport || loaderObject.saveRoom ||
-                    loaderObject.saveComponent"
+                    loaderObject.saveComponent || loaderObject.saveComputer"
                 ></app-loader>
             </button>
         </div>

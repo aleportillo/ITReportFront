@@ -11,6 +11,7 @@ export interface ILoader {
     login           : boolean;
     saveRoom        : boolean;
     saveComponent   : boolean;
+    saveComputer    : boolean;
 }
 
 export class Loader implements ILoader {
@@ -28,4 +29,5 @@ export class Loader implements ILoader {
     login            = false;
     saveRoom         = false;
     saveComponent    = false;
+    saveComputer     = false;
 }
