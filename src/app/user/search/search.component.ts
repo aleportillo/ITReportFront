@@ -72,10 +72,12 @@ export class SearchComponent implements OnInit {
 					this._snackbarService.showSnackbar( 'MULTIPLE_SEARCH', 'error' );
 					return;
 				}
-				console.log(data);
+				console.log( data );
 				
 				const idElement = ( this.form.value.type === 'computadora' ) ? 
-					data[FIRST_ELEMENT].gabinete : data[FIRST_ELEMENT].nombre.split( ' ' )[1] ;
+					data[FIRST_ELEMENT].gabinete : 
+					data[FIRST_ELEMENT].nombre.toLowerCase().replace( 'sala', '' ).trim();
+
 				this._helpersService.currentElementResume$.next( data );
 				sessionStorage.setItem( 'IT_REPORT', `/` );
 				sessionStorage.setItem( 'IT_ELEMENT', JSON.stringify( data[FIRST_ELEMENT] ) );
