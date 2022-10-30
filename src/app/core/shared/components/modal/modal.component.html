@@ -45,7 +45,8 @@
             >
                 {{modalData.labelButton }}
                 <app-loader 
-                    *ngIf="loaderObject.createReport || loaderObject.saveRoom"
+                    *ngIf="loaderObject.createReport || loaderObject.saveRoom ||
+                    loaderObject.saveComponent"
                 ></app-loader>
             </button>
         </div>

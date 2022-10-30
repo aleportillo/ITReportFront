@@ -10,6 +10,7 @@ export interface ILoader {
     getProfile      : boolean;
     login           : boolean;
     saveRoom        : boolean;
+    saveComponent   : boolean;
 }
 
 export class Loader implements ILoader {
@@ -26,4 +27,5 @@ export class Loader implements ILoader {
     getProfile       = false;
     login            = false;
     saveRoom         = false;
+    saveComponent    = false;
 }

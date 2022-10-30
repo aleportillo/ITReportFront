@@ -7,7 +7,9 @@ import { RoomsService } from 'src/app/core/services/api/rooms.service';
 import { FormService } from 'src/app/core/services/internal/form.service';
 import { SnackbarService } from 'src/app/core/services/internal/snackbar.service';
 import { ModalComponent } from 'src/app/core/shared/components/modal/modal.component';
+import { ComponentsService } from 'src/app/core/services/api/components.service';
 import rooms from 'src/assets/jsons/rooms.json';
+import components from 'src/assets/jsons/components.json';
 
 @Component( {
 	selector    : 'app-inventory',
@@ -18,8 +20,8 @@ export class InventoryComponent implements OnInit {
 	
 	buttonsTemplate = [ 
 		{ text: 'Salas', form: rooms },
-		{ text: 'Computadoras', form: rooms },
-		{ text: 'Componentes', form: rooms }
+		{ text: 'Computadoras', form: components },
+		{ text: 'Componentes', form: components }
 	];
 	
 	currentSection : 'Salas' | 'Computadoras' | 'Componentes' | string = 'Salas';
@@ -28,6 +30,7 @@ export class InventoryComponent implements OnInit {
 		private _dialog: MatDialog,
 		private _formService: FormService,
 		private _roomsService: RoomsService,
+		private _componentsService: ComponentsService,
 		private _snackbarService: SnackbarService
 	) { }
 
@@ -58,7 +61,7 @@ export class InventoryComponent implements OnInit {
 		switch ( this.currentSection ){
 			case 'Salas': this.saveRoom( saveData ); break;
 			case 'Computadoras':  break;
-			case 'Componentes': break;
+			case 'Componentes': this.saveComponent( saveData ); break;
 		}
 	}
 	
@@ -71,6 +74,19 @@ export class InventoryComponent implements OnInit {
 			( res ) => {
 				console.log( res );
 				this._snackbarService.showSnackbar( 'La sala fue guardada correctamente.', 'success' );
+				this._dialog.closeAll();
+			}, 
+			( err ) => {
+				this._snackbarService.showSnackbar( 'SAVE_REPORT', 'error' );
+			}
+		);
+	}
+	
+	saveComponent( saveData: any ){
+		this._componentsService.saveElement( { ...saveData } ).subscribe(
+			( res ) => {
+				console.log( res );
+				this._snackbarService.showSnackbar( 'El componente se ha guardado correctamente.', 'success' );
 				this._dialog.closeAll();
 			}, 
 			( err ) => {

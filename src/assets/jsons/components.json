@@ -1,0 +1,29 @@
+[
+    {
+        "name"        : "numero",
+        "type"        : "text",
+        "label"       : "Número",
+        "columnSize"  : 2,
+        "optional"    : false,
+        "subtype"     : "normal"
+    },
+    {
+        "name"        : "nombre",
+        "type"        : "text",
+        "label"       : "Nombre",
+        "columnSize"  : 2,
+        "optional"    : false,
+        "subtype"     : "normal"
+    },
+    {
+        "label"     : "Tipo",
+        "name"      : "tipo",
+        "type"      : "select",
+        "subtype"   : "normal",
+        "columnSize": 2,
+        "options"   : [
+            { "text" : "Hardware", "value": "hardware" },
+            { "text" : "Software", "value": "software" }
+        ]
+    }
+]

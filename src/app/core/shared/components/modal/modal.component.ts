@@ -41,7 +41,10 @@ export class ModalComponent implements OnInit {
 		
 		// console.log( this.form.value );
 		
-		if ( this.loaderObject.createReport || this.loaderObject.saveRoom ) { return; }
+		if ( 
+			this.loaderObject.createReport || this.loaderObject.saveRoom ||
+			this.loaderObject.saveComponent 
+		) { return; }
 		
 		this._formService.formData$.next( {
 			newData  : { ...this.form.value },
