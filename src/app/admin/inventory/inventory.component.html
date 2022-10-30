@@ -7,9 +7,19 @@
         >
             {{button}}
         </button>
-        <!-- <button class="button text">Salas</button>
-        <button class="button text">Computadoras</button>    
-        <button class="button text">Componentes</button>     -->
     </span>
     <button class="button report">Agregar</button>
+</section>
+<section>
+    <ng-container [ngSwitch]="currentSection">
+        <ng-container *ngSwitchCase="'Salas'">
+            <app-rooms></app-rooms>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Computadoras'">
+            <app-computers></app-computers>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Componentes'">
+            <app-components></app-components>
+        </ng-container>
+    </ng-container>
 </section>
