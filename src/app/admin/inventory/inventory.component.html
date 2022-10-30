@@ -1,14 +1,14 @@
 <section class="navbar">
     <span>
         <button *ngFor="let button of buttonsTemplate"
-            [attr.active]="button === currentSection"
+            [attr.active]="button.text === currentSection"
             class="button text"
-            (click)="changeSection(button);"
+            (click)="changeSection(button.text);"
         >
-            {{button}}
+            {{button.text}}
         </button>
     </span>
-    <button class="button report">Agregar</button>
+    <button class="button report" (click)="openForm();">Agregar</button>
 </section>
 <section>
     <ng-container [ngSwitch]="currentSection">

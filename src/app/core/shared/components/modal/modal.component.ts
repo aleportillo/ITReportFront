@@ -40,6 +40,9 @@ export class ModalComponent implements OnInit {
 		// console.log(this.modalData.typeModal);
 		
 		// console.log( this.form.value );
+		
+		if ( this.loaderObject.createReport || this.loaderObject.saveRoom ) { return; }
+		
 		this._formService.formData$.next( {
 			newData  : { ...this.form.value },
 			editData : ( this.editData ) ? { ...this.editData } : null 

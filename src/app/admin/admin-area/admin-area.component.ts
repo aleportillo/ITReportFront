@@ -13,7 +13,7 @@ export class AdminAreaComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
-	changeSection(section: string){
+	changeSection( section: string ){
 		this.currentSection = section;
 	}
 

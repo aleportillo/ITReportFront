@@ -28,6 +28,12 @@
                         [form]="form"
                     ></app-input-area>
                 </ng-container>
+                <ng-container *ngIf="input.type === 'text'">
+                    <app-input-text
+                        [formInput]="input"
+                        [form]="form"
+                    ></app-input-text>
+                </ng-container>
             </div>
         </div>
 
@@ -38,7 +44,9 @@
                 [disabled]="form.invalid"
             >
                 {{modalData.labelButton }}
-                <app-loader *ngIf="loaderObject.createReport"></app-loader>
+                <app-loader 
+                    *ngIf="loaderObject.createReport || loaderObject.saveRoom"
+                ></app-loader>
             </button>
         </div>
     </body>
