@@ -133,3 +133,17 @@
 .button.accept:hover{
     background-color: var(--secondary-light);
 }
+
+.button.text{
+    background: transparent;
+    color: var(--text-light);
+    font-size: 1.4rem;
+    margin: 0;
+    display: initial;
+    margin-inline: 0.5rem;
+    padding-block: 0;
+}
+
+.button.text:hover{
+    color : var(--quinary-light);
+}

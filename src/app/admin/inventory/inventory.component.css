@@ -1,0 +1,15 @@
+.navbar{
+    background-color: #393C3F;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button.report{
+    padding: 0 1.5rem;
+}
+
+.button.text[active=true]{
+    text-decoration: underline;
+}

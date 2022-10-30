@@ -1,1 +1,15 @@
-<p>inventory works!</p>
+<section class="navbar">
+    <span>
+        <button *ngFor="let button of buttonsTemplate"
+            [attr.active]="button === currentSection"
+            class="button text"
+            (click)="changeSection(button);"
+        >
+            {{button}}
+        </button>
+        <!-- <button class="button text">Salas</button>
+        <button class="button text">Computadoras</button>    
+        <button class="button text">Componentes</button>     -->
+    </span>
+    <button class="button report">Agregar</button>
+</section>

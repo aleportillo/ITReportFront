@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
 
 	@Output() changeSectionEmitter = new EventEmitter<string>();
 	screenSize : ScreenSize = new ScreenSize();
-	currentSection = 'Reportes nuevos';
+	currentSection = 'Inventario';
 	user : IAdmin = new Admin();
 
 	constructor(

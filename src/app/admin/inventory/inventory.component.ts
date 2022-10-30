@@ -6,10 +6,18 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls   : ['./inventory.component.css']
 } )
 export class InventoryComponent implements OnInit {
-
+	
+	buttonsTemplate = [ 'Salas', 'Computadoras', 'Componentes' ];
+	
+	currentSection : 'Salas' | 'Computadoras' | 'Componentes' | string = 'Salas';
+	
 	constructor() { }
 
 	ngOnInit(): void {
+	}
+	
+	changeSection( newSection:  string  ) {
+		this.currentSection = newSection;
 	}
 
 }
