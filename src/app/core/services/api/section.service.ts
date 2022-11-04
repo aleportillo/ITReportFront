@@ -72,5 +72,23 @@ export class SectionService {
 				} ) 
 			);
 	}
+	
+	getInventoryItems( type: string, idElement: string ){
+		const params : any = {};
+		params[ `${ type }Id` ] = idElement;
+
+		this._helpersService.setTrue( 'getInventoryItems' );
+		return this._http.post( API_URL + `${ type }/filtrar`, params )
+			.pipe(
+				finalize( () => this._helpersService.setFalse( 'getInventoryItems' ) ),
+				map( ( data: any ) => {
+					if ( type === 'computadoras' ){
+						return ( data || [] ).map( ( report: IBackendViewReport ) => new ViewReport().parse( report ) );
+					} 
+					// Components
+					return ( data || [] ).map( ( report: IBackendViewReport ) => new ViewReport().parse( report ) );
+				} ) 
+			);
+	}
 
 }

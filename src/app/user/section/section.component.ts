@@ -137,10 +137,32 @@ export class SectionComponent implements OnInit {
 		){ 
 			this.search();
 		}
+		
+		this.loadSubsectionItems( this.subSectionActive );
 	}
 
 
 	// -------------------------------------------------- ANCHOR: HELPERS
+	
+	loadSubsectionItems( subSection: string ){
+		switch ( subSection ){
+			case 'computadoras':
+				this.allCardsInventory = [];
+				this.loaderObject.getInventoryItems = true;
+				this.getInventoryItems( this.type, this.backendId.toString() );
+				break;
+			case 'componentes':
+				this.allCardsInventory = [];
+				this.loaderObject.getInventoryItems = true;
+				this.getInventoryItems( this.type, this.backendId.toString() );
+				break;
+			case 'reportes':
+				this.allCards = [];
+				this.loaderObject.getUserReports = true;
+				this.getReports( this.type, this.backendId.toString() );
+				break;
+		}
+	}
 	
 	goBack(){
 		this._router.navigate( [sessionStorage.getItem( 'IT_REPORT' ) ?? '/'] );
@@ -149,13 +171,7 @@ export class SectionComponent implements OnInit {
 	changeSubSection( button: {label: string; key: string} ){
 
 		this.subSectionActive = button.key;
-
-		if ( button.key === 'reportes' ){
-			this.allCards = [];
-			this.loaderObject.getUserReports = true;
-			this.getReports( this.type, this.backendId.toString() );
-		}
-
+		this.loadSubsectionItems( button.key );
 	}
 
 	loadOptions(){
@@ -306,6 +322,18 @@ export class SectionComponent implements OnInit {
 			},
 			error => {
 				this._snackbarService.showSnackbar( 'GET_REPORTS', 'error' );
+			}
+		);
+	}
+	
+	getInventoryItems( type: string, idElement: string ){
+		this._sectionService.getInventoryItems( type, idElement ).subscribe(
+			data => {
+				console.log( data ); 
+				this.allCardsInventory = data;
+			},
+			error => {
+				this._snackbarService.showSnackbar( 'GET_INVENTORY_ITEMS', 'error' );
 			}
 		);
 	}
