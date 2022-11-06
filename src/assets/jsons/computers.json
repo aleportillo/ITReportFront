@@ -12,11 +12,12 @@
         "name"      : "salaId",
         "type"      : "select",
         "subtype"   : "normal",
+        "optional"  : false,
         "columnSize": 2,
         "options"   : [
-            { "text" : "401", "value": "401"},
-            { "text" : "402", "value": "402"},
-            { "text" : "403", "value": "403"}
+            { "text" : "401", "value": 401},
+            { "text" : "402", "value": 402},
+            { "text" : "403", "value": 403}
         ]
     },
     {
@@ -24,7 +25,7 @@
         "type"        : "multiple",
         "label"       : "Hardware",
         "columnSize"  : 2,
-        "optional"    : false,
+        "optional"    : true,
         "subtype"     : "normal",
         "options"     : [
             { "text" : "1231 Teclado", "value": "401T"},
@@ -37,7 +38,7 @@
         "type"        : "multiple",
         "label"       : "Software",
         "columnSize"  : 2,
-        "optional"    : false,
+        "optional"    : true,
         "subtype"     : "normal",
         "options"     : [
             { "text" : "Java", "value": "java"},

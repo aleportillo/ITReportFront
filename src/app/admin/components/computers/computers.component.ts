@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { IComputer, Computer } from 'src/app/core/models/inventory/computer.model';
+import { IFormInput } from 'src/app/core/models/tools/form-input.model';
+import { IModalData } from 'src/app/core/models/tools/modal-data';
+import { FormService } from 'src/app/core/services/internal/form.service';
+import { HelpersService } from 'src/app/core/services/internal/helpers.service';
+import { SnackbarService } from 'src/app/core/services/internal/snackbar.service';
+import { ModalComponent } from 'src/app/core/shared/components/modal/modal.component';
+import computers from 'src/assets/jsons/computers.json';
 @Component( {
 	selector    : 'app-computers',
 	templateUrl : './computers.component.html',
@@ -7,9 +15,143 @@ import { Component, OnInit } from '@angular/core';
 } )
 export class ComputersComponent implements OnInit {
 
-	constructor() { }
-
+	constructor(
+		private _dialog: MatDialog,
+		private _formService: FormService,
+		private _helperService: HelpersService,
+		private _snackbarService : SnackbarService
+	) { }
+	
+	currentComputer!: IComputer;
+	allCardsInventory : IComputer[] = [];
+	
 	ngOnInit(): void {
+		
+		const defaultCard : IComputer = {
+			id       : 1,
+			salaId   : 401,
+			gabinete : 'HUP',
+			hardware : [ '401T', '402M' ],
+			software : [ 'java', 'VS' ]
+		};
+		
+		const card = new Computer().parse( defaultCard );
+		
+		defaultCard.id = 2;
+		defaultCard.salaId = 402;
+		defaultCard.gabinete = 'JAJAJ';
+		defaultCard.hardware = [ '401T', '402M', '403R' ];
+		defaultCard.software = [ 'java', 'VS', 'off' ];
+		
+		const card2 = new Computer().parse( defaultCard );
+		
+		defaultCard.id = 3;
+		defaultCard.salaId = 403;
+		defaultCard.gabinete = 'JSFER';
+		defaultCard.hardware = [ '403R' ];
+		defaultCard.software = [ 'java', 'VS', 'off' ];
+		
+		const card3 = new Computer().parse( defaultCard );
+		
+		defaultCard.id = 4;
+		defaultCard.salaId = 401;
+		defaultCard.gabinete = 'NHURT';
+		defaultCard.hardware = [ '402M'];
+		defaultCard.software = [ 'VS'];
+
+		const card4 = new Computer().parse( defaultCard );
+
+		this.allCardsInventory = [ card, card2, card3, card4 ];
+		// console.log( this.allCardsInventory );
+		
+		this.modalService();
+		this.noticeService();
+	}
+	
+	openEditComputerForm( editComputer : IComputer ){
+		console.log( editComputer );
+		const currentForm = computers;
+		const modalData : IModalData = {
+			title       : `Computadora`,
+			form        : currentForm as IFormInput[],
+			typeSection : '',
+			typeModal   : 'form',
+			labelButton : 'Guardar'
+		}; 
+
+		const dialogConfig = new MatDialogConfig();
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.panelClass = 'form';
+		dialogConfig.data = modalData;
+		this._dialog.open( ModalComponent , dialogConfig );
+		this._formService.formData$.next( { newData: null, editData: editComputer } );
+		this.currentComputer = editComputer;
+	}
+	openDeleteComputerModal( deleteComputer: any ){
+		console.log( deleteComputer );
+		const modalData : IModalData = {
+			title       : `Eliminar`,
+			form        : [],
+			typeSection : 'pc',
+			typeModal   : 'notice',
+			labelButton : 'Eliminar',
+			noticeData  : `la computadora ${ deleteComputer.gabinete }` 
+		}; 
+
+		const dialogConfig = new MatDialogConfig();
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.panelClass = 'form';
+		dialogConfig.data = modalData;
+		this._dialog.open( ModalComponent , dialogConfig );
+		this.currentComputer = deleteComputer;
+	}
+	
+	modalService(){
+		this._formService.formData$.subscribe( ( response ) => {
+			console.log( response );
+			if ( response.newData === null ) { return; }
+			if ( response.editData === null ) { return; }
+			console.log( 'HERE' );
+			this.saveComputer( this.currentComputer, response.newData );
+		} );
+	}
+	
+	noticeService(){
+		this._helperService.noticeModal$.subscribe( ( response ) => {
+			if ( !response.delete ) { return; }
+			if ( this.currentComputer.totalHardware || this.currentComputer.totalSoftware ) { 
+				this._snackbarService.showSnackbar(
+					'No es posible eliminar la computadora, ya que aún tiene componentes asociados', 
+					'warning'
+				);
+				return; 
+			}
+			this.deleteComputer( this.currentComputer );
+		} );
+	}
+	
+	deleteComputer( actualComputer: IComputer ){
+		this.allCardsInventory = this.allCardsInventory.filter( card => card.id !== actualComputer.id );
+		this._dialog.closeAll();
+		this._helperService.noticeModal$.next( { delete: false } );
+		this.currentComputer = new Computer ();
+	}
+	
+	saveComputer( actualData: IComputer, newData: any ){
+
+		for ( const key in newData ) {
+			actualData[key] = newData[key];
+		}
+		actualData.totalHardware = actualData.hardware.length;
+		actualData.totalSoftware = actualData.software.length;
+	
+		const actualDataIndex = this.allCardsInventory.findIndex( card => card.id === actualData.id );
+		this.allCardsInventory[actualDataIndex] = actualData;
+		this._dialog.closeAll();
+		this._formService.formData$.next( { newData: null, editData: null } );
+		this.currentComputer = new Computer ();
 	}
 
 }
