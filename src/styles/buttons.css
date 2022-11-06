@@ -90,7 +90,7 @@
 }
 
 .button.close:hover{
-    background-color: var(--quinary);
+    background-color: var(--secondary);
 }
 
 .button.header{
