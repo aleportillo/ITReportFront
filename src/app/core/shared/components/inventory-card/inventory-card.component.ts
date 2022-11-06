@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IRoom } from 'src/app/core/models/inventory/room.model';
 import { IComputer } from 'src/app/core/models/inventory/computer.model';
 import { IViewInventory } from 'src/app/core/models/inventory/view-inventory.model';
+import { IComponentItem } from 'src/app/core/models/inventory/component.model';
 
 @Component( {
 	selector    : 'app-inventory-card',
@@ -10,7 +11,7 @@ import { IViewInventory } from 'src/app/core/models/inventory/view-inventory.mod
 } )
 export class InventoryCardComponent implements OnInit {
 
-	@Input() inventoryData!: IViewInventory | IRoom | IComputer;
+	@Input() inventoryData!: IViewInventory | IRoom | IComputer | IComponentItem;
 	@Input() fromSection = '';
 	
 	@Output() clickCardEmitter 	= new EventEmitter<any>();

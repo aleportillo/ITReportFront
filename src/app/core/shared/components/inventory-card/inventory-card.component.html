@@ -12,6 +12,9 @@
         <ng-container *ngIf="inventoryData.subtitle1 || inventoryData.edificio">
             {{inventoryData.subtitle1 || inventoryData.edificio}}
         </ng-container>
+        <ng-container *ngIf="inventoryData.numero || inventoryData.numero === 0 ">
+            {{inventoryData.numero }}
+        </ng-container>
     </p>
     <p>
         <ng-container *ngIf="inventoryData.totalPC || inventoryData.totalPC === 0">
@@ -19,6 +22,9 @@
         </ng-container>
         <ng-container *ngIf="inventoryData.totalHardware || inventoryData.totalHardware === 0">
             Hardware: {{inventoryData.totalHardware}}
+        </ng-container>
+        <ng-container *ngIf="inventoryData.tipo">
+            {{ inventoryData.tipo | firstLetterUppercase }}
         </ng-container>
     </p>
 </div>

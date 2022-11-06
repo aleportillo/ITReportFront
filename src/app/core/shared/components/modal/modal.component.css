@@ -21,6 +21,11 @@ header h1{
     color: var(--quaternary);
 }
 
+.form header h1 [type="component"],
+.type-notice .modal__form .modal__noticeData span[type='component']{
+    color: var(--quinary);
+}
+
 
 /*        ANCHOR: FORM         */
 

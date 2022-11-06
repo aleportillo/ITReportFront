@@ -5,6 +5,7 @@ import { IFormInput } from '../../models/tools/form-input.model';
 import { Report } from '../../models/reports/report.model';
 import { IRoom } from '../../models/inventory/room.model';
 import { IComputer } from '../../models/inventory/computer.model';
+import { IComponentItem } from '../../models/inventory/component.model';
 
 @Injectable( {
 	providedIn : 'root'
@@ -16,8 +17,8 @@ export class FormService {
 	 * and the original information sent from the backend.
 	 */
 	 formData$ = new BehaviorSubject<{
-		newData : Report | IRoom | IComputer | null;
-		editData: Report | IRoom | IComputer | null;
+		newData : Report | IRoom | IComputer | IComponentItem | null;
+		editData: Report | IRoom | IComputer | IComponentItem | null;
 	}>( { newData: null, editData: null } );
 
 	constructor() { }
