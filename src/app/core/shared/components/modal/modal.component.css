@@ -16,9 +16,10 @@ header h1{
     color: var(--tertiary);
 }
 
-/* .form h1 [type="pc"]{
-    color: var(--tertiary);
-} */
+.form header h1 [type="pc"],
+.type-notice .modal__form .modal__noticeData span[type='pc']{
+    color: var(--quaternary);
+}
 
 
 /*        ANCHOR: FORM         */
