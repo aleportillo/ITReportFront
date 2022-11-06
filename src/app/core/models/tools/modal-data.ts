@@ -7,9 +7,9 @@ export type LABEL_BUTTON = 'Eliminar' | 'Guardar' | 'Actualizar' | 'Reportar';
 
 export interface IModalData {
     form       : IFormInput[];
-    values     : any;
     title      : string;
     typeSection: TYPE_SECTION;
     typeModal  : TYPE_MODAL;
     labelButton: LABEL_BUTTON;
+    noticeData ?: string;
 }

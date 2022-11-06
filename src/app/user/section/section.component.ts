@@ -389,7 +389,6 @@ export class SectionComponent implements OnInit {
 		const modalData : IModalData = {
 			title       : `${ this.type === 'sala' ? 'Sala' : 'PC' } ${ this.idSection }`,
 			form        : report,
-			values      : [],
 			typeSection : this.type as TYPE_SECTION,
 			typeModal   : 'form',
 			labelButton : 'Reportar'

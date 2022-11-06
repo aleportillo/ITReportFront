@@ -122,7 +122,6 @@ export class InventoryComponent implements OnInit {
 		const modalData : IModalData = {
 			title       : `${ this.currentSection.substring( FIRST_ELEMENT, this.currentSection.length - LAST_POSITION ) }`,
 			form        : currentForm as IFormInput[],
-			values      : [],
 			typeSection : '',
 			typeModal   : 'form',
 			labelButton : 'Guardar'
