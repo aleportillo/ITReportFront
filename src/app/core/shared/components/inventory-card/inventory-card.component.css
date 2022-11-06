@@ -6,6 +6,10 @@
     position: relative;
 }
 
+.card[type='rooms']{
+    cursor: pointer;
+}
+
 span{
     width: 3rem;
     height: 3rem;
@@ -29,6 +33,16 @@ span[type="pc"]{
 
 span[type="delete"]{
     background-color: var(--primary-light);
+    cursor: pointer;
+}
+
+span[type="delete"]:hover{
+    background-color: var(--primary);
+    cursor: pointer;
+}
+
+span[type="delete"]:hover img{
+    filter: var(--primary-light-svg);
 }
 
 span img{

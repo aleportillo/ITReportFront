@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IRoom } from 'src/app/core/models/inventory/room.model';
 import { IViewInventory, ViewInventory } from 'src/app/core/models/inventory/view-inventory.model';
 
 @Component( {
@@ -8,13 +9,29 @@ import { IViewInventory, ViewInventory } from 'src/app/core/models/inventory/vie
 } )
 export class InventoryCardComponent implements OnInit {
 
-	@Input() inventoryData : IViewInventory = new ViewInventory();
+	@Input() inventoryData!: IViewInventory | IRoom;
+	@Input() fromSection = '';
+	
+	@Output() clickCardEmitter 	= new EventEmitter<any>();
+	@Output() clickBadgeEmitter = new EventEmitter<string>();
+	
+	
 	
 	constructor() { }
 
 	ngOnInit(): void {
-		console.log(this.inventoryData);
-		
+		console.log( this.inventoryData );
+	}
+	
+	handleCardClick( event: any ){
+		if ( event.target.nodeName === 'SPAN' || event.target.nodeName === 'IMG' ){ return; }
+		if ( !this.fromSection ) {return;}
+		this.clickCardEmitter.emit( this.inventoryData );
+	}
+	
+	handleBadgeClick(){
+		if ( !this.fromSection ) {return;}
+		this.clickBadgeEmitter.emit( this.inventoryData.id );
 	}
 
 }
