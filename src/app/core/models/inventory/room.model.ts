@@ -8,6 +8,7 @@ export interface IBackendRoom {
     id              : number;
     nombre          : string;
     edificio        : string;
+    totalPC         : number;
 }
 
 export interface IRoom {
@@ -15,6 +16,7 @@ export interface IRoom {
     id                : number;
     nombre            : string;
     edificio          : string;
+    totalPC           : number;
 }
 
 export class Room implements IRoom {
@@ -23,6 +25,7 @@ export class Room implements IRoom {
     id                 = 0 ;
     nombre             = '';
     edificio           = '';
+    totalPC            = 0 ;
     
     parse( obj: IBackendRoom ) {
         

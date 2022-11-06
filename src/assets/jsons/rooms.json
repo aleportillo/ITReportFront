@@ -1,6 +1,6 @@
 [
     {
-        "name"        : "numero",
+        "name"        : "nombre",
         "type"        : "text",
         "label"       : "Número",
         "columnSize"  : 2,

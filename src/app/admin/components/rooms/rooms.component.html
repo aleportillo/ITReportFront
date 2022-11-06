@@ -1,1 +1,20 @@
-<p>rooms works!</p>
+<!-- <app-loader *ngIf="loaderObject.getInventoryItems; else showInventoryItems" [section]="'page'"></app-loader> -->
+<!-- <ng-template #showInventoryItems> -->
+    <ng-container *ngIf="allCardsInventory.length > 0; else noItemsInventory">
+        <div class="section-inventory">
+            <app-inventory-card 
+                *ngFor="let cardInventory of allCardsInventory"
+                [inventoryData] = "cardInventory"
+                [fromSection] = "'rooms'"
+                (clickCardEmitter) = "openEditRoomForm($event);"
+            >
+            </app-inventory-card>
+        </div>
+    </ng-container>
+    <ng-template #noItemsInventory>
+        <p class="noMessage">
+            Aún no hay salas registradas
+        </p>
+    </ng-template>
+<!-- </ng-template> -->
+

@@ -28,12 +28,13 @@ export class ModalComponent implements OnInit {
 	) {
 		this.modalData = data;
 		// console.log( data );
+		this.form = this._formService.createForm( this.modalData.form );
 	}
 
 	ngOnInit(): void {
 		this.formDataSuscribe();
 		this.loaderSuscribe();
-		this.form = this._formService.createForm( this.modalData.form );
+		// console.log(this.modalData.values)
 	}
 
 	primaryAction(){
@@ -53,6 +54,11 @@ export class ModalComponent implements OnInit {
 	}
 	
 	closeModal(){
+		this._formService.formData$.next( {
+			newData  : null,
+			editData : null 
+		} );	
+		this.editData = null;
 		// this.dialogRef.close();
 		// dialogRef.afterClosed().subscribe(
 		// data => console.log("Dialog output:", data)
@@ -71,10 +77,13 @@ export class ModalComponent implements OnInit {
 	}
 
 	formDataSuscribe(){
+		const ZERO_KEYS = 0;
 		this._formService.formData$.subscribe( ( response ) => {
-			// if(!response.editData && !response.newData){
-			// 	this.closeModal();
-			// }
+			console.log(response);
+			if ( !response.newData && Object.keys( response.editData ?? {} ).length > ZERO_KEYS ){
+				this.editData = response.editData;
+				this.form = this._formService.initForm( this.form, this.editData );
+			}
 		} );
 	}
 

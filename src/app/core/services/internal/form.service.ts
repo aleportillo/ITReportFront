@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { IFormInput } from '../../models/tools/form-input.model';
 import { Report } from '../../models/reports/report.model';
+import { IRoom, Room } from '../../models/inventory/room.model';
 
 @Injectable( {
 	providedIn : 'root'
@@ -14,8 +15,8 @@ export class FormService {
 	 * and the original information sent from the backend.
 	 */
 	 formData$ = new BehaviorSubject<{
-		newData : Report | null;
-		editData: Report | null;
+		newData : Report | IRoom | null;
+		editData: Report | IRoom | null;
 	}>( { newData: null, editData: null } );
 
 	constructor() { }
