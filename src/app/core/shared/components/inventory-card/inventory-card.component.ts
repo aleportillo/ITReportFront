@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IRoom } from 'src/app/core/models/inventory/room.model';
-import { IViewInventory, ViewInventory } from 'src/app/core/models/inventory/view-inventory.model';
+import { IViewInventory } from 'src/app/core/models/inventory/view-inventory.model';
 
 @Component( {
 	selector    : 'app-inventory-card',
@@ -13,7 +13,7 @@ export class InventoryCardComponent implements OnInit {
 	@Input() fromSection = '';
 	
 	@Output() clickCardEmitter 	= new EventEmitter<any>();
-	@Output() clickBadgeEmitter = new EventEmitter<string>();
+	@Output() clickBadgeEmitter = new EventEmitter<any>();
 	
 	
 	
@@ -31,7 +31,7 @@ export class InventoryCardComponent implements OnInit {
 	
 	handleBadgeClick(){
 		if ( !this.fromSection ) {return;}
-		this.clickBadgeEmitter.emit( this.inventoryData.id );
+		this.clickBadgeEmitter.emit( this.inventoryData );
 	}
 
 }
