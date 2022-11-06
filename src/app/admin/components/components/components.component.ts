@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { IComponentItem, ComponentItem } from 'src/app/core/models/inventory/component.model';
 import { IFormInput } from 'src/app/core/models/tools/form-input.model';
 import { IModalData } from 'src/app/core/models/tools/modal-data';
@@ -12,16 +13,20 @@ import components from 'src/assets/jsons/components.json';
 	templateUrl : './components.component.html',
 	styleUrls   : ['./components.component.css']
 } )
-export class ComponentsComponent implements OnInit {
+export class ComponentsComponent implements OnInit, OnDestroy {
 
+	private _allSubs   : Subscription[]   = [];
+	allCardsInventory  : IComponentItem[] = [];
+	currentComponent  !: IComponentItem;
+	
+	
+	// -------------------------------------------------- ANCHOR: LIFECYCLE
+	
 	constructor(
 		private _dialog: MatDialog,
 		private _formService: FormService,
 		private _helperService: HelpersService
 	) { }
-	
-	currentComponent!: IComponentItem;
-	allCardsInventory : IComponentItem[] = [];
 	
 	ngOnInit(): void {
 		
@@ -56,6 +61,15 @@ export class ComponentsComponent implements OnInit {
 		this.noticeService();
 	}
 	
+	ngOnDestroy() {
+		this._allSubs.forEach( ( sub: Subscription ) => {
+			sub.unsubscribe();
+		} );
+	}
+	
+	
+	// -------------------------------------------------- ANCHOR: MODALS
+	
 	openEditComponentForm( editComponent : any ){
 		console.log( editComponent );
 		const currentForm = components;
@@ -76,6 +90,7 @@ export class ComponentsComponent implements OnInit {
 		this._formService.formData$.next( { newData: null, editData: editComponent } );
 		this.currentComponent = editComponent;
 	}
+	
 	openDeleteComponentModal( deleteComponent : any ){
 		console.log( deleteComponent );
 		const modalData : IModalData = {
@@ -96,8 +111,11 @@ export class ComponentsComponent implements OnInit {
 		this.currentComponent = deleteComponent;
 	}
 	
+	
+	// -------------------------------------------------- ANCHOR: SUBS
+	
 	modalService(){
-		this._formService.formData$.subscribe( ( response ) => {
+		this._allSubs[this._allSubs.length] = this._formService.formData$.subscribe( ( response ) => {
 			console.log( response );
 			if ( response.newData === null ) { return; }
 			if ( response.editData === null ) { return; }
@@ -107,12 +125,14 @@ export class ComponentsComponent implements OnInit {
 	}
 	
 	noticeService(){
-		this._helperService.noticeModal$.subscribe( ( response ) => {
-			if ( response.delete ){
-				this.deleteComponent( this.currentComponent );
-			}
+		this._allSubs[this._allSubs.length] = this._helperService.noticeModal$.subscribe( ( response ) => {
+			if ( !response.delete ) { return; }
+			this.deleteComponent( this.currentComponent );
 		} );
 	}
+	
+	
+	// -------------------------------------------------- ANCHOR: API
 	
 	deleteComponent( actualComponent: any ){
 		this.allCardsInventory = this.allCardsInventory.filter( card => card.id !== actualComponent.id );

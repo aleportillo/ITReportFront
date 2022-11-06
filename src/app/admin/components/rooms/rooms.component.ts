@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { IRoom, Room } from 'src/app/core/models/inventory/room.model';
 import { IFormInput } from 'src/app/core/models/tools/form-input.model';
 import { IModalData } from 'src/app/core/models/tools/modal-data';
 import { FormService } from 'src/app/core/services/internal/form.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
+import { SnackbarService } from 'src/app/core/services/internal/snackbar.service';
 import { ModalComponent } from 'src/app/core/shared/components/modal/modal.component';
 import rooms from 'src/assets/jsons/rooms.json';
 @Component( {
@@ -12,16 +14,21 @@ import rooms from 'src/assets/jsons/rooms.json';
 	templateUrl : './rooms.component.html',
 	styleUrls   : ['./rooms.component.css']
 } )
-export class RoomsComponent implements OnInit {
-
-	constructor(
-		private _dialog: MatDialog,
-		private _formService: FormService,
-		private _helperService: HelpersService
-	) { }
+export class RoomsComponent implements OnInit, OnDestroy {
 	
-	allCardsInventory : IRoom[] = [];
-	currentRoom!: IRoom;
+	private _allSubs   : Subscription[] = [];
+	allCardsInventory  : IRoom[]        = [];
+	currentRoom       !: IRoom;
+	
+	 
+	// -------------------------------------------------- ANCHOR: LIFECYCLE
+	
+	constructor(
+		private _dialog         : MatDialog,
+		private _formService    : FormService,
+		private _helperService  : HelpersService,
+		private _snackbarService: SnackbarService
+	) { }
 	
 	ngOnInit(): void {
 		const card = new Room();
@@ -51,6 +58,15 @@ export class RoomsComponent implements OnInit {
 		this.noticeService();
 	}
 	
+	ngOnDestroy(): void {
+		this._allSubs.forEach( ( sub: Subscription ) => {
+			sub.unsubscribe();
+		} );
+	}
+	
+	
+	// -------------------------------------------------- ANCHOR: MODALS
+	
 	openEditRoomForm( editRoom : IRoom ){
 		// console.log( editRoom );
 		const currentForm = rooms;
@@ -71,6 +87,7 @@ export class RoomsComponent implements OnInit {
 		this._formService.formData$.next( { newData: null, editData: editRoom } );
 		this.currentRoom = editRoom;
 	}
+	
 	openDeleteRoomModal( deleteRoom: any ){
 		// console.log( deleteRoom );
 		const modalData : IModalData = {
@@ -91,8 +108,11 @@ export class RoomsComponent implements OnInit {
 		this.currentRoom = deleteRoom;
 	}
 	
+	
+	// -------------------------------------------------- ANCHOR: SUBS
+	
 	modalService(){
-		this._formService.formData$.subscribe( ( response ) => {
+		this._allSubs[this._allSubs.length] = this._formService.formData$.subscribe( ( response ) => {
 			console.log( response );
 			if ( response.newData === null ) { return; }
 			if ( response.editData === null ) { return; }
@@ -102,12 +122,24 @@ export class RoomsComponent implements OnInit {
 	}
 	
 	noticeService(){
-		this._helperService.noticeModal$.subscribe( ( response ) => {
+		this._allSubs[this._allSubs.length] = this._helperService.noticeModal$.subscribe( ( response ) => {
+			if ( !response.delete ) { return; }
+			if ( this.currentRoom.totalPC ) {
+				this._snackbarService.showSnackbar(
+					'No es posible eliminar la sala, ya que aún tiene computadoras asociados', 
+					'warning'
+				);
+				this._helperService.noticeModal$.next( { delete: false } );
+				return;
+			}
 			if ( response.delete ){
 				this.deleteRoom( this.currentRoom );
 			}
 		} );
 	}
+	
+	
+	// -------------------------------------------------- ANCHOR: API
 	
 	deleteRoom( actualRoom: IRoom ){
 		this.allCardsInventory = this.allCardsInventory.filter( card => card.id !== actualRoom.id );

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { IComputer, Computer } from 'src/app/core/models/inventory/computer.model';
 import { IFormInput } from 'src/app/core/models/tools/form-input.model';
 import { IModalData } from 'src/app/core/models/tools/modal-data';
@@ -13,17 +14,21 @@ import computers from 'src/assets/jsons/computers.json';
 	templateUrl : './computers.component.html',
 	styleUrls   : ['./computers.component.css']
 } )
-export class ComputersComponent implements OnInit {
+export class ComputersComponent implements OnInit, OnDestroy {
 
-	constructor(
-		private _dialog: MatDialog,
-		private _formService: FormService,
-		private _helperService: HelpersService,
-		private _snackbarService : SnackbarService
-	) { }
+	private _allSubs   : Subscription[] = [];
+	allCardsInventory  : IComputer[]    = [];
+	currentComputer   !: IComputer;
 	
-	currentComputer!: IComputer;
-	allCardsInventory : IComputer[] = [];
+	
+	// -------------------------------------------------- ANCHOR: LIFECYCLE
+	
+	constructor(
+		private _dialog         : MatDialog,
+		private _formService    : FormService,
+		private _helperService  : HelpersService,
+		private _snackbarService: SnackbarService
+	) { }
 	
 	ngOnInit(): void {
 		
@@ -68,6 +73,15 @@ export class ComputersComponent implements OnInit {
 		this.noticeService();
 	}
 	
+	ngOnDestroy() {
+		this._allSubs.forEach( ( sub: Subscription ) => {
+			sub.unsubscribe();
+		} );
+	}
+	
+	
+	// -------------------------------------------------- ANCHOR: MODALS
+	
 	openEditComputerForm( editComputer : IComputer ){
 		console.log( editComputer );
 		const currentForm = computers;
@@ -88,6 +102,7 @@ export class ComputersComponent implements OnInit {
 		this._formService.formData$.next( { newData: null, editData: editComputer } );
 		this.currentComputer = editComputer;
 	}
+	
 	openDeleteComputerModal( deleteComputer: any ){
 		console.log( deleteComputer );
 		const modalData : IModalData = {
@@ -108,8 +123,11 @@ export class ComputersComponent implements OnInit {
 		this.currentComputer = deleteComputer;
 	}
 	
+	
+	// -------------------------------------------------- ANCHOR: SUBS
+	
 	modalService(){
-		this._formService.formData$.subscribe( ( response ) => {
+		this._allSubs[this._allSubs.length] = this._formService.formData$.subscribe( ( response ) => {
 			console.log( response );
 			if ( response.newData === null ) { return; }
 			if ( response.editData === null ) { return; }
@@ -119,18 +137,22 @@ export class ComputersComponent implements OnInit {
 	}
 	
 	noticeService(){
-		this._helperService.noticeModal$.subscribe( ( response ) => {
+		this._allSubs[this._allSubs.length] = this._helperService.noticeModal$.subscribe( ( response ) => {
 			if ( !response.delete ) { return; }
 			if ( this.currentComputer.totalHardware || this.currentComputer.totalSoftware ) { 
 				this._snackbarService.showSnackbar(
 					'No es posible eliminar la computadora, ya que aún tiene componentes asociados', 
 					'warning'
 				);
+				this._helperService.noticeModal$.next( { delete: false } );
 				return; 
 			}
 			this.deleteComputer( this.currentComputer );
 		} );
 	}
+	
+	
+	// -------------------------------------------------- ANCHOR: API
 	
 	deleteComputer( actualComputer: IComputer ){
 		this.allCardsInventory = this.allCardsInventory.filter( card => card.id !== actualComputer.id );
