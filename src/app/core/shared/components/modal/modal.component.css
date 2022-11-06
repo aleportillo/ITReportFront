@@ -11,7 +11,8 @@ header h1{
     font-size: var(--PX-26);
 }
 
-.type-form header h1[type="room"]{
+.type-form header h1[type="room"],
+.type-notice .modal__form .modal__noticeData span[type='room']{
     color: var(--tertiary);
 }
 
@@ -36,6 +37,16 @@ header h1{
 /*        ANCHOR: FOOTER (BUTTONS)         */
 .modal__buttons{
     width: 100%;
+    text-align: center;
+}
+
+.modal__form .modal__noticeData{
+    grid-column: span 2;
+    /* border: 1px solid; */
+    font-family: 'Be vietnam Pro';
+    font-size: 1.2rem;
+    width: fit-content;
+    margin: 0 auto;
     text-align: center;
 }
 

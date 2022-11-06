@@ -13,7 +13,7 @@ export class HelpersService {
 	loader$ 	          = new BehaviorSubject<ILoader>( new Loader() );
 	user$ 		          = new BehaviorSubject<IAdmin>( JSON.parse( localStorage.getItem( 'IT_USER' ) ?? '' ) ?? new Admin() );
 	currentElementResume$ = new BehaviorSubject<any>( {} );
-
+	noticeModal$ 		  = new BehaviorSubject<{delete: boolean}>( { delete: false } );
 	loaderObject : Loader =  new Loader();
 
 	constructor() {

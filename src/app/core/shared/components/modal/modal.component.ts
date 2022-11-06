@@ -17,7 +17,6 @@ export class ModalComponent implements OnInit {
 	modalData: IModalData;
 	form : FormGroup  = new FormGroup( {} );
 	editData : any = null;
-
 	loaderObject : Loader =  new Loader();
 
 	constructor(
@@ -27,20 +26,20 @@ export class ModalComponent implements OnInit {
 		private _helpersService : HelpersService
 	) {
 		this.modalData = data;
-		// console.log( data );
+		console.log( data );
 		this.form = this._formService.createForm( this.modalData.form );
 	}
 
 	ngOnInit(): void {
 		this.formDataSuscribe();
 		this.loaderSuscribe();
-		// console.log(this.modalData.values)
 	}
 
 	primaryAction(){
-		// console.log(this.modalData.typeModal);
-		
-		// console.log( this.form.value );
+		if ( this.modalData.typeModal === 'notice' ){
+			this._helpersService.noticeModal$.next( { delete: true } );
+			return;
+		}
 		
 		if ( 
 			this.loaderObject.createReport || this.loaderObject.saveRoom ||
@@ -79,7 +78,6 @@ export class ModalComponent implements OnInit {
 	formDataSuscribe(){
 		const ZERO_KEYS = 0;
 		this._formService.formData$.subscribe( ( response ) => {
-			console.log(response);
 			if ( !response.newData && Object.keys( response.editData ?? {} ).length > ZERO_KEYS ){
 				this.editData = response.editData;
 				this.form = this._formService.initForm( this.form, this.editData );

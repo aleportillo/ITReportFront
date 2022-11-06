@@ -10,37 +10,46 @@
     <body>
 
         <div class="modal__form">
-            <div 
-                *ngFor="let input of modalData.form"
-                class="form__input"
-                style="--column: {{input.columnSize}};"
-            >
-                <ng-container *ngIf="input.type === 'select'">
-                    <app-input-select
-                        (changeOptionEmmiter)="changeOption(input, $event);"
-                        [formInput]="input"
-                        [form]="form"
-                    ></app-input-select>
-                </ng-container>
-                <ng-container *ngIf="input.type === 'multiple'">
-                    <app-input-multiple-select
-                        [formInput]="input"
-                        [form]="form"
-                    ></app-input-multiple-select>
-                </ng-container>
-                <ng-container *ngIf="input.type === 'textArea'">
-                    <app-input-area
-                        [formInput]="input"
-                        [form]="form"
-                    ></app-input-area>
-                </ng-container>
-                <ng-container *ngIf="input.type === 'text'">
-                    <app-input-text
-                        [formInput]="input"
-                        [form]="form"
-                    ></app-input-text>
-                </ng-container>
-            </div>
+            <ng-container *ngIf="modalData.typeModal === 'notice'; else formContent">
+                <p class="modal__noticeData">
+                    ¿Estás seguro de eliminar 
+                        <span [attr.type]="modalData.typeSection">{{modalData.noticeData}}</span>
+                    ?
+                </p>
+            </ng-container>
+            <ng-template #formContent>
+                <div 
+                    *ngFor="let input of modalData.form"
+                    class="form__input"
+                    style="--column: {{input.columnSize}};"
+                >
+                    <ng-container *ngIf="input.type === 'select'">
+                        <app-input-select
+                            (changeOptionEmmiter)="changeOption(input, $event);"
+                            [formInput]="input"
+                            [form]="form"
+                        ></app-input-select>
+                    </ng-container>
+                    <ng-container *ngIf="input.type === 'multiple'">
+                        <app-input-multiple-select
+                            [formInput]="input"
+                            [form]="form"
+                        ></app-input-multiple-select>
+                    </ng-container>
+                    <ng-container *ngIf="input.type === 'textArea'">
+                        <app-input-area
+                            [formInput]="input"
+                            [form]="form"
+                        ></app-input-area>
+                    </ng-container>
+                    <ng-container *ngIf="input.type === 'text'">
+                        <app-input-text
+                            [formInput]="input"
+                            [form]="form"
+                        ></app-input-text>
+                    </ng-container>
+                </div>
+            </ng-template>
         </div>
 
         <div class="modal__buttons">
