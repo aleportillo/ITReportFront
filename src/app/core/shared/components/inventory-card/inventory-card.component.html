@@ -3,14 +3,22 @@
         <img src="./../../../../../assets/icons/icon_{{inventoryData.type ?? 'delete'}}.svg" alt="">
     </span>
     <h3>
-        {{ (inventoryData.title || inventoryData.nombre ) | firstLetterUppercase }}
+        {{ (inventoryData.title || inventoryData.nombre || inventoryData.gabinete ) | firstLetterUppercase }}
     </h3>
     <p>
-        {{inventoryData.subtitle1 || inventoryData.edificio}}
+        <ng-container *ngIf="inventoryData.totalSoftware || inventoryData.totalSoftware === 0">
+            Software: {{inventoryData.totalSoftware}}
+        </ng-container>
+        <ng-container *ngIf="inventoryData.subtitle1 || inventoryData.edificio">
+            {{inventoryData.subtitle1 || inventoryData.edificio}}
+        </ng-container>
     </p>
     <p>
-        <ng-container *ngIf="inventoryData.totalPC">
+        <ng-container *ngIf="inventoryData.totalPC || inventoryData.totalPC === 0">
             PCs: {{inventoryData.totalPC}}
+        </ng-container>
+        <ng-container *ngIf="inventoryData.totalHardware || inventoryData.totalHardware === 0">
+            Hardware: {{inventoryData.totalHardware}}
         </ng-container>
     </p>
 </div>

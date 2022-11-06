@@ -3,7 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { IFormInput } from '../../models/tools/form-input.model';
 import { Report } from '../../models/reports/report.model';
-import { IRoom, Room } from '../../models/inventory/room.model';
+import { IRoom } from '../../models/inventory/room.model';
+import { IComputer } from '../../models/inventory/computer.model';
 
 @Injectable( {
 	providedIn : 'root'
@@ -15,8 +16,8 @@ export class FormService {
 	 * and the original information sent from the backend.
 	 */
 	 formData$ = new BehaviorSubject<{
-		newData : Report | IRoom | null;
-		editData: Report | IRoom | null;
+		newData : Report | IRoom | IComputer | null;
+		editData: Report | IRoom | IComputer | null;
 	}>( { newData: null, editData: null } );
 
 	constructor() { }
@@ -26,7 +27,7 @@ export class FormService {
 		inputs.forEach( input => {
 			const validations = [];
 			if ( !input.optional ) { validations.push( Validators.required ); }
-			if ( input.minLength ) { validations.push (Validators.minLength(input.minLength));}
+			if ( input.minLength ) { validations.push ( Validators.minLength( input.minLength ) ); }
 			form.addControl( input.name, new FormControl( '', validations ) );
 		} );
 
