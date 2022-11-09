@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { finalize, map } from 'rxjs';
 import { Admin, IAdmin } from '../../models/admin.model';
+import { Router } from '@angular/router';
 
 const API_URL = environment.apiURL;
 
@@ -14,6 +15,7 @@ export class ProfileService {
 
 	constructor(
 		private _http   : HttpClient,
+		private _router: Router,
 		private _helpersService : HelpersService
 	) { }
 
@@ -58,6 +60,22 @@ export class ProfileService {
 	}
 	
 	isLogged(): boolean {
-		return Boolean( localStorage.getItem( 'IT_REPORT_T' ) );
+		return Boolean( localStorage.getItem( 'IT_REPORT_TOKEN' ) );
 	}
+	
+	verifyUser() {
+		if ( this.isLogged() ) {
+			this.getData().subscribe(
+				data => {
+					this._helpersService.user$.next( data );
+					localStorage.setItem( 'IT_REPORT_NAME', data.nombre );
+					this._router.navigate( [`/admin/home`] );
+				},
+				err => {
+					this._router.navigate( [`/admin`] );
+				}
+			);
+		}
+	}
+	
 }

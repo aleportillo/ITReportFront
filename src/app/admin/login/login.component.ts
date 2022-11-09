@@ -45,7 +45,9 @@ export class LoginComponent implements OnInit {
 		private _router: Router,
 		private _profileService : ProfileService,
 		private _snackbarService : SnackbarService
-	) { }
+	) {
+		this._profileService.verifyUser();
+	}
 
 	ngOnInit(): void {
 		this.screenService();

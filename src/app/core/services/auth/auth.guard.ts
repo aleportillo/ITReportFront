@@ -14,8 +14,9 @@ export class AuthGuard implements CanActivate {
 	
 	canActivate(): boolean {
 		const isUserLogged = this._profileService.isLogged();
-						
-		if ( !isUserLogged ) {
+		if ( isUserLogged ) {
+			this._profileService.verifyUser();
+		} else {
 			this.router.navigate( ['/admin'] );
 		}
 		return isUserLogged;

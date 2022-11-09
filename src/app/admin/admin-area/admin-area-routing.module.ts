@@ -8,7 +8,7 @@ const routes: Routes = [
 	{
 		path        : 'home',
 		component   : AdminAreaComponent,
-		// canActivate : [AuthGuard]
+		canActivate : [AuthGuard]
 	},
 	{
 		path      : '',
