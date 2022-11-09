@@ -42,6 +42,9 @@ export class HeaderComponent implements OnInit {
 	userService(){
 		this._helpersService.user$.subscribe( ( response ) => {
 			this.user = response;
+			if ( !this.user.nombre ){
+				this.user.nombre = localStorage.getItem( 'IT_REPORT_NAME' ) ?? '';
+			}
 		} );
 	}
 

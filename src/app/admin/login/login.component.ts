@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { IFormInput } from 'src/app/core/models/tools/form-input.model';
 import { Loader } from 'src/app/core/models/tools/loader.model';
 import { ScreenSize } from 'src/app/core/models/tools/screen-size.model';
-import { SearchService } from 'src/app/core/services/api/search.service';
+import { ProfileService } from 'src/app/core/services/api/profile.service';
 import { FormService } from 'src/app/core/services/internal/form.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 import { SnackbarService } from 'src/app/core/services/internal/snackbar.service';
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
 		private _helpersService : HelpersService,
 		private _formService : FormService,
 		private _router: Router,
-		private _searchService : SearchService,
+		private _profileService : ProfileService,
 		private _snackbarService : SnackbarService
 	) { }
 
@@ -55,15 +55,28 @@ export class LoginComponent implements OnInit {
 
 	// -------------------------------------------------- ANCHOR: API
 
-	search(){
-		this._searchService.search( this.form.value ).subscribe(
+	async search(){
+		const { usuario, password } = this.form.value;
+		this._profileService.login( usuario, password ).subscribe(
+			async data => {
+				this.getData();
+			},
+			error => {
+				console.log( error );
+				this._snackbarService.showSnackbar( error , 'error' );
+			}
+		);
+	}
+	
+	getData(){
+		this._profileService.getData().subscribe(
 			data => {
-				localStorage.setItem( 'IT_REPORT_T', String( 'A' ) );
+				this._helpersService.user$.next( data );
+				localStorage.setItem( 'IT_REPORT_NAME', data.nombre );
 				this._router.navigate( [`/admin/home`] );
 			},
 			error => {
-				this._router.navigate( [`/admin/home`] );
-				this._snackbarService.showSnackbar( error , 'error' );
+				this._snackbarService.showSnackbar( 'GET_PROFILE', 'error' );
 			}
 		);
 	}

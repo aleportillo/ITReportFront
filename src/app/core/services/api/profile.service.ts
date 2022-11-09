@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HelpersService } from '../internal/helpers.service';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { finalize, map } from 'rxjs';
 import { Admin, IAdmin } from '../../models/admin.model';
@@ -42,13 +42,18 @@ export class ProfileService {
 	}
 	
 	login( usuario: string, password: string ){
+
 		this._helpersService.setTrue( 'login' );
-		return this._http.post( API_URL + `admins/1`, { usuario, password } )
+		return this._http.post( API_URL + `admins/token`, { usuario, password }, { responseType: 'text' } )
 			.pipe(
-				finalize( () => this._helpersService.setFalse( 'login' ) ),
-				map( ( data : any ) => {
-					return new Admin().parse( data );
-				} ) 
+				finalize( () => {
+					this._helpersService.setFalse( 'login' );
+				} ),
+				map( ( data: any )  => {
+					localStorage.setItem( 'IT_REPORT_TOKEN', data );
+					const defaultAdminID = 1;
+					return defaultAdminID;
+				} )
 			);
 	}
 	
