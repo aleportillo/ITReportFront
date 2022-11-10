@@ -78,6 +78,11 @@ p {
     margin-bottom: .5rem;
 }
 
+.button.icon.reject, .button.icon.accept{
+    display: flex;
+    align-content: center;
+}
+
 @media (max-width: 768px) {
     .row__container{
         grid-template-columns: 100% !important;

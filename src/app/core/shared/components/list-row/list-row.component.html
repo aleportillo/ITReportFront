@@ -46,7 +46,7 @@
             </ng-container>
             <ng-container *ngSwitchCase="'buttons'">
                 <button class="button icon reject" (click)="clickButton('rejectReport');">
-                    <ng-container *ngIf="loaderObject.rejectReport; else showImageA">
+                    <ng-container *ngIf="loaderObject.rejectReport && isItemEmiting ; else showImageA">
                         <app-loader></app-loader>
                     </ng-container>
                     <ng-template #showImageA>
@@ -54,7 +54,7 @@
                     </ng-template>
                 </button>
                 <button class="button icon accept" (click)="clickButton('acceptReport');">
-                    <ng-container *ngIf="loaderObject.acceptReport; else showImageB">
+                    <ng-container *ngIf="loaderObject.acceptReport && isItemEmiting; else showImageB">
                         <app-loader></app-loader>
                     </ng-container>
                     <ng-template #showImageB>

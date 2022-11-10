@@ -16,6 +16,7 @@ export class ListRowComponent implements OnInit {
 	@Output() clickButtonEmitter = new EventEmitter<string>();
 
 	loaderObject : Loader =  new Loader();
+	isItemEmiting = false;
 
 	constructor(
 		private _helpersService : HelpersService
@@ -34,6 +35,7 @@ export class ListRowComponent implements OnInit {
 	}
 
 	clickButton( event : any ){
+		this.isItemEmiting = true;
 		this.clickButtonEmitter.emit( event );
 	}
 }
