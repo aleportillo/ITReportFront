@@ -43,7 +43,7 @@ export class SectionComponent implements OnInit {
 	firstColumnReports : ViewReport[] = [];
 	secondColumnReports : ViewReport[] = [];
 	allCards!: ViewReport[];
-	allCardsInventory!: ViewInventory[];
+	allCardsInventory: ViewInventory[] = [];
 
 	// RESUME
 	salaResume = [
@@ -83,34 +83,34 @@ export class SectionComponent implements OnInit {
 		private _searchService : SearchService
 	) { }	
 
-	ngOnInit(): void {
+	ngOnInit() {
 		this.screenService();
 		this.loadOptions();
 		this.modalService();
 		this.loadService();
 		this.currentElementService();
 		
-		const card = new ViewInventory();
-		card.type = 'hardware';
-		card.title = 'hardware';
-		card.subtitle1 = 'Visual Studio Code';
+		// const card = new ViewInventory();
+		// card.type = 'hardware';
+		// card.title = 'hardware';
+		// card.subtitle1 = 'Visual Studio Code';
 		
-		const card2 = new ViewInventory();
-		card2.type = 'software';
-		card2.title = 'software';
-		card2.subtitle1 = 'Microsoft Office';
+		// const card2 = new ViewInventory();
+		// card2.type = 'software';
+		// card2.title = 'software';
+		// card2.subtitle1 = 'Microsoft Office';
 		
-		const card3 = new ViewInventory();
-		card3.type = 'pc';
-		card3.title = 'hardware';
-		card3.subtitle1 = 'Monitor';
+		// const card3 = new ViewInventory();
+		// card3.type = 'pc';
+		// card3.title = 'hardware';
+		// card3.subtitle1 = 'Monitor';
 		
-		const card4 = new ViewInventory();
-		card4.type = 'delete';
-		card4.title = 'hardware';
-		card4.subtitle1 = 'cable ethernet para conectar';
+		// const card4 = new ViewInventory();
+		// card4.type = 'delete';
+		// card4.title = 'hardware';
+		// card4.subtitle1 = 'cable ethernet para conectar';
 		
-		this.allCardsInventory = [ card, card2, card3, card4 ];
+		// this.allCardsInventory = [ card, card2, card3, card4 ];
 
 		// INIT VARS
 		this.type = this._router.url.split( '/' )[SECTION_POSITION];
@@ -135,10 +135,11 @@ export class SectionComponent implements OnInit {
 			this.sectionResume.computadoras === ZERO_VALUES 
 			|| this.sectionResume.software === ZERO_VALUES 
 		){ 
-			this.search();
+			this.search( true );
+		} else {
+			this.loadSubsectionItems( this.subSectionActive );
 		}
 		
-		this.loadSubsectionItems( this.subSectionActive );
 	}
 
 
@@ -297,11 +298,14 @@ export class SectionComponent implements OnInit {
 		);
 	}
 
-	search(){
+	search( fromInit?: boolean ){
 		this._searchService.search( { type: this.type, textSearch: this.idSection } ).subscribe(
 			data => {
-				console.log( this.sectionResume );
+				console.log( 'hereee', this.sectionResume ); 
 				this._helpersService.currentElementResume$.next( data );
+				if ( fromInit ){
+					this.loadSubsectionItems( this.subSectionActive );
+				}
 			},
 			error => {
 				this._snackbarService.showSnackbar( error , 'error' );
