@@ -58,7 +58,7 @@ export class ActiveReport implements IActiveReport {
     	this.categoria = obj.categoria.nombre ?? '';
     	this.incidente = obj.incidente.nombre ?? '';
     	this.estado    = obj.estado.nombre ?? '';
-    	this.idTipo    = obj.sala?.nombre.split( ' ' )[1] ?? obj.computadora.gabinete;
+    	this.idTipo    = obj.salaId ? obj.sala.nombre : obj.computadora.gabinete;
     	this.tipo      = obj.salaId ? 'sala' : 'computadora';
         
     	return this;
