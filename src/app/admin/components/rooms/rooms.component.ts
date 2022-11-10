@@ -150,12 +150,27 @@ export class RoomsComponent implements OnInit, OnDestroy {
 		for ( const key in newData ) {
 			actualData[key] = newData[key];
 		}
+		
+		this._roomsService.updateRoom( actualData.id, newData ).subscribe(
+			data => {
+				const actualDataIndex = this.allCardsInventory.findIndex( card => card.id === actualData.id );
+				this.allCardsInventory[actualDataIndex] = actualData;
+				this._dialog.closeAll();
+				this._formService.formData$.next( { newData: null, editData: null } );
+				this.currentRoom = new Room ();
+				this._snackbarService.showSnackbar(
+					'La sala se ha actualizado correctamente', 
+					'success'
+				);
+			},
+			err => {
+				this._snackbarService.showSnackbar(
+					'SAVE_ROOMS', 
+					'error'
+				);
+			}
+		);
 	
-		const actualDataIndex = this.allCardsInventory.findIndex( card => card.id === actualData.id );
-		this.allCardsInventory[actualDataIndex] = actualData;
-		this._dialog.closeAll();
-		this._formService.formData$.next( { newData: null, editData: null } );
-		this.currentRoom = new Room ();
 	}
 	
 	getRooms(){
