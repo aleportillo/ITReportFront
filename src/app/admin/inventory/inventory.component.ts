@@ -70,7 +70,7 @@ export class InventoryComponent implements OnInit {
 	
 	saveRoom( saveData: any ){
 		const saveElement : SaveRoom = {
-			nombre   : saveData.numero,
+			nombre   : saveData.nombre,
 			edificio : saveData.edificio
 		};
 		this._roomsService.saveElement( saveElement ).subscribe(
