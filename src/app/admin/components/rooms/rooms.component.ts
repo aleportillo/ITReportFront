@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { IRoom, Room } from 'src/app/core/models/inventory/room.model';
@@ -22,6 +22,14 @@ export class RoomsComponent implements OnInit, OnDestroy {
 	allCardsInventory  : IRoom[]        = [];
 	currentRoom       !: IRoom;
 	loaderObject       : Loader =  new Loader();
+	
+	@Input() set hasNewElementAdded( value: boolean ) {
+		console.log(value)
+		if ( value ){
+			setTimeout( () => { this.getRooms(); }, 6000 );
+			// this.getRooms();
+		}
+	}
 	
 	 
 	// -------------------------------------------------- ANCHOR: LIFECYCLE

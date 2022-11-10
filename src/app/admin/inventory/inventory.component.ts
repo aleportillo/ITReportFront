@@ -27,6 +27,7 @@ export class InventoryComponent implements OnInit {
 	];
 	
 	currentSection : 'Salas' | 'Computadoras' | 'Componentes' | string = 'Salas';
+	hasNewElementAdded = false;
 	
 	constructor(
 		private _dialog: MatDialog,
@@ -61,6 +62,7 @@ export class InventoryComponent implements OnInit {
 	// -------------------------------------------------- ANCHOR: API
 	
 	saveElement( saveData : any ){
+		this.hasNewElementAdded = false;
 		switch ( this.currentSection ){
 			case 'Salas': this.saveRoom( saveData ); break;
 			case 'Computadoras': this.saveComputer( saveData ); break;
@@ -75,6 +77,7 @@ export class InventoryComponent implements OnInit {
 		};
 		this._roomsService.saveElement( saveElement ).subscribe(
 			( res ) => {
+				this.hasNewElementAdded = true;
 				console.log( res );
 				this._snackbarService.showSnackbar( 'La sala fue guardada correctamente.', 'success' );
 				this._dialog.closeAll();
@@ -88,6 +91,7 @@ export class InventoryComponent implements OnInit {
 	saveComponent( saveData: any ){
 		this._componentsService.saveElement( { ...saveData } ).subscribe(
 			( res ) => {
+				this.hasNewElementAdded = true;
 				console.log( res );
 				this._snackbarService.showSnackbar( 'El componente se ha guardado correctamente.', 'success' );
 				this._dialog.closeAll();
@@ -101,6 +105,7 @@ export class InventoryComponent implements OnInit {
 	saveComputer( saveData: any ){
 		this._computersService.saveElement( { ...saveData } ).subscribe(
 			( res ) => {
+				this.hasNewElementAdded = true;
 				console.log( res );
 				this._snackbarService.showSnackbar( 'La computadora se ha guardado correctamente.', 'success' );
 				this._dialog.closeAll();

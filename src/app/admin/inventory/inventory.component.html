@@ -13,7 +13,10 @@
 <section>
     <ng-container [ngSwitch]="currentSection">
         <ng-container *ngSwitchCase="'Salas'">
-            <app-rooms></app-rooms>
+            <app-rooms
+                [hasNewElementAdded] = 'hasNewElementAdded'
+            >
+            </app-rooms>
         </ng-container>
         <ng-container *ngSwitchCase="'Computadoras'">
             <app-computers></app-computers>
