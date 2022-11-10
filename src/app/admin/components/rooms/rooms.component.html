@@ -1,5 +1,5 @@
-<!-- <app-loader *ngIf="loaderObject.getInventoryItems; else showInventoryItems" [section]="'page'"></app-loader> -->
-<!-- <ng-template #showInventoryItems> -->
+<app-loader *ngIf="loaderObject.getRooms; else showInventoryItems" [section]="'page'"></app-loader>
+<ng-template #showInventoryItems>
     <ng-container *ngIf="allCardsInventory.length > 0; else noItemsInventory">
         <div class="section-inventory">
             <app-inventory-card 
@@ -17,5 +17,5 @@
             Aún no hay salas registradas
         </p>
     </ng-template>
-<!-- </ng-template> -->
+</ng-template>
 

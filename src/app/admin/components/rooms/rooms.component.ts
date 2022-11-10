@@ -3,7 +3,9 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { IRoom, Room } from 'src/app/core/models/inventory/room.model';
 import { IFormInput } from 'src/app/core/models/tools/form-input.model';
+import { Loader } from 'src/app/core/models/tools/loader.model';
 import { IModalData } from 'src/app/core/models/tools/modal-data';
+import { RoomsService } from 'src/app/core/services/api/rooms.service';
 import { FormService } from 'src/app/core/services/internal/form.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 import { SnackbarService } from 'src/app/core/services/internal/snackbar.service';
@@ -19,6 +21,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
 	private _allSubs   : Subscription[] = [];
 	allCardsInventory  : IRoom[]        = [];
 	currentRoom       !: IRoom;
+	loaderObject       : Loader =  new Loader();
 	
 	 
 	// -------------------------------------------------- ANCHOR: LIFECYCLE
@@ -27,35 +30,15 @@ export class RoomsComponent implements OnInit, OnDestroy {
 		private _dialog         : MatDialog,
 		private _formService    : FormService,
 		private _helperService  : HelpersService,
-		private _snackbarService: SnackbarService
+		private _snackbarService: SnackbarService,
+		private _roomsService   : RoomsService
 	) { }
 	
 	ngOnInit(): void {
-		const card = new Room();
-		card.id = 1;
-		card.edificio = 'Sistemas';
-		card.nombre = '700';
-		card.totalPC = 30;
-		const card2 = new Room();
-		card2.id = 2;
-		card2.edificio = 'Guillot';
-		card2.nombre = '600';
-		card2.totalPC = 37;
-		const card3 = new Room();
-		card3.id = 3;
-		card3.edificio = 'Biblioteca';
-		card3.nombre = 'Biblioteca';
-		card3.totalPC = 2;
-		const card4 = new Room();
-		card4.id = 4;
-		card4.edificio = 'Logistica';
-		card4.nombre = '800';
-		card4.totalPC = 20;
-		this.allCardsInventory = [ card, card2, card3, card4 ];
-		// console.log( this.allCardsInventory );
-		
+		this.getRooms();
 		this.modalService();
 		this.noticeService();
+		this.loaderService();
 	}
 	
 	ngOnDestroy(): void {
@@ -138,6 +121,12 @@ export class RoomsComponent implements OnInit, OnDestroy {
 		} );
 	}
 	
+	loaderService(){
+		this._helperService.loader$.subscribe( ( response ) => {
+			this.loaderObject = response;
+		} );
+	}
+	
 	
 	// -------------------------------------------------- ANCHOR: API
 	
@@ -159,6 +148,20 @@ export class RoomsComponent implements OnInit, OnDestroy {
 		this._dialog.closeAll();
 		this._formService.formData$.next( { newData: null, editData: null } );
 		this.currentRoom = new Room ();
+	}
+	
+	getRooms(){
+		this._roomsService.getRooms().subscribe(
+			data => {
+				this.allCardsInventory = data;
+			},
+			err => {
+				this._snackbarService.showSnackbar(
+					'ERR_GET_ROOMS', 
+					'error'
+				);
+			}
+		)
 	}
 
 }
