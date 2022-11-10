@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { finalize, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { SaveComputer } from '../../models/inventory/computer.model';
+import { Computer, IBackendComputer, SaveComputer } from '../../models/inventory/computer.model';
 import { HelpersService } from '../internal/helpers.service';
 
 const API_URL = environment.apiURL;
@@ -25,6 +25,18 @@ export class ComputersService {
 				map( ( data: any ) => {
 					return data;
 				} ) 
+			);
+	}
+	
+	getComputers(){
+		this._helpersService.setTrue( 'getComputers' );
+		return this._http.get( API_URL + 'computadoras' )
+			.pipe(
+				finalize( () => this._helpersService.setFalse( 'getComputers' ) ),
+				map( ( data : any ) => {
+					console.log(data);
+					return ( data || [] ).map( ( pc: IBackendComputer ) => new Computer().parse( pc ) );
+				} )
 			);
 	}
 	
