@@ -75,10 +75,12 @@ export class SectionService {
 	
 	getInventoryItems( type: string, idElement: string ){
 		const params : any = {};
-		params[ `${ type }Id` ] = idElement;
+		params[ `Id${ type }` ] = idElement;
+		
+		const route = type === 'computadora' ? 'Componentes/computadora' : '';
 
 		this._helpersService.setTrue( 'getInventoryItems' );
-		return this._http.post( API_URL + `${ type }/filtrar`, params )
+		return this._http.get( API_URL + `${ route }`, params )
 			.pipe(
 				finalize( () => this._helpersService.setFalse( 'getInventoryItems' ) ),
 				map( ( data: any ) => {

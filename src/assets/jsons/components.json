@@ -17,13 +17,13 @@
     },
     {
         "label"     : "Tipo",
-        "name"      : "tipo",
+        "name"      : "categoriaId",
         "type"      : "select",
         "subtype"   : "normal",
         "columnSize": 2,
         "options"   : [
-            { "text" : "Hardware", "value": "hardware" },
-            { "text" : "Software", "value": "software" }
+            { "text" : "Hardware", "value": "2" },
+            { "text" : "Software", "value": "1" }
         ]
     }
 ]
