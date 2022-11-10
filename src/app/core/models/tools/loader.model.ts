@@ -13,6 +13,7 @@ export interface ILoader {
     saveComponent     : boolean;
     saveComputer      : boolean;
     getInventoryItems : boolean;
+    getRooms          : boolean;
 }
 
 export class Loader implements ILoader {
@@ -32,4 +33,5 @@ export class Loader implements ILoader {
     saveComponent     = false;
     saveComputer      = false;
     getInventoryItems = false;
+    getRooms          = false;
 }

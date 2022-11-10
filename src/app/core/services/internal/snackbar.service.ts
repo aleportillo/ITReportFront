@@ -11,7 +11,8 @@ const ERRORS : any = {
 	MULTIPLE_SEARCH     : 'Hay múltiples resultados con los parámetros introducidos, sé más específico.',
 	ERR_PASSWORD        : 'La contraseña es incorrecta',
 	LOAD_FORM           : 'Hubo un problema al cargar el formulario,  inténtalo de nuevo más tarde.',
-	GET_INVENTORY_ITEMS : 'Hubo un error al cargar los elementos, inténtalo de nuevo más tarde.'
+	GET_INVENTORY_ITEMS : 'Hubo un error al cargar los elementos, inténtalo de nuevo más tarde.',
+	ERR_GET_ROOMS       : 'Hubo un error al cargar las salas, inténtalo de nuevo más tarde.'
 };
 
 @Injectable( {

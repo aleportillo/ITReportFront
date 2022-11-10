@@ -8,7 +8,7 @@ export interface IBackendRoom {
     id              : number;
     nombre          : string;
     edificio        : string;
-    totalPC         : number;
+    computadoras    : number;
 }
 
 export interface IRoom {
@@ -40,7 +40,8 @@ export class Room implements IRoom {
     			this[key] = Boolean ( obj[key] ?? Room.clean[key] );
     		}
     	} );
-
+        
+    	this.totalPC = obj.computadoras || 0;
     	return this;
     }
 
