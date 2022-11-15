@@ -33,7 +33,6 @@ export class InventoryComponent implements OnInit {
 	hardwareComponents : IFormInputOption[] = [];
 	softwareComponents : IFormInputOption[] = [];
 	allRooms		   : IFormInputOption[] = [];
-	gettingOptions     = { rooms: false, components: false };
 	
 	constructor(
 		private _dialog: MatDialog,

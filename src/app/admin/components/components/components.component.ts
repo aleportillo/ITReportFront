@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { IComponentItem, ComponentItem } from 'src/app/core/models/inventory/component.model';
@@ -23,6 +23,13 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 	currentComponent  !: IComponentItem;
 	loaderObject       : Loader =  new Loader();
 	
+	@Input() set hasNewElementAdded( value: boolean ) {
+		console.log( value );
+		if ( value ){
+			setTimeout( () => { this.getComponents(); }, 6000 );
+			// this.getRooms();
+		}
+	}
 	
 	
 	// -------------------------------------------------- ANCHOR: LIFECYCLE
@@ -122,10 +129,24 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 	// -------------------------------------------------- ANCHOR: API
 	
 	deleteComponent( actualComponent: any ){
-		this.allCardsInventory = this.allCardsInventory.filter( card => card.id !== actualComponent.id );
-		this._dialog.closeAll();
-		this._helperService.noticeModal$.next( { delete: false } );
-		this.currentComponent = new ComponentItem ();
+		this._componentsService.deleteComponent( actualComponent.id ).subscribe(
+			data => {
+				this.allCardsInventory = this.allCardsInventory.filter( card => card.id !== actualComponent.id );
+				this._dialog.closeAll();
+				this._helperService.noticeModal$.next( { delete: false } );
+				this.currentComponent = new ComponentItem ();
+				this._snackbarService.showSnackbar(
+					'El componente se elimino correctamente', 
+					'success'
+				);
+			},
+			err => {
+				this._snackbarService.showSnackbar(
+					'ERR_DELETE_COMPONENT', 
+					'error'
+				);
+			}
+		);
 	}
 	
 	saveComponent( actualData: any, newData: any ){

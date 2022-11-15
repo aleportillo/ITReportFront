@@ -22,7 +22,9 @@
             <app-computers></app-computers>
         </ng-container>
         <ng-container *ngSwitchCase="'Componentes'">
-            <app-components></app-components>
+            <app-components
+                [hasNewElementAdded] = 'hasNewElementAdded'
+            ></app-components>
         </ng-container>
     </ng-container>
 </section>

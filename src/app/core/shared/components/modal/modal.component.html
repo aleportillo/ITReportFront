@@ -61,7 +61,8 @@
                 {{ modalData.labelButton }}
                 <app-loader 
                     *ngIf="loaderObject.createReport || loaderObject.saveRoom ||
-                    loaderObject.saveComponent || loaderObject.saveComputer || loaderObject.deleteRoom"
+                    loaderObject.saveComponent || loaderObject.saveComputer || loaderObject.deleteRoom
+                    || loaderObject.deleteComponent"
                 ></app-loader>
             </button>
         </div>

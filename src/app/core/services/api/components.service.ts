@@ -65,4 +65,15 @@ export class ComponentsService {
 			);
 	}
 	
+	deleteComponent( componentId: number ){
+		this._helpersService.setTrue( 'deleteComponent' );
+		return this._http.delete( API_URL + `Componentes/${ componentId }` )
+			.pipe(
+				finalize( () => this._helpersService.setFalse( 'deleteComponent' ) ),
+				map( ( data: any ) => {
+					return data;
+				} ) 
+			);
+	}
+	
 }
