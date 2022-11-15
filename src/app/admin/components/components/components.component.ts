@@ -133,12 +133,32 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 		for ( const key in newData ) {
 			actualData[key] = newData[key];
 		}
+		
+		this._componentsService.updateComponent( actualData.id, newData ).subscribe(
+			data => {
+				const actualDataIndex = this.allCardsInventory.findIndex( card => card.id === actualData.id );
+				this.allCardsInventory[actualDataIndex] = actualData;
+				this._dialog.closeAll();
+				this._formService.formData$.next( { newData: null, editData: null } );
+				this.currentComponent = new ComponentItem ();
+				this._snackbarService.showSnackbar(
+					'El componente se ha actualizado correctamente', 
+					'success'
+				);
+			},
+			err => {
+				this._snackbarService.showSnackbar(
+					'SAVE_COMPONENT', 
+					'error'
+				);
+			}
+		);
 	
-		const actualDataIndex = this.allCardsInventory.findIndex( card => card.id === actualData.id );
-		this.allCardsInventory[actualDataIndex] = actualData;
-		this._dialog.closeAll();
-		this._formService.formData$.next( { newData: null, editData: null } );
-		this.currentComponent = new ComponentItem ();
+		// const actualDataIndex = this.allCardsInventory.findIndex( card => card.id === actualData.id );
+		// this.allCardsInventory[actualDataIndex] = actualData;
+		// this._dialog.closeAll();
+		// this._formService.formData$.next( { newData: null, editData: null } );
+		// this.currentComponent = new ComponentItem ();
 	}
 	
 	getComponents(){

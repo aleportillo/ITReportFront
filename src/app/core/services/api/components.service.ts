@@ -41,15 +41,15 @@ export class ComponentsService {
 			);
 	}
 	
-	// updateRoom( roomId: number, room: SaveRoom ){
-	// 	this._helpersService.setTrue( 'saveRoom' );
-	// 	return this._http.put( API_URL + `salas/${ roomId }`, room )
-	// 		.pipe(
-	// 			finalize( () => this._helpersService.setFalse( 'saveRoom' ) ),
-	// 			map( ( data: any ) => {
-	// 				return data;
-	// 			} ) 
-	// 		);
-	// }
+	updateComponent( componentId: number, component: SaveComponentItem ){
+		this._helpersService.setTrue( 'saveComponent' );
+		return this._http.put( API_URL + `Componentes/${ componentId }`, component )
+			.pipe(
+				finalize( () => this._helpersService.setFalse( 'saveComponent' ) ),
+				map( ( data: any ) => {
+					return data;
+				} ) 
+			);
+	}
 	
 }
