@@ -28,6 +28,13 @@
     margin-top: 2rem;
 }
 
+.button.logOut{
+    background: transparent;
+    color: var(--primary);
+    text-decoration: underline;
+    padding: .5rem;
+}
+
 @media (max-width: 700px) {
     .form__input{
         grid-column: span 2;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Loader } from 'src/app/core/models/tools/loader.model';
 import { ScreenSize } from 'src/app/core/models/tools/screen-size.model';
 import { ProfileService } from 'src/app/core/services/api/profile.service';
@@ -24,7 +25,8 @@ export class ProfileComponent implements OnInit {
 		private _formService: FormService,
 		private _helpersService: HelpersService,
 		private _snackbarService: SnackbarService,
-		private _profileService : ProfileService
+		private _profileService : ProfileService,
+		private _router: Router
 	) { }
 
 	ngOnInit(): void {
@@ -32,6 +34,11 @@ export class ProfileComponent implements OnInit {
 		this.screenService();
 		this.loaderService();
 		this.getData();
+	}
+	
+	logOut(){
+		localStorage.clear();
+		this._router.navigate( [`/admin`] );
 	}
 
 
