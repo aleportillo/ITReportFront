@@ -5,9 +5,10 @@ export interface SaveComponentItem {
 }
 
 export interface IBackendComponentItem {
+    [key: string]       : any;
     id                  : number;
     nombre              : string;
-    tipo                : string;
+    categoriaId         : number;
     numero              : string;
 }
 
@@ -15,8 +16,9 @@ export interface IComponentItem {
     [key: string]       : any;
     id                  : number;
     nombre              : string;
-    tipo                : string;
+    categoriaId         : number;
     numero              : string;
+    tipo                : string;
 }
 
 export class ComponentItem implements IComponentItem {
@@ -24,10 +26,11 @@ export class ComponentItem implements IComponentItem {
     [key: string]      : any;
     id                  = 0 ;
     nombre              = '';
-    tipo                = '';
+    categoriaId         = 1 ;
     numero              = '';
+    tipo                = '';
     
-    parse( obj: IComponentItem ) {
+    parse( obj: IBackendComponentItem ) {
         
     	Object.keys( this ).forEach( key => {
     		if ( typeof this[key] === 'string' ){
@@ -43,6 +46,8 @@ export class ComponentItem implements IComponentItem {
     			this[key] =  ( obj[key] ?? ComponentItem.clean[key] );
     		}
     	} );
+        
+    	this.tipo = obj.categoriaId === 1 ? 'software' : 'hardware'; 
         
     	return this;
     }

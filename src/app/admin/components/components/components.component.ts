@@ -3,9 +3,12 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { IComponentItem, ComponentItem } from 'src/app/core/models/inventory/component.model';
 import { IFormInput } from 'src/app/core/models/tools/form-input.model';
+import { Loader } from 'src/app/core/models/tools/loader.model';
 import { IModalData } from 'src/app/core/models/tools/modal-data';
+import { ComponentsService } from 'src/app/core/services/api/components.service';
 import { FormService } from 'src/app/core/services/internal/form.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
+import { SnackbarService } from 'src/app/core/services/internal/snackbar.service';
 import { ModalComponent } from 'src/app/core/shared/components/modal/modal.component';
 import components from 'src/assets/jsons/components.json';
 @Component( {
@@ -18,6 +21,8 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 	private _allSubs   : Subscription[]   = [];
 	allCardsInventory  : IComponentItem[] = [];
 	currentComponent  !: IComponentItem;
+	loaderObject       : Loader =  new Loader();
+	
 	
 	
 	// -------------------------------------------------- ANCHOR: LIFECYCLE
@@ -25,38 +30,14 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 	constructor(
 		private _dialog: MatDialog,
 		private _formService: FormService,
-		private _helperService: HelpersService
+		private _helperService: HelpersService,
+		private _componentsService: ComponentsService,
+		private _snackbarService: SnackbarService
 	) { }
 	
 	ngOnInit(): void {
-		
-		const card = new ComponentItem();
-		card.id = 1;
-		card.nombre = 'Cable';
-		card.numero = '12313';
-		card.tipo = 'hardware';
-		
-		const card2 = new ComponentItem();
-		card2.id = 2;
-		card2.nombre = 'Java';
-		card2.numero = 'cdsd';
-		card2.tipo = 'software';
-		
-		const card3 = new ComponentItem();
-		card3.id = 3;
-		card3.nombre = 'Cable 2';
-		card3.numero = '1231s3';
-		card3.tipo = 'hardware';
-		
-		const card4 = new ComponentItem();
-		card4.id = 4;
-		card4.nombre = 'Monitor';
-		card4.numero = 'W12313';
-		card4.tipo = 'hardware';
-		
-		this.allCardsInventory = [ card, card2, card3, card4 ];
-		console.log( this.allCardsInventory );
-		
+		this.loaderService();
+		this.getComponents();		
 		this.modalService();
 		this.noticeService();
 	}
@@ -131,6 +112,12 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 		} );
 	}
 	
+	loaderService(){
+		this._helperService.loader$.subscribe( ( response ) => {
+			this.loaderObject = response;
+		} );
+	}
+	
 	
 	// -------------------------------------------------- ANCHOR: API
 	
@@ -152,6 +139,21 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 		this._dialog.closeAll();
 		this._formService.formData$.next( { newData: null, editData: null } );
 		this.currentComponent = new ComponentItem ();
+	}
+	
+	getComponents(){
+		this._componentsService.getComponents().subscribe(
+			data => {
+				console.log( data );
+				this.allCardsInventory = data;
+			},
+			err => {
+				this._snackbarService.showSnackbar(
+					'ERR_GET_COMPONENTS', 
+					'error'
+				);
+			}
+		);
 	}
 
 }
