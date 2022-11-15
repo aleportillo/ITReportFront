@@ -7,7 +7,7 @@
                 [report]="report"
                 [section]="'new'"
                 [rowTemplate]="rowTemplate"
-                (clickButtonEmitter)="updateReport($event, report)">
+                (clickButtonEmitter)="actionReport($event, report)">
             </app-list-row>
         </ng-container>
         <ng-template #noReports>

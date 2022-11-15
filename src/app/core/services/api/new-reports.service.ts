@@ -28,11 +28,22 @@ export class NewReportsService {
 			);
 	}
 
-	updateReport( section: string, idReport: number ) {
-		this._helpersService.setTrue( section );
-		return this._http.put( API_URL + `reportes/${ idReport }`, { estadoId: 1 } )
+	updateReport( reportId: number ) {
+		this._helpersService.setTrue( 'acceptReport' );
+		return this._http.put( API_URL + `reportes/${ reportId }`, { estadoId: 1 } )
 			.pipe(
-				finalize( () => this._helpersService.setFalse( section ) ),
+				finalize( () => this._helpersService.setFalse( 'acceptReport' ) ),
+				map( ( data: any ) => {
+					return data;
+				} ) 
+			);
+	}
+	
+	deleteReport( reportId: number ){
+		this._helpersService.setTrue( 'rejectReport' );
+		return this._http.delete( API_URL + `reportes/${ reportId }` )
+			.pipe(
+				finalize( () => this._helpersService.setFalse( 'rejectReport' ) ),
 				map( ( data: any ) => {
 					return data;
 				} ) 

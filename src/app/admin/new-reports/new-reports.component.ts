@@ -47,9 +47,35 @@ export class NewReportsComponent implements OnInit, OnDestroy {
 	}
 
 	// -------------------------------------------------- ANCHOR: API
+	
+	actionReport( type: string, report: INewReport ){
+		if ( type === 'acceptReport' ){
+			this.updateReport( report );
+		} else {
+			this.deleteReport( report );
+		}
+	}
+	
+	deleteReport( report : INewReport ){
+		this._newReportService.deleteReport( report.id ).subscribe(
+			data => {
+				this.newReports = this.newReports.filter( card => card.id !== report.id );
+				this._snackbarService.showSnackbar(
+					'El reporte se descarto correctamente', 
+					'success'
+				);
+			},
+			err => {
+				this._snackbarService.showSnackbar(
+					'ERR_DELETE_COMPONENT', 
+					'error'
+				);
+			}
+		);
+	}
 
-	updateReport( event: any, report : INewReport ) {
-		this._newReportService.updateReport( event, report.id ).subscribe(
+	updateReport( report : INewReport ) {
+		this._newReportService.updateReport( report.id ).subscribe(
 			data => {
 				this.newReports = this.newReports.filter( ( newReport : INewReport ) => newReport.id !== report.id );
 				this._snackbarService.showSnackbar( 'El reporte ha sido aceptado correctamente', 'success' );
