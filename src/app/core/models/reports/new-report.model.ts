@@ -57,8 +57,8 @@ export class NewReport implements INewReport {
 
     	this.categoria = obj.categoria.nombre ?? '';
     	this.incidente = obj.incidente.nombre ?? '';
-    	const ID_TYPE_POSTION = 1;
-    	this.idTipo    = ( obj.sala !== null ) ? obj.sala?.nombre?.split( ' ' )[ID_TYPE_POSTION] : obj.computadora.gabinete;
+    	
+    	this.idTipo    = ( obj.sala !== null ) ? obj.sala?.nombre : obj.computadora.gabinete;
     	this.tipo      = obj.salaId ? 'sala' : 'computadora';
 
     	return this;
