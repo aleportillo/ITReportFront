@@ -24,7 +24,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
 	loaderObject       : Loader =  new Loader();
 	
 	@Input() set hasNewElementAdded( value: boolean ) {
-		console.log(value)
+		console.log( value );
 		if ( value ){
 			setTimeout( () => { this.getRooms(); }, 6000 );
 			// this.getRooms();
@@ -139,10 +139,26 @@ export class RoomsComponent implements OnInit, OnDestroy {
 	// -------------------------------------------------- ANCHOR: API
 	
 	deleteRoom( actualRoom: IRoom ){
-		this.allCardsInventory = this.allCardsInventory.filter( card => card.id !== actualRoom.id );
-		this._dialog.closeAll();
-		this._helperService.noticeModal$.next( { delete: false } );
-		this.currentRoom = new Room ();
+		this._roomsService.deleteRoom( actualRoom.id ).subscribe(
+			data => {
+				console.log( data );
+				this.allCardsInventory = this.allCardsInventory.filter( card => card.id !== actualRoom.id );
+				this._dialog.closeAll();
+				this._helperService.noticeModal$.next( { delete: false } );
+				this.currentRoom = new Room ();
+				this._snackbarService.showSnackbar(
+					'La sala se elimino correctamente', 
+					'success'
+				);
+			},
+			err => {
+				this._snackbarService.showSnackbar(
+					'ERR_DELETE_ROOM', 
+					'error'
+				);
+			}
+		);
+		
 	}
 	
 	saveRoom( actualData: IRoom, newData: any ){

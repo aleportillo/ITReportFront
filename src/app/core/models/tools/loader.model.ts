@@ -16,6 +16,7 @@ export interface ILoader {
     getRooms          : boolean;
     getComputers      : boolean;
     getComponents     : boolean;
+    deleteRoom        : boolean;
 }
 
 export class Loader implements ILoader {
@@ -38,4 +39,5 @@ export class Loader implements ILoader {
     getRooms          = false;
     getComputers      = false;
     getComponents     = false;
+    deleteRoom        = false;
 }

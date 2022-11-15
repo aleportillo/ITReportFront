@@ -34,7 +34,7 @@ export class RoomsService {
 			.pipe(
 				finalize( () => this._helpersService.setFalse( 'getRooms' ) ),
 				map( ( data : any ) => {
-					console.log(data);
+					console.log( data );
 					return ( data || [] ).map( ( room: IBackendRoom ) => new Room().parse( room ) );
 				} )
 			);
@@ -45,6 +45,17 @@ export class RoomsService {
 		return this._http.put( API_URL + `salas/${ roomId }`, room )
 			.pipe(
 				finalize( () => this._helpersService.setFalse( 'saveRoom' ) ),
+				map( ( data: any ) => {
+					return data;
+				} ) 
+			);
+	}
+	
+	deleteRoom( roomId: number ){
+		this._helpersService.setTrue( 'deleteRoom' );
+		return this._http.delete( API_URL + `salas/${ roomId }` )
+			.pipe(
+				finalize( () => this._helpersService.setFalse( 'deleteRoom' ) ),
 				map( ( data: any ) => {
 					return data;
 				} ) 
