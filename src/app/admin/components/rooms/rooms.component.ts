@@ -184,7 +184,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
 					'error'
 				);
 			}
-		)
+		);
 	}
 
 }
