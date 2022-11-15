@@ -1,7 +1,7 @@
 export interface SaveComputer {
     gabinete            : string;
-    hardware            : string[];
-    software            : string[];
+    componentsHardware  : string[];
+    componentesSoftware : string[];
     salaId              : string;
 }
 

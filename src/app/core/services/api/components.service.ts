@@ -41,6 +41,19 @@ export class ComponentsService {
 			);
 	}
 	
+	getFreeComponents(){
+		this._helpersService.setTrue( 'getComponents' );
+		return this._http.get( API_URL + 'Componentes/unassigned' )
+			.pipe(
+				finalize( () => this._helpersService.setFalse( 'getComponents' ) ),
+				map( ( data : any ) => {
+					console.log( data );
+					// return [];
+					return ( data || [] ).map( ( component: IBackendComponentItem ) => new ComponentItem().parse( component ) );
+				} )
+			);
+	}
+	
 	updateComponent( componentId: number, component: SaveComponentItem ){
 		this._helpersService.setTrue( 'saveComponent' );
 		return this._http.put( API_URL + `Componentes/${ componentId }`, component )

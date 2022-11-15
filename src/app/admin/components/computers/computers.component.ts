@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { ComponentItem } from 'src/app/core/models/inventory/component.model';
 import { IComputer, Computer } from 'src/app/core/models/inventory/computer.model';
 import { IFormInput } from 'src/app/core/models/tools/form-input.model';
 import { Loader } from 'src/app/core/models/tools/loader.model';
 import { IModalData } from 'src/app/core/models/tools/modal-data';
+import { ComponentsService } from 'src/app/core/services/api/components.service';
 import { ComputersService } from 'src/app/core/services/api/computers.service';
 import { FormService } from 'src/app/core/services/internal/form.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
@@ -22,6 +24,7 @@ export class ComputersComponent implements OnInit, OnDestroy {
 	allCardsInventory  : IComputer[]    = [];
 	currentComputer   !: IComputer;
 	loaderObject       : Loader =  new Loader();
+	allFreeComponents  : ComponentItem[] = [];
 	
 	
 	// -------------------------------------------------- ANCHOR: LIFECYCLE
@@ -31,7 +34,8 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		private _formService     : FormService,
 		private _helperService   : HelpersService,
 		private _snackbarService : SnackbarService,
-		private _computersService: ComputersService
+		private _computersService: ComputersService,
+		private _componentsService: ComponentsService
 	) { }
 	
 	ngOnInit(): void {
@@ -39,6 +43,7 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		this.modalService();
 		this.noticeService();
 		this.loaderService();
+		this.getFreeComponents();
 	}
 	
 	ngOnDestroy() {
@@ -161,7 +166,22 @@ export class ComputersComponent implements OnInit, OnDestroy {
 					'error'
 				);
 			}
-		)
+		);
+	}
+	
+	getFreeComponents(){
+		this._componentsService.getFreeComponents().subscribe(
+			data => {
+				console.log( data );
+				this.allFreeComponents = data;
+			},
+			err => {
+				this._snackbarService.showSnackbar(
+					'ERR_GET_COMPONENTS', 
+					'error'
+				);
+			}
+		);
 	}
 
 }

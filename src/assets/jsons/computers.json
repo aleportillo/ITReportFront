@@ -21,7 +21,7 @@
         ]
     },
     {
-        "name"        : "hardware",
+        "name"        : "componentsHardware",
         "type"        : "multiple",
         "label"       : "Hardware",
         "columnSize"  : 2,
@@ -34,7 +34,7 @@
         ]
     },
     {
-        "name"        : "software",
+        "name"        : "componentesSoftware",
         "type"        : "multiple",
         "label"       : "Software",
         "columnSize"  : 2,

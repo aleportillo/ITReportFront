@@ -19,7 +19,7 @@ export class ComputersService {
 	
 	saveElement( component: SaveComputer ){
 		this._helpersService.setTrue( 'saveComputer' );
-		return this._http.post( API_URL + `computadoras`, component )
+		return this._http.post( API_URL + `computadoras/v2`, component )
 			.pipe(
 				finalize( () => this._helpersService.setFalse( 'saveComputer' ) ),
 				map( ( data: any ) => {

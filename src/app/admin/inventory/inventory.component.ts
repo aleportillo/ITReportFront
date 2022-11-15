@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { SaveRoom } from 'src/app/core/models/inventory/room.model';
-import { IFormInput } from 'src/app/core/models/tools/form-input.model';
+import { IRoom, SaveRoom } from 'src/app/core/models/inventory/room.model';
+import { IFormInput, IFormInputOption } from 'src/app/core/models/tools/form-input.model';
 import { IModalData } from 'src/app/core/models/tools/modal-data';
 import { RoomsService } from 'src/app/core/services/api/rooms.service';
 import { FormService } from 'src/app/core/services/internal/form.service';
@@ -12,6 +12,7 @@ import { ComputersService } from 'src/app/core/services/api/computers.service';
 import rooms from 'src/assets/jsons/rooms.json';
 import components from 'src/assets/jsons/components.json';
 import computers from 'src/assets/jsons/computers.json';
+import { ComponentItem } from 'src/app/core/models/inventory/component.model';
 
 @Component( {
 	selector    : 'app-inventory',
@@ -26,8 +27,13 @@ export class InventoryComponent implements OnInit {
 		{ text: 'Componentes', form: components }
 	];
 	
-	currentSection : 'Salas' | 'Computadoras' | 'Componentes' | string = 'Salas';
+	currentSection : 'Salas' | 'Computadoras' | 'Componentes' | string = 'Computadoras';
 	hasNewElementAdded = false;
+	allFreeComponents  : ComponentItem[] = [];
+	hardwareComponents : IFormInputOption[] = [];
+	softwareComponents : IFormInputOption[] = [];
+	allRooms		   : IFormInputOption[] = [];
+	gettingOptions     = { rooms: false, components: false };
 	
 	constructor(
 		private _dialog: MatDialog,
@@ -61,7 +67,37 @@ export class InventoryComponent implements OnInit {
 	
 	// -------------------------------------------------- ANCHOR: API
 	
+	getFreeComponents(){
+		return new Promise<string>( ( resolve, reject ) => {
+			this._componentsService.getFreeComponents().subscribe(
+				data => {
+					console.log( data );
+					this.allFreeComponents = data;
+					this.hardwareComponents = this.allFreeComponents.filter( item => item.categoriaId === 2 )
+						.map( item => { return {text: item.nombre, value: item.id }; } );
+					this.softwareComponents = this.allFreeComponents.filter( item => item.categoriaId === 1 )
+						.map( item => { return {text: item.nombre, value: item.id }; } );
+					resolve( 'success' );
+				},
+				err => { reject( 'error' ); }
+			);
+		} );
+	}
+	
+	getRooms(){
+		return new Promise<string>( ( resolve, reject ) => {
+			this._roomsService.getRooms().subscribe(
+				data => {
+					this.allRooms = data.map( ( item : IRoom ) => { return { text: item.nombre, value: item.id }; } );
+					resolve( 'success' );
+				},
+				err => { reject( 'error' ); }
+			);
+		} );
+	}
+	
 	saveElement( saveData : any ){
+		console.log( this.allFreeComponents );
 		this.hasNewElementAdded = false;
 		switch ( this.currentSection ){
 			case 'Salas': this.saveRoom( saveData ); break;
@@ -103,6 +139,8 @@ export class InventoryComponent implements OnInit {
 	}
 	
 	saveComputer( saveData: any ){
+		console.log(saveData);
+		// return;
 		this._computersService.saveElement( { ...saveData } ).subscribe(
 			( res ) => {
 				this.hasNewElementAdded = true;
@@ -120,10 +158,16 @@ export class InventoryComponent implements OnInit {
 	
 	// -------------------------------------------------- ANCHOR: FORM
 	
-	openForm(){
+	async openForm(){
+		
+		const currentForm = await this.loadForm();
+		
+		console.log( 'currentForm', currentForm );
+		
+		if ( !currentForm ) { return; }
+		
 		const FIRST_ELEMENT = 0;
 		const LAST_POSITION = 1;
-		const currentForm = this.buttonsTemplate.find( element => element.text === this.currentSection )?.form;
 		const modalData : IModalData = {
 			title       : `${ this.currentSection.substring( FIRST_ELEMENT, this.currentSection.length - LAST_POSITION ) }`,
 			form        : currentForm as IFormInput[],
@@ -140,6 +184,31 @@ export class InventoryComponent implements OnInit {
 
 		this._dialog.open( ModalComponent , dialogConfig );
 		
+	}
+	
+	async loadForm(){
+
+		const currentForm = this.buttonsTemplate.find( element => element.text === this.currentSection )?.form;
+		if ( this.currentSection !== 'Computadoras' ) { return currentForm; }
+		
+		await this.getFreeComponents();
+		await this.getRooms();
+		
+		console.log('HW', this.hardwareComponents);
+		console.log('ROOMS', this.allRooms);
+		
+		if ( this.hardwareComponents.length < 1 || this.allRooms.length < 1 ){ 
+			this._snackbarService.showSnackbar( 'LOAD_FORM', 'error' );
+			return null; 
+		}
+		
+		currentForm?.forEach( ( input : IFormInput ) => {
+			if ( input.name === 'componentsHardware' ){ input.options = this.hardwareComponents; }
+			if ( input.name === 'componentesSoftware' ){ input.options = this.softwareComponents; }
+			if ( input.name === 'salaId'   ){ input.options = this.allRooms; }
+		} );
+		
+		return currentForm;
 	}
 	
 }
