@@ -6,7 +6,8 @@
                 *ngFor="let report of activeReports" 
                 [report]="report"
                 [section]="'active'"
-                [rowTemplate]="rowTemplate">
+                [rowTemplate]="rowTemplate"
+                (clickButtonEmitter)="openDialog(report)">
             </app-list-row>
         </ng-container> 
         <ng-template #noReports>

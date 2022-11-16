@@ -3,7 +3,7 @@ import { HelpersService } from '../internal/helpers.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { finalize, map } from 'rxjs';
-import { ActiveReport, IBackendActiveReport } from '../../models/reports/active-report.model';
+import { ActiveReport, IActiveReport, IBackendActiveReport } from '../../models/reports/active-report.model';
 
 const API_URL = environment.apiURL;
 
@@ -28,13 +28,31 @@ export class ActiveReportsService {
 			);
 	}
 
-	// TODO CHECK
-	updateReport( section: string ) {
-		this._helpersService.setTrue( section );
-		return this._http.put( API_URL, {} )
+
+	updateReport( reportId: number, reportData: IActiveReport ) {
+
+		const saveReport : any = {
+			categoriaId       : reportData.categoriaId,
+			tipoDeIncidenteId : reportData.tipoDeIncidenteId,
+			comentarios       : reportData.comentariosReporte,
+			comentariosAdmin  : reportData.comentariosAdmin,
+			estadoId          : reportData.estadoId
+		};
+		
+		if ( reportData.tipo === 'sala' ){
+			saveReport.salaId = reportData.idTipoBackend;
+		} else {
+			saveReport.computadoraId = reportData.idTipoBackend;
+		}
+		console.log( saveReport );
+		
+		this._helpersService.setTrue( 'createReport' );
+		return this._http.put( API_URL + `reportes/${ reportId }`, saveReport )
 			.pipe(
-				finalize( () => this._helpersService.setFalse( section ) ),
+				finalize( () => this._helpersService.setFalse( 'createReport' ) ),
 				map( ( data: any ) => {
+					console.log( data );
+					console.log( 'SAVEEE' );
 					return data;
 				} ) 
 			);
