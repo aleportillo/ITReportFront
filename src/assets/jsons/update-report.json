@@ -1,0 +1,55 @@
+[
+    {
+        "label"     : "Tipo de reporte",
+        "name"      : "categoriaId",
+        "type"      : "select",
+        "columnSize": 1,
+        "subtype"   : "normal",
+        "options"   : [],
+        "disabled"   : true
+    },
+    {
+        "label"     : "Problema",
+        "name"      : "tipoDeIncidenteId",
+        "type"      : "select",
+        "subtype"   : "normal",
+        "columnSize": 1,
+        "disabled"   :true,
+        "options"   : [],
+        "allOptions" : {
+            "reporte": [],
+            "solicitud": []
+        }
+    },
+    {
+        "label"     : "Descripción",
+        "name"      : "comentariosReporte",
+        "type"      : "textArea",
+        "optional"  : true,
+        "columnSize": 2,
+        "maxLength" : 500,
+        "disabled"   : true
+    },
+    {
+        "name"        : "estadoId",
+        "type"        : "select",
+        "label"       : "Estado",
+        "columnSize"  : 2,
+        "optional"    : true,
+        "subtype"     : "normal",
+        "options"     : [
+            { "text" : "Pendiente",  "value": 1 },
+            { "text" : "Atendiendo",  "value": 5 },
+            { "text" : "Detenido",   "value": 2 },
+            { "text" : "Resuelto",   "value": 3 }
+        ]
+    },
+    {
+        "label"     : "Comentarios",
+        "name"      : "comentariosAdmin",
+        "type"      : "textArea",
+        "optional"  : true,
+        "columnSize": 2,
+        "maxLength" : 500
+    }
+]
