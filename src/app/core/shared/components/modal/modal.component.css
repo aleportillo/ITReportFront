@@ -16,12 +16,12 @@ header h1{
     color: var(--tertiary);
 }
 
-.form header h1 [type="pc"],
+.type-form header h1[type="pc"],
 .type-notice .modal__form .modal__noticeData span[type='pc']{
     color: var(--quaternary);
 }
 
-.form header h1 [type="component"],
+.form header h1[type="component"],
 .type-notice .modal__form .modal__noticeData span[type='component']{
     color: var(--quinary);
 }
@@ -34,6 +34,7 @@ header h1{
     grid-template-columns: repeat(2, 50%);
     row-gap: 1rem;
     margin-block: 1rem;
+    column-gap: .2rem;
 }
 
 .form__input{

@@ -12,9 +12,9 @@
 			[id]="formInput.name"
 			[formControlName]="formInput.name"
 			[placeholder]="formInput.placeholder ?? ''"
-			[disabled]="formInput.disabled ?? false"
 			rows="5"
 			[maxLength]="formInput.maxLength"
+			[attr.disabled]="formInput.disabled ?? null"
 		>
 		</textarea>
 	</div>
