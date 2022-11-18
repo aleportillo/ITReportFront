@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ComponentItem } from 'src/app/core/models/inventory/component.model';
@@ -26,6 +26,13 @@ export class ComputersComponent implements OnInit, OnDestroy {
 	loaderObject       : Loader =  new Loader();
 	allFreeComponents  : ComponentItem[] = [];
 	
+	@Input() set hasNewElementAdded( value: boolean ) {
+		console.log( value );
+		if ( value ){
+			setTimeout( () => { this.getComputers(); }, 6000 );
+			// this.getRooms();
+		}
+	}
 	
 	// -------------------------------------------------- ANCHOR: LIFECYCLE
 	
@@ -138,6 +145,26 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		this._dialog.closeAll();
 		this._helperService.noticeModal$.next( { delete: false } );
 		this.currentComputer = new Computer ();
+		
+		this._computersService.deleteComputer( actualComputer.id ).subscribe(
+			data => {
+				this.allCardsInventory = this.allCardsInventory.filter( card => card.id !== actualComputer.id );
+				this._dialog.closeAll();
+				this._helperService.noticeModal$.next( { delete: false } );
+				this.currentComputer = new Computer ();
+				this._snackbarService.showSnackbar(
+					'La computadora se elimino correctamente', 
+					'success'
+				);
+			},
+			err => {
+				this._snackbarService.showSnackbar(
+					'ERR_DELETE_COMPONENT', 
+					'error'
+				);
+			}
+		);
+		
 	}
 	
 	saveComputer( actualData: IComputer, newData: any ){

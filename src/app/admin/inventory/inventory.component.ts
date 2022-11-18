@@ -73,9 +73,21 @@ export class InventoryComponent implements OnInit {
 					console.log( data );
 					this.allFreeComponents = data;
 					this.hardwareComponents = this.allFreeComponents.filter( item => item.categoriaId === 2 )
-						.map( item => { return {text: item.nombre, value: item.id }; } );
-					this.softwareComponents = this.allFreeComponents.filter( item => item.categoriaId === 1 )
-						.map( item => { return {text: item.nombre, value: item.id }; } );
+						.map( item => { return { text: item.nombre, value: item.id }; } );
+					resolve( 'success' );
+				},
+				err => { reject( 'error' ); }
+			);
+		} );
+	}
+	
+	getComponents(){
+		return new Promise<string>( ( resolve, reject ) => {
+			this._componentsService.getComponents().subscribe(
+				data => {
+					console.log( data );
+					this.softwareComponents = data.filter( ( item : any ) => item.categoriaId === 1 )
+						.map( ( item : any ) => { return { text: item.nombre, value: item.id }; } );
 					resolve( 'success' );
 				},
 				err => { reject( 'error' ); }
@@ -138,7 +150,7 @@ export class InventoryComponent implements OnInit {
 	}
 	
 	saveComputer( saveData: any ){
-		console.log(saveData);
+		console.log( saveData );
 		// return;
 		this._computersService.saveElement( { ...saveData } ).subscribe(
 			( res ) => {
@@ -192,6 +204,7 @@ export class InventoryComponent implements OnInit {
 		
 		await this.getFreeComponents();
 		await this.getRooms();
+		await this.getComponents();
 		
 		console.log('HW', this.hardwareComponents);
 		console.log('ROOMS', this.allRooms);

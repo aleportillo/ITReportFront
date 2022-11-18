@@ -40,4 +40,15 @@ export class ComputersService {
 			);
 	}
 	
+	deleteComputer( componentId: number ){
+		this._helpersService.setTrue( 'deleteComputer' );
+		return this._http.delete( API_URL + `computadoras/${ componentId }` )
+			.pipe(
+				finalize( () => this._helpersService.setFalse( 'deleteComputer' ) ),
+				map( ( data: any ) => {
+					return data;
+				} ) 
+			);
+	}
+	
 }

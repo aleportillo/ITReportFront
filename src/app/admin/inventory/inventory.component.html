@@ -19,7 +19,9 @@
             </app-rooms>
         </ng-container>
         <ng-container *ngSwitchCase="'Computadoras'">
-            <app-computers></app-computers>
+            <app-computers
+                [hasNewElementAdded] = 'hasNewElementAdded'
+            ></app-computers>
         </ng-container>
         <ng-container *ngSwitchCase="'Componentes'">
             <app-components
