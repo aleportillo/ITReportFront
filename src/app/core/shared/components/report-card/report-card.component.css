@@ -24,7 +24,7 @@
     color: var(--status-stopped);
 }
 
-.card .details .status[status='atendiendo']{
+.card .details .status[status='atendido']{
     font-weight: bold;
     color: var(--status-attending);
 }

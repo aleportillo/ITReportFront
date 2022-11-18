@@ -6,7 +6,9 @@
     <div class="details">
         <p>{{report.categoria | firstLetterUppercase }}</p>
         <p>{{report.incidente | firstLetterUppercase }}</p>
-        <p class="status" [attr.status]="report.estado.toLowerCase()">{{report.estado | firstLetterUppercase}}</p>
+        <p class="status" [attr.status]="report.estado.toLowerCase()">
+            {{ (report.estado === 'Atendido' ? 'atendiendo' : report.estado ) | firstLetterUppercase}}
+        </p>
     </div>
     <ng-container *ngIf="report.comentariosReporte">
         <p> <span> Descripción:</span> {{report.comentariosReporte }}</p>
