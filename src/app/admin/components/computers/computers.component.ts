@@ -3,11 +3,13 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ComponentItem } from 'src/app/core/models/inventory/component.model';
 import { IComputer, Computer } from 'src/app/core/models/inventory/computer.model';
-import { IFormInput } from 'src/app/core/models/tools/form-input.model';
+import { IRoom } from 'src/app/core/models/inventory/room.model';
+import { IFormInput, IFormInputOption } from 'src/app/core/models/tools/form-input.model';
 import { Loader } from 'src/app/core/models/tools/loader.model';
 import { IModalData } from 'src/app/core/models/tools/modal-data';
 import { ComponentsService } from 'src/app/core/services/api/components.service';
 import { ComputersService } from 'src/app/core/services/api/computers.service';
+import { RoomsService } from 'src/app/core/services/api/rooms.service';
 import { FormService } from 'src/app/core/services/internal/form.service';
 import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 import { SnackbarService } from 'src/app/core/services/internal/snackbar.service';
@@ -25,6 +27,9 @@ export class ComputersComponent implements OnInit, OnDestroy {
 	currentComputer   !: IComputer;
 	loaderObject       : Loader =  new Loader();
 	allFreeComponents  : ComponentItem[] = [];
+	hardwareComponents : IFormInputOption[] = [];
+	softwareComponents : IFormInputOption[] = [];
+	allRooms		   : IFormInputOption[] = [];
 	
 	@Input() set hasNewElementAdded( value: boolean ) {
 		console.log( value );
@@ -42,7 +47,8 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		private _helperService   : HelpersService,
 		private _snackbarService : SnackbarService,
 		private _computersService: ComputersService,
-		private _componentsService: ComponentsService
+		private _componentsService: ComponentsService,
+		private _roomsService : RoomsService
 	) { }
 	
 	ngOnInit(): void {
@@ -59,12 +65,44 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		} );
 	}
 	
+	async loadForm(){
+
+		const currentForm = computers;
+
+		await this.getFreeComponents();
+		await this.getRooms();
+		await this.getComponents();
+		
+		console.log('HW', this.hardwareComponents);
+		console.log('ROOMS', this.allRooms);
+		
+		if ( this.hardwareComponents.length < 1 || this.allRooms.length < 1 ){ 
+			this._snackbarService.showSnackbar( 'LOAD_FORM', 'error' );
+			return null; 
+		}
+		
+		currentForm?.forEach( ( input : IFormInput ) => {
+			if ( input.name === 'componentsHardware' ){ input.options = this.hardwareComponents; }
+			if ( input.name === 'componentesSoftware' ){ input.options = this.softwareComponents; }
+			if ( input.name === 'salaId'   ){ input.options = this.allRooms; }
+		} );
+		
+		return currentForm;
+	}
+	
 	
 	// -------------------------------------------------- ANCHOR: MODALS
 	
-	openEditComputerForm( editComputer : IComputer ){
+	async openEditComputerForm( editComputer : IComputer ){
+		
+		const currentForm = await this.loadForm();
+		
+		console.log( 'currentForm', currentForm );
+		
+		if ( !currentForm ) { return; }
+		
 		console.log( editComputer );
-		const currentForm = computers;
+
 		const modalData : IModalData = {
 			title       : `Computadora`,
 			form        : currentForm as IFormInput[],
@@ -197,18 +235,44 @@ export class ComputersComponent implements OnInit, OnDestroy {
 	}
 	
 	getFreeComponents(){
-		this._componentsService.getFreeComponents().subscribe(
-			data => {
-				console.log( data );
-				this.allFreeComponents = data;
-			},
-			err => {
-				this._snackbarService.showSnackbar(
-					'ERR_GET_COMPONENTS', 
-					'error'
-				);
-			}
-		);
+		return new Promise<string>( ( resolve, reject ) => {
+			this._componentsService.getFreeComponents().subscribe(
+				data => {
+					console.log( data );
+					this.allFreeComponents = data;
+					this.hardwareComponents = this.allFreeComponents.filter( item => item.categoriaId === 2 )
+						.map( item => { return { text: item.nombre, value: item.id }; } );
+					resolve( 'success' );
+				},
+				err => { reject( 'error' ); }
+			);
+		} );
+	}
+	
+	getComponents(){
+		return new Promise<string>( ( resolve, reject ) => {
+			this._componentsService.getComponents().subscribe(
+				data => {
+					console.log( data );
+					this.softwareComponents = data.filter( ( item : any ) => item.categoriaId === 1 )
+						.map( ( item : any ) => { return { text: item.nombre, value: item.id }; } );
+					resolve( 'success' );
+				},
+				err => { reject( 'error' ); }
+			);
+		} );
+	}
+	
+	getRooms(){
+		return new Promise<string>( ( resolve, reject ) => {
+			this._roomsService.getRooms().subscribe(
+				data => {
+					this.allRooms = data.map( ( item : IRoom ) => { return { text: item.nombre, value: item.id }; } );
+					resolve( 'success' );
+				},
+				err => { reject( 'error' ); }
+			);
+		} );
 	}
 
 }
