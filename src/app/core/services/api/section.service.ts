@@ -6,6 +6,7 @@ import { finalize, map } from 'rxjs';
 import { IBackendViewReport, ViewReport } from '../../models/reports/view-report.model';
 import { Report } from '../../models/reports/report.model';
 import { Incident } from '../../models/incident.model';
+import { IBackendViewInventory, ViewInventory } from '../../models/inventory/view-inventory.model';
 
 const API_URL = environment.apiURL;
 
@@ -77,7 +78,7 @@ export class SectionService {
 		const params : any = {};
 		params[ `Id${ type }` ] = idElement;
 		
-		const route = type === 'computadora' ? 'Componentes/computadora' : '';
+		const route = type === 'computadora' ? `Componentes/computadora/${ idElement }` : '';
 
 		this._helpersService.setTrue( 'getInventoryItems' );
 		return this._http.get( API_URL + `${ route }`, params )
@@ -88,7 +89,7 @@ export class SectionService {
 						return ( data || [] ).map( ( report: IBackendViewReport ) => new ViewReport().parse( report ) );
 					} 
 					// Components
-					return ( data || [] ).map( ( report: IBackendViewReport ) => new ViewReport().parse( report ) );
+					return ( data || [] ).map( ( item : IBackendViewInventory ) => new ViewInventory().parse( item ) );
 				} ) 
 			);
 	}

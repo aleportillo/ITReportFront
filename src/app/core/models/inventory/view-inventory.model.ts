@@ -3,13 +3,16 @@ import { categoria, estado } from '../tools/tool-interface.model';
 
 export interface IBackendViewInventory {
     [key: string]     : any;
-    id                : number; 
-    fechaDeInventorye    : Date;
-    estado            : estado;
-    comentariosInventorye?: string;
-    comentariosAdmin  ?: string;
-    categoria         : categoria;
-    incidente         : IIncident;
+    // id                : number; 
+    // fechaDeInventorye    : Date;
+    // estado            : estado;
+    // comentariosInventorye?: string;
+    // comentariosAdmin  ?: string;
+
+    // incidente         : IIncident;
+    
+    categoriaId       ?: number;
+    nombre            ?: string;
 }
 
 export interface IViewInventory {
@@ -30,17 +33,9 @@ export class ViewInventory implements IViewInventory {
     
     parse( obj: IBackendViewInventory ) {
         
-    	Object.keys( this ).forEach( key  => {
-    		if ( typeof this[key] === 'string' ){
-    			this[key] = String ( obj[key] ?? ViewInventory.clean[key] );
-    		}
-    		else if ( typeof this[key] === 'number' ){
-    			this[key] = Number ( obj[key] ?? ViewInventory.clean[key] );
-    		}
-    		else if ( typeof this[key] === 'boolean' ){
-    			this[key] = Boolean ( obj[key] ?? ViewInventory.clean[key] );
-    		}
-    	} );
+    	this.title = obj.categoriaId === 1 ? 'software' : 'hardware';
+    	this.subtitle1 = obj.nombre ?? '';
+    	this.type = obj.categoriaId === 1 ? 'software' : 'hardware';
 
     	return this;
     }
