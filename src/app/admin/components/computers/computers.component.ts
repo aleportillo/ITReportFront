@@ -65,7 +65,7 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		} );
 	}
 	
-	async loadForm(){
+	async loadForm( editOptions: any[] ){
 
 		const currentForm = computers;
 
@@ -75,11 +75,14 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		
 		console.log('HW', this.hardwareComponents);
 		console.log('ROOMS', this.allRooms);
-		
-		if ( this.hardwareComponents.length < 1 || this.allRooms.length < 1 ){ 
+		if ( this.allRooms.length < 1 ){ 
 			this._snackbarService.showSnackbar( 'LOAD_FORM', 'error' );
 			return null; 
 		}
+		
+		this.hardwareComponents = this.hardwareComponents.concat( editOptions );
+		console.log('EDIT OPTIONSSSS', editOptions);
+		console.log('EDIT OPTIONSSSS', this.hardwareComponents);
 		
 		currentForm?.forEach( ( input : IFormInput ) => {
 			if ( input.name === 'componentsHardware' ){ input.options = this.hardwareComponents; }
@@ -95,12 +98,14 @@ export class ComputersComponent implements OnInit, OnDestroy {
 	
 	async openEditComputerForm( editComputer : IComputer ){
 		
-		const currentForm = await this.loadForm();
+		// editComputer.componentesSoftware = editComputer.software;
+		
+		const currentForm = await this.loadForm( editComputer.componentsHardware );
 		
 		console.log( 'currentForm', currentForm );
 		
 		if ( !currentForm ) { return; }
-		
+
 		console.log( editComputer );
 
 		const modalData : IModalData = {
@@ -206,18 +211,48 @@ export class ComputersComponent implements OnInit, OnDestroy {
 	}
 	
 	saveComputer( actualData: IComputer, newData: any ){
-
 		for ( const key in newData ) {
 			actualData[key] = newData[key];
 		}
-		actualData.totalHardware = actualData.hardware.length;
-		actualData.totalSoftware = actualData.software.length;
-	
-		const actualDataIndex = this.allCardsInventory.findIndex( card => card.id === actualData.id );
-		this.allCardsInventory[actualDataIndex] = actualData;
-		this._dialog.closeAll();
-		this._formService.formData$.next( { newData: null, editData: null } );
-		this.currentComputer = new Computer ();
+		actualData.totalHardware = actualData.componentsHardware.length;
+		actualData.totalSoftware = actualData.componentesSoftware.length;
+		
+		this._computersService.updateElement( actualData.id, newData ).subscribe(
+			data =>{
+				
+				// SOFTWARE
+				const newSoftwares : any = [];
+				actualData.componentesSoftware.forEach( value => {
+					const newValue = this.softwareComponents.find( software => software.value === value );
+					if ( newValue ){ newSoftwares.push( newValue ); }
+				} );
+				actualData.componentesSoftware = [...newSoftwares];
+				// HARDWARE
+				const newHardwares : any = [];
+				actualData.componentsHardware.forEach( value => {
+					const newValue = this.hardwareComponents.find( hardware => hardware.value === value );
+					if ( newValue ){ newHardwares.push( newValue ); }
+				} );
+				actualData.componentsHardware = [...newHardwares];
+				
+				const actualDataIndex = this.allCardsInventory.findIndex( card => card.id === actualData.id );
+				this.allCardsInventory[actualDataIndex] = actualData;
+				this._dialog.closeAll();
+				this._formService.formData$.next( { newData: null, editData: null } );
+				this.currentComputer = new Computer ();
+				this._snackbarService.showSnackbar(
+					'La computadora se ha actualizado correctamente', 
+					'success'
+				);
+			}, 
+			err =>{
+				this._snackbarService.showSnackbar(
+					'SAVE_COMPUTERS', 
+					'error'
+				);
+			}
+		);
+		
 	}
 	
 	getComputers(){

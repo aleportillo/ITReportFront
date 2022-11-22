@@ -28,6 +28,17 @@ export class ComputersService {
 			);
 	}
 	
+	updateElement( idComputer:number, component: SaveComputer ){
+		this._helpersService.setTrue( 'saveComputer' );
+		return this._http.put( API_URL + `computadoras/v2/${ idComputer }`, component )
+			.pipe(
+				finalize( () => this._helpersService.setFalse( 'saveComputer' ) ),
+				map( ( data: any ) => {
+					return data;
+				} ) 
+			);
+	}
+	
 	getComputers(){
 		this._helpersService.setTrue( 'getComputers' );
 		return this._http.get( API_URL + 'computadoras' )
