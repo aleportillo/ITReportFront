@@ -3,6 +3,7 @@ import { IRoom } from 'src/app/core/models/inventory/room.model';
 import { IComputer } from 'src/app/core/models/inventory/computer.model';
 import { IViewInventory } from 'src/app/core/models/inventory/view-inventory.model';
 import { IComponentItem } from 'src/app/core/models/inventory/component.model';
+import { Router } from '@angular/router';
 
 @Component( {
 	selector    : 'app-inventory-card',
@@ -19,7 +20,9 @@ export class InventoryCardComponent implements OnInit {
 	
 	
 	
-	constructor() { }
+	constructor(
+		private _router: Router
+	) { }
 
 	ngOnInit(): void {
 		console.log( this.inventoryData );
@@ -34,6 +37,12 @@ export class InventoryCardComponent implements OnInit {
 	handleBadgeClick(){
 		if ( !this.fromSection ) {return;}
 		this.clickBadgeEmitter.emit( this.inventoryData );
+	}
+	
+	redirect(){
+		// console.log(this._router.url);
+		sessionStorage.setItem( 'IT_REPORT', this._router.url );
+		this._router.navigate( [`/computadora/${ this.inventoryData.title }`] );
 	}
 
 }

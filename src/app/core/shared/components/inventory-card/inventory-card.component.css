@@ -55,6 +55,11 @@ h3{
     margin-right: 1.9rem;
 }
 
+h3[type='pc']{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 p{
     margin: 0;
     margin-top: .5rem;

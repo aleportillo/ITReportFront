@@ -89,13 +89,19 @@ export class SectionComponent implements OnInit {
 		this.modalService();
 		this.loadService();
 		this.currentElementService();
-
+		
+		
 		// INIT VARS
 		this.type = this._router.url.split( '/' )[SECTION_POSITION];
 		this.idSection = this._router.url.split( '/' )[ID_SECTION];
 		this.subSectionActive = ( this.type === 'sala' ) ? 
 			this.buttonsRoom[FIRST_ELEMENT].key : 
 			this.buttonsPC[FIRST_ELEMENT].key ;
+		
+		if ( this.type === 'sala' ){
+			// console.log(this.type)
+			sessionStorage.setItem( 'IT_REPORT', `/` );
+		}
 
 		this.sectionResume = {
 			solicitudesSala : 0,
