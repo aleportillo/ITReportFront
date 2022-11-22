@@ -39,6 +39,18 @@ export class FormService {
 	initForm( form: FormGroup, values: any ) : FormGroup {
 		Object.keys( values ).forEach( ( keyValue : any ) => {
 			if ( keyValue === 'password' ) { return; }
+			if ( keyValue === 'componentesSoftware' ){
+				const softwareValues : any = [];
+				values[keyValue].forEach( ( item : any ) => softwareValues.push( item.value ) );
+				form.controls[keyValue]?.setValue( softwareValues );
+				return;
+			}
+			if ( keyValue === 'componentsHardware' ){
+				const hardwareValues : any = [];
+				values[keyValue].forEach( ( item : any ) => hardwareValues.push( item.value ) );
+				form.controls[keyValue]?.setValue( hardwareValues );
+				return;
+			}
 			form.controls[keyValue]?.setValue( values[keyValue] );
 		} );
 		return form;
