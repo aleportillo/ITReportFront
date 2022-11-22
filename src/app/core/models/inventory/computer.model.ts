@@ -20,8 +20,8 @@ export interface IComputer {
     gabinete            : string;
     totalSoftware       ?: number;
     totalHardware       ?: number;
-    hardware            : any[];
-    software            : any[];
+    componentsHardware  : any[]; 
+    componentesSoftware : any[];
 }
 
 export class Computer implements IComputer {
@@ -32,8 +32,8 @@ export class Computer implements IComputer {
     gabinete           = '';
     totalSoftware      ?= 0 ;
     totalHardware      ?= 0 ;
-    hardware      : any = [];
-    software      : any = [];
+    componentsHardware  : any = [];
+    componentesSoftware : any = [];
     
     parse( obj: IBackendComputer ) {
         
@@ -54,12 +54,12 @@ export class Computer implements IComputer {
         
         
     	if ( obj.components.length ){
-    		this.software =  obj.components.filter( ( item : any ) => item.categoriaId === 1 )
+    		this.componentesSoftware =  obj.components.filter( ( item : any ) => item.categoriaId === 1 )
     			.map( ( item : any ) => { return { text: item.nombre, value: item.id }; } );
-    		this.totalSoftware = this.software.length;
-    		this.hardware =  obj.components.filter( ( item : any ) => item.categoriaId === 2 )
+    		this.totalSoftware = this.componentesSoftware.length;
+    		this.componentsHardware =  obj.components.filter( ( item : any ) => item.categoriaId === 2 )
     			.map( ( item : any ) => { return { text: item.nombre, value: item.id }; } );
-    		this.totalHardware = this.hardware.length;
+    		this.totalHardware = this.componentsHardware.length;
     	}
         
 

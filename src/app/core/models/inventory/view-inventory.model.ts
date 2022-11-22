@@ -3,14 +3,8 @@ import { categoria, estado } from '../tools/tool-interface.model';
 
 export interface IBackendViewInventory {
     [key: string]     : any;
-    // id                : number; 
-    // fechaDeInventorye    : Date;
-    // estado            : estado;
-    // comentariosInventorye?: string;
-    // comentariosAdmin  ?: string;
-
-    // incidente         : IIncident;
-    
+    reportes          ?: any[];
+    gabinete          ?: string;
     categoriaId       ?: number;
     nombre            ?: string;
 }
@@ -32,10 +26,10 @@ export class ViewInventory implements IViewInventory {
     subtitle2          = '';
     
     parse( obj: IBackendViewInventory ) {
-        
-    	this.title = obj.categoriaId === 1 ? 'software' : 'hardware';
-    	this.subtitle1 = obj.nombre ?? '';
-    	this.type = obj.categoriaId === 1 ? 'software' : 'hardware';
+        console.log(obj)
+    	this.title = obj.gabinete ? obj.gabinete : obj.categoriaId === 1 ? 'software' : 'hardware';
+    	this.subtitle1 = obj.nombre ? obj.nombre : `${ obj.reportes?.length ?? 0}`;
+    	this.type = obj.gabinete ? 'pc' : obj.categoriaId === 1 ? 'software' : 'hardware';
 
     	return this;
     }
