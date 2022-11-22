@@ -209,7 +209,7 @@ export class InventoryComponent implements OnInit {
 		console.log('HW', this.hardwareComponents);
 		console.log('ROOMS', this.allRooms);
 		
-		if ( this.hardwareComponents.length < 1 || this.allRooms.length < 1 ){ 
+		if ( this.allRooms.length < 1 ){ 
 			this._snackbarService.showSnackbar( 'LOAD_FORM', 'error' );
 			return null; 
 		}

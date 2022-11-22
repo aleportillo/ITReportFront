@@ -6,11 +6,11 @@ export interface SaveComputer {
 }
 
 export interface IBackendComputer {
+    [key: string]       : any;
     id                  : number;
     salaId              : number;
     gabinete            : string;
-    hardware            : string[];
-    software            : string[];
+    components          : any[];
 }
 
 export interface IComputer {
@@ -20,8 +20,8 @@ export interface IComputer {
     gabinete            : string;
     totalSoftware       ?: number;
     totalHardware       ?: number;
-    hardware            : string[];
-    software            : string[];
+    hardware            : any[];
+    software            : any[];
 }
 
 export class Computer implements IComputer {
@@ -32,10 +32,10 @@ export class Computer implements IComputer {
     gabinete           = '';
     totalSoftware      ?= 0 ;
     totalHardware      ?= 0 ;
-    hardware           = [];
-    software           = [];
+    hardware      : any = [];
+    software      : any = [];
     
-    parse( obj: IComputer ) {
+    parse( obj: IBackendComputer ) {
         
     	Object.keys( this ).forEach( key => {
     		if ( typeof this[key] === 'string' ){
@@ -52,8 +52,16 @@ export class Computer implements IComputer {
     		}
     	} );
         
-    	this.totalHardware = this.hardware.length;
-    	this.totalSoftware = this.software.length;
+        
+    	if ( obj.components.length ){
+    		this.software =  obj.components.filter( ( item : any ) => item.categoriaId === 1 )
+    			.map( ( item : any ) => { return { text: item.nombre, value: item.id }; } );
+    		this.totalSoftware = this.software.length;
+    		this.hardware =  obj.components.filter( ( item : any ) => item.categoriaId === 2 )
+    			.map( ( item : any ) => { return { text: item.nombre, value: item.id }; } );
+    		this.totalHardware = this.hardware.length;
+    	}
+        
 
     	return this;
     }
