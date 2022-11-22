@@ -78,7 +78,7 @@ export class SectionService {
 		const params : any = {};
 		params[ `Id${ type }` ] = idElement;
 		
-		const route = type === 'computadora' ? `Componentes/computadora/${ idElement }` : '';
+		const route = type === 'computadora' ? `Componentes/computadora/${ idElement }` : `computadoras/sala/${ idElement }`;
 
 		this._helpersService.setTrue( 'getInventoryItems' );
 		return this._http.get( API_URL + `${ route }`, params )
