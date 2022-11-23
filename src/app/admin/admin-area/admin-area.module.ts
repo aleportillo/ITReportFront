@@ -13,6 +13,7 @@ import { ActiveReportsComponent } from '../active-reports/active-reports.compone
 import { NewReportsComponent } from '../new-reports/new-reports.component';
 import { LoginComponent } from '../login/login.component';
 import { InventoryComponent } from '../inventory/inventory.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @NgModule( {
 	declarations : [ 
@@ -22,7 +23,8 @@ import { InventoryComponent } from '../inventory/inventory.component';
 		ActiveReportsComponent, 
 		NewReportsComponent, 
 		LoginComponent, 
-		InventoryComponent 
+		InventoryComponent,
+		DashboardComponent
 	],
 	imports : [
 		CommonModule,
