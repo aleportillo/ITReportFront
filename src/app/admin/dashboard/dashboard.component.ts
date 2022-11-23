@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { IDashboard } from 'src/app/core/models/dashboard.model';
+import { Dashboard, IDashboard } from 'src/app/core/models/dashboard.model';
+import { Loader } from 'src/app/core/models/tools/loader.model';
 import { DashboardService } from 'src/app/core/services/api/dashboard.service';
+import { HelpersService } from 'src/app/core/services/internal/helpers.service';
 import { SnackbarService } from 'src/app/core/services/internal/snackbar.service';
 
 @Component( {
@@ -20,13 +22,16 @@ export class DashboardComponent implements OnInit {
 		{ label: 'Reportes\r\ndetenidos', backend: 'reportesDetenidos' },
 		{ label: 'Reportes\r\npendientes', backend: 'reportesPendientes' },
 	];
+	loaderObject : Loader =  new Loader();
 	
 	constructor(
 		private _dashboardService: DashboardService,
-		private _snackbarService: SnackbarService
+		private _snackbarService: SnackbarService,
+		private _helperService: HelpersService
 	) { }
 
 	ngOnInit(): void {
+		this.loaderService();
 		this.getDashboard();
 	}
 	
@@ -41,8 +46,15 @@ export class DashboardComponent implements OnInit {
 					'ERR_GET_ROOMS', 
 					'error'
 				);
+				this.allCards = new Dashboard();
 			}
 		);
+	}
+	
+	loaderService(){
+		this._helperService.loader$.subscribe( ( response ) => {
+			this.loaderObject = response;
+		} );
 	}
 
 }

@@ -1,8 +1,9 @@
-<div class="cards__wrapper">
-    
-    <div *ngFor="let key of keys" class="card">
-        <h2>{{key.label}}</h2>
-        <h3 class="{{key.backend}}">{{allCards[key.backend]}}</h3>
+<app-loader *ngIf="loaderObject.getDashboard; else showDashboard" [section]="'page'"></app-loader>
+<ng-template #showDashboard>
+    <div class="cards__wrapper">
+        <div *ngFor="let key of keys" class="card">
+            <h2>{{key.label}}</h2>
+            <h3 class="{{key.backend}}">{{allCards[key.backend]}}</h3>
+        </div>
     </div>
-    
-</div>
+</ng-template>
