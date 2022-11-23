@@ -162,7 +162,7 @@ export class ComputersComponent implements OnInit, OnDestroy {
 	noticeService(){
 		this._allSubs[this._allSubs.length] = this._helperService.noticeModal$.subscribe( ( response ) => {
 			if ( !response.delete ) { return; }
-			if ( this.currentComputer.totalHardware || this.currentComputer.totalSoftware ) { 
+			if ( this.currentComputer.totalHardware ) { 
 				this._snackbarService.showSnackbar(
 					'No es posible eliminar la computadora, ya que aún tiene componentes asociados', 
 					'warning'
