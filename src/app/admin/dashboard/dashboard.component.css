@@ -1,0 +1,48 @@
+.cards__wrapper{
+    display: grid;
+    grid-template-columns: repeat(3, 33.33%);
+    margin: 0 auto;
+    padding: 1rem;
+    max-width: 80rem;
+}
+
+h2{
+    font-size: 18px;
+    margin: 0 auto;
+    width: fit-content;
+    font-weight: 100;
+    text-align: center;
+}
+
+h3{
+    margin: 0;
+    width: fit-content;
+    margin: 0 auto;
+    font-size: 70px;
+    font-family: 'Baloo 2';
+}
+
+.reportesPendientes{
+    color: var(--status-pending);
+}
+
+.reportesDetenidos{
+    font-weight: bold;
+    color: var(--status-stopped);
+}
+
+.reportesAtendiendose{
+    font-weight: bold;
+    color: var(--status-attending);
+}
+
+.reportesFinalizados{
+    font-weight: bold;
+    color: var(--status-finish);
+}
+
+@media (max-width: 640px) {
+    .card{
+        grid-column: span 3;
+    }
+}

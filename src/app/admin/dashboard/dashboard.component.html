@@ -1,1 +1,8 @@
-<p>dashboard works!</p>
+<div class="cards__wrapper">
+    
+    <div *ngFor="let key of keys" class="card">
+        <h2>{{key.label}}</h2>
+        <h3 class="{{key.backend}}">{{allCards[key.backend]}}</h3>
+    </div>
+    
+</div>
