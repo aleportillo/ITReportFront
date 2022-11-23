@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { IModalData, TYPE_SECTION } from 'src/app/core/models/tools/modal-data';
 import { IViewReport, ViewReport } from 'src/app/core/models/reports/view-report.model';
@@ -13,6 +13,7 @@ import { SnackbarService } from 'src/app/core/services/internal/snackbar.service
 import { Loader } from 'src/app/core/models/tools/loader.model';
 import { SearchService } from 'src/app/core/services/api/search.service';
 import { ViewInventory } from 'src/app/core/models/inventory/view-inventory.model';
+import { Subscriber, Subscription } from 'rxjs';
 
 const SECTION_POSITION = 1;
 const ID_SECTION = 2;
@@ -24,7 +25,7 @@ const ZERO_VALUES = 0;
 	templateUrl : './section.component.html',
 	styleUrls   : ['./section.component.css']
 } )
-export class SectionComponent implements OnInit {
+export class SectionComponent implements OnInit, OnDestroy {
 
 	@ViewChild ( 'firstColumn'  ) firstColumn  : ElementRef | undefined;
 	@ViewChild ( 'secondColumn' ) secondColumn : ElementRef | undefined;
@@ -70,6 +71,9 @@ export class SectionComponent implements OnInit {
 		{ label: 'Componentes', key: 'componentes' },
 		{ label: 'Reportes', key: 'reportes' }
 	];
+	
+	// SUBS
+	private _allSubs   : Subscription[] = [];
 
 
 	constructor(
@@ -98,8 +102,8 @@ export class SectionComponent implements OnInit {
 			this.buttonsRoom[FIRST_ELEMENT].key : 
 			this.buttonsPC[FIRST_ELEMENT].key ;
 		
+
 		if ( this.type === 'sala' ){
-			// console.log(this.type)
 			sessionStorage.setItem( 'IT_REPORT', `/` );
 		}
 
@@ -124,6 +128,13 @@ export class SectionComponent implements OnInit {
 			this.loadSubsectionItems( this.subSectionActive );
 		}
 		
+	}
+	
+	ngOnDestroy(){
+		this._allSubs.forEach( ( sub: Subscription ) => {
+			sub.unsubscribe();
+		} );
+		this._allSubs = [];
 	}
 
 
@@ -232,29 +243,31 @@ export class SectionComponent implements OnInit {
 	// -------------------------------------------------- ANCHOR: SUBS
 
 	screenService(){
-		this._helpersService.screenSize$.subscribe( ( response ) => {
+		this._allSubs[this._allSubs.length] = this._helpersService.screenSize$.subscribe( ( response ) => {
 			this.screenSize = response;
 			this.fillColumns();
 		} );
 	}
 
 	modalService(){
-		this._formService.formData$.subscribe( ( response ) => {
+		this._allSubs[this._allSubs.length] = this._formService.formData$.subscribe( ( response ) => {
 			console.log( response );
 			if ( response.newData === null ) { return; }
+			// if ( this.isShowingData ) { return; }
+			// this.isShowingData = true;
 			console.log( 'HERE' );
 			this.saveReport( response );
 		} );
 	}
 
 	loadService(){
-		this._helpersService.loader$.subscribe( ( response ) => {
+		this._allSubs[this._allSubs.length] = this._helpersService.loader$.subscribe( ( response ) => {
 			this.loaderObject = response;
 		} );
 	}
 
 	currentElementService(){
-		this._helpersService.currentElementResume$.subscribe( ( response ) => {
+		this._allSubs[this._allSubs.length] = this._helpersService.currentElementResume$.subscribe( ( response ) => {
 			if ( response ){
 				this.backendId = response[FIRST_ELEMENT]?.id;
 				this.sectionResume = response[FIRST_ELEMENT];
@@ -269,6 +282,7 @@ export class SectionComponent implements OnInit {
 	// -------------------------------------------------- ANCHOR: API
 
 	saveReport( formData :  {newData : any; editData : any } ){
+		
 		this._sectionService.saveReport( formData.newData, this.type, this.backendId.toString() ).subscribe(
 			data => {
 				this._dialog.closeAll();
