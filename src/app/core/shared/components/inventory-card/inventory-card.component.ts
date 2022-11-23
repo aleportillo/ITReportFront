@@ -40,6 +40,7 @@ export class InventoryCardComponent implements OnInit {
 	}
 	
 	redirect(){
+		if ( this.fromSection ){ return; }
 		// console.log(this._router.url);
 		sessionStorage.setItem( 'IT_REPORT', this._router.url );
 		this._router.navigate( [`/computadora/${ this.inventoryData.title }`] );

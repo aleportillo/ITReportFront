@@ -2,7 +2,7 @@
     <span [attr.type]="inventoryData.type ?? 'delete'" (click)="handleBadgeClick();">
         <img src="./../../../../../assets/icons/icon_{{inventoryData.type ?? 'delete'}}.svg" alt="">
     </span>
-    <h3 [attr.type]="inventoryData.type ?? 'delete'" (click)="redirect();">
+    <h3 [attr.type]="fromSection ? '' : inventoryData.type" (click)="redirect();">
         {{ (inventoryData.title || inventoryData.nombre || inventoryData.gabinete ) | firstLetterUppercase }}
     </h3>
     <p>
