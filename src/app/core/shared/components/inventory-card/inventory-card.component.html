@@ -10,7 +10,8 @@
             Software: {{inventoryData.totalSoftware}}
         </ng-container>
         <ng-container *ngIf="inventoryData.subtitle1 || inventoryData.edificio">
-            {{ ( inventoryData.type === 'pc' ? 'Reportes: ' : '' )+ inventoryData.subtitle1 || inventoryData.edificio}}
+            {{ inventoryData.type === 'pc' ? 'Reportes: ' : '' }}
+            {{ inventoryData.subtitle1 || inventoryData.edificio }}
         </ng-container>
         <ng-container *ngIf="inventoryData.numero || inventoryData.numero === 0 ">
             {{inventoryData.numero }}
