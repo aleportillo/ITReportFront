@@ -117,7 +117,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
 			if ( !response.delete ) { return; }
 			if ( this.currentRoom.totalPC ) {
 				this._snackbarService.showSnackbar(
-					'No es posible eliminar la sala, ya que aún tiene computadoras asociados', 
+					'No es posible eliminar la sala, ya que aún tiene computadoras asociadas', 
 					'warning'
 				);
 				this._helperService.noticeModal$.next( { delete: false } );
