@@ -24,7 +24,6 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 	loaderObject       : Loader =  new Loader();
 	
 	@Input() set hasNewElementAdded( value: boolean ) {
-		console.log( value );
 		if ( value ){
 			setTimeout( () => { this.getComponents(); }, 6000 );
 			// this.getRooms();
@@ -59,7 +58,7 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 	// -------------------------------------------------- ANCHOR: MODALS
 	
 	openEditComponentForm( editComponent : any ){
-		console.log( editComponent );
+		
 		const currentForm = components;
 		const modalData : IModalData = {
 			title       : `Componente`,
@@ -80,7 +79,7 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 	}
 	
 	openDeleteComponentModal( deleteComponent : any ){
-		console.log( deleteComponent );
+		
 		const modalData : IModalData = {
 			title       : `Eliminar`,
 			form        : [],
@@ -104,10 +103,8 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 	
 	modalService(){
 		this._allSubs[this._allSubs.length] = this._formService.formData$.subscribe( ( response ) => {
-			console.log( response );
 			if ( response.newData === null ) { return; }
 			if ( response.editData === null ) { return; }
-			console.log( 'HERE' );
 			this.saveComponent( this.currentComponent, response.newData );
 		} );
 	}
@@ -136,7 +133,7 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 				this._helperService.noticeModal$.next( { delete: false } );
 				this.currentComponent = new ComponentItem ();
 				this._snackbarService.showSnackbar(
-					'El componente se elimino correctamente', 
+					'DELETE_COMPONENT', 
 					'success'
 				);
 			},
@@ -163,29 +160,23 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 				this._formService.formData$.next( { newData: null, editData: null } );
 				this.currentComponent = new ComponentItem ();
 				this._snackbarService.showSnackbar(
-					'El componente se ha actualizado correctamente', 
+					'SAVE_COMPONENT', 
 					'success'
 				);
 			},
 			err => {
+				const error = ( err?.error?.message === 'COMPONENT_DUPLICATE' ) ? 'COMPONENT_DUPLICATE' : 'SAVE_ROOM';
 				this._snackbarService.showSnackbar(
-					'SAVE_COMPONENT', 
+					error, 
 					'error'
 				);
 			}
 		);
-	
-		// const actualDataIndex = this.allCardsInventory.findIndex( card => card.id === actualData.id );
-		// this.allCardsInventory[actualDataIndex] = actualData;
-		// this._dialog.closeAll();
-		// this._formService.formData$.next( { newData: null, editData: null } );
-		// this.currentComponent = new ComponentItem ();
 	}
 	
 	getComponents(){
 		this._componentsService.getComponents().subscribe(
 			data => {
-				console.log( data );
 				this.allCardsInventory = data;
 			},
 			err => {

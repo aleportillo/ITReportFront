@@ -24,7 +24,6 @@ export class RoomsComponent implements OnInit, OnDestroy {
 	loaderObject       : Loader =  new Loader();
 	
 	@Input() set hasNewElementAdded( value: boolean ) {
-		console.log( value );
 		if ( value ){
 			setTimeout( () => { this.getRooms(); }, 6000 );
 			// this.getRooms();
@@ -104,10 +103,8 @@ export class RoomsComponent implements OnInit, OnDestroy {
 	
 	modalService(){
 		this._allSubs[this._allSubs.length] = this._formService.formData$.subscribe( ( response ) => {
-			console.log( response );
 			if ( response.newData === null ) { return; }
 			if ( response.editData === null ) { return; }
-			console.log( 'HERE' );
 			this.saveRoom( this.currentRoom, response.newData );
 		} );
 	}
@@ -117,7 +114,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
 			if ( !response.delete ) { return; }
 			if ( this.currentRoom.totalPC ) {
 				this._snackbarService.showSnackbar(
-					'No es posible eliminar la sala, ya que aún tiene computadoras asociadas', 
+					'ROOM_HAS_PC', 
 					'warning'
 				);
 				this._helperService.noticeModal$.next( { delete: false } );
@@ -141,13 +138,12 @@ export class RoomsComponent implements OnInit, OnDestroy {
 	deleteRoom( actualRoom: IRoom ){
 		this._roomsService.deleteRoom( actualRoom.id ).subscribe(
 			data => {
-				console.log( data );
 				this.allCardsInventory = this.allCardsInventory.filter( card => card.id !== actualRoom.id );
 				this._dialog.closeAll();
 				this._helperService.noticeModal$.next( { delete: false } );
 				this.currentRoom = new Room ();
 				this._snackbarService.showSnackbar(
-					'La sala se elimino correctamente', 
+					'DELETE_ROOM', 
 					'success'
 				);
 			},
@@ -175,13 +171,14 @@ export class RoomsComponent implements OnInit, OnDestroy {
 				this._formService.formData$.next( { newData: null, editData: null } );
 				this.currentRoom = new Room ();
 				this._snackbarService.showSnackbar(
-					'La sala se ha actualizado correctamente', 
+					'SAVE_ROOM', 
 					'success'
 				);
 			},
 			err => {
+				const error = ( err?.error?.message === 'ROOM_DUPLICATE' ) ? 'ROOM_DUPLICATE' : 'SAVE_ROOM';
 				this._snackbarService.showSnackbar(
-					'SAVE_ROOMS', 
+					error, 
 					'error'
 				);
 			}

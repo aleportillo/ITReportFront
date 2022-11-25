@@ -39,11 +39,10 @@ export class DashboardComponent implements OnInit {
 		this._dashboardService.getDashboard().subscribe(
 			data => {
 				this.allCards = data;
-				console.log( this.allCards );
 			},
 			err => {
 				this._snackbarService.showSnackbar(
-					'ERR_GET_ROOMS', 
+					'ERR_GET_DASHBOARD', 
 					'error'
 				);
 				this.allCards = new Dashboard();

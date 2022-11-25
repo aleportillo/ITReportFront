@@ -61,13 +61,13 @@ export class NewReportsComponent implements OnInit, OnDestroy {
 			data => {
 				this.newReports = this.newReports.filter( card => card.id !== report.id );
 				this._snackbarService.showSnackbar(
-					'El reporte se descarto correctamente', 
+					'DELETE_REPORT', 
 					'success'
 				);
 			},
 			err => {
 				this._snackbarService.showSnackbar(
-					'ERR_DELETE_COMPONENT', 
+					'ERR_DELETE_REPORT', 
 					'error'
 				);
 			}
@@ -78,10 +78,10 @@ export class NewReportsComponent implements OnInit, OnDestroy {
 		this._newReportService.updateReport( report.id ).subscribe(
 			data => {
 				this.newReports = this.newReports.filter( ( newReport : INewReport ) => newReport.id !== report.id );
-				this._snackbarService.showSnackbar( 'El reporte ha sido aceptado correctamente', 'success' );
+				this._snackbarService.showSnackbar( 'REPORT_ACCEPT', 'success' );
 			},
 			error => {
-				this._snackbarService.showSnackbar( 'SAVE_REPORT', 'error' );
+				this._snackbarService.showSnackbar( 'REPORT_ACCEPT', 'error' );
 			}
 		);
 	}

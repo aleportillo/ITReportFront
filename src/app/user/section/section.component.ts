@@ -13,7 +13,7 @@ import { SnackbarService } from 'src/app/core/services/internal/snackbar.service
 import { Loader } from 'src/app/core/models/tools/loader.model';
 import { SearchService } from 'src/app/core/services/api/search.service';
 import { ViewInventory } from 'src/app/core/models/inventory/view-inventory.model';
-import { Subscriber, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 const SECTION_POSITION = 1;
 const ID_SECTION = 2;
@@ -165,7 +165,6 @@ export class SectionComponent implements OnInit, OnDestroy {
 	}
 
 	changeSubSection( button: {label: string; key: string} ){
-
 		this.subSectionActive = button.key;
 		this.loadSubsectionItems( button.key );
 	}
@@ -251,11 +250,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 
 	modalService(){
 		this._allSubs[this._allSubs.length] = this._formService.formData$.subscribe( ( response ) => {
-			console.log( response );
 			if ( response.newData === null ) { return; }
-			// if ( this.isShowingData ) { return; }
-			// this.isShowingData = true;
-			console.log( 'HERE' );
 			this.saveReport( response );
 		} );
 	}
@@ -272,9 +267,6 @@ export class SectionComponent implements OnInit, OnDestroy {
 				this.backendId = response[FIRST_ELEMENT]?.id;
 				this.sectionResume = response[FIRST_ELEMENT];
 			}
-			console.log( 'UPDATE', response[FIRST_ELEMENT] );
-			console.log( this.sectionResume );
-			
 		} );
 	}
 
@@ -286,9 +278,8 @@ export class SectionComponent implements OnInit, OnDestroy {
 		this._sectionService.saveReport( formData.newData, this.type, this.backendId.toString() ).subscribe(
 			data => {
 				this._dialog.closeAll();
-				console.log( 'save' );
 				this._formService.formData$.next( { newData: null, editData: null } );
-				this._snackbarService.showSnackbar( 'Tu reporte se ha enviado al departamento de sistemas.', 'success' );
+				this._snackbarService.showSnackbar( 'SAVE_REPORT_USER' , 'success' );
 			},
 			error => {
 				this._snackbarService.showSnackbar( 'SAVE_REPORT', 'error' );
@@ -299,7 +290,6 @@ export class SectionComponent implements OnInit, OnDestroy {
 	search( fromInit?: boolean ){
 		this._searchService.search( { type: this.type, textSearch: this.idSection } ).subscribe(
 			data => {
-				console.log( 'hereee', this.sectionResume ); 
 				this._helpersService.currentElementResume$.next( data );
 				if ( fromInit ){
 					this.loadSubsectionItems( this.subSectionActive );
@@ -314,7 +304,6 @@ export class SectionComponent implements OnInit, OnDestroy {
 	getReports( type: string, idElement: string ){
 		this._sectionService.getReports( type, idElement ).subscribe(
 			data => {
-				console.log( data ); 
 				data = data.filter( ( activeReport : IViewReport ) => activeReport.estado !== 'Nuevo' && activeReport.estado !== 'Resuelto' );
 				this.allCards = data;
 				const MILLISECONDS_OF_WAITING = 20;
@@ -331,7 +320,6 @@ export class SectionComponent implements OnInit, OnDestroy {
 	getInventoryItems( type: string, idElement: string ){
 		this._sectionService.getInventoryItems( type, idElement ).subscribe(
 			data => {
-				console.log( data ); 
 				this.allCardsInventory = data;
 			},
 			error => {
@@ -360,9 +348,6 @@ export class SectionComponent implements OnInit, OnDestroy {
 						report[INDEX_INPUT_INCIDENT].allOptions!.solicitud = solicitudes ;
 					}
 				} );
-			},
-			error => {
-				// this._snackbarService.showSnackbar( 'GET_REPORTS', 'error' );
 			}
 		);
 	}
@@ -376,9 +361,6 @@ export class SectionComponent implements OnInit, OnDestroy {
 				} );
 				const INDEX_INPUT_CATEGORY = 0;
 				report[INDEX_INPUT_CATEGORY].options = options;
-			},
-			error => {
-				// this._snackbarService.showSnackbar( 'GET_REPORTS', 'error' );
 			}
 		);
 	}

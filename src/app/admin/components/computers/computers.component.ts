@@ -32,7 +32,6 @@ export class ComputersComponent implements OnInit, OnDestroy {
 	allRooms		   : IFormInputOption[] = [];
 	
 	@Input() set hasNewElementAdded( value: boolean ) {
-		console.log( value );
 		if ( value ){
 			setTimeout( () => { this.getComputers(); }, 6000 );
 			// this.getRooms();
@@ -73,16 +72,12 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		await this.getRooms();
 		await this.getComponents();
 		
-		console.log('HW', this.hardwareComponents);
-		console.log('ROOMS', this.allRooms);
 		if ( this.allRooms.length < 1 ){ 
 			this._snackbarService.showSnackbar( 'LOAD_FORM', 'error' );
 			return null; 
 		}
 		
 		this.hardwareComponents = this.hardwareComponents.concat( editOptions );
-		console.log('EDIT OPTIONSSSS', editOptions);
-		console.log('EDIT OPTIONSSSS', this.hardwareComponents);
 		
 		currentForm?.forEach( ( input : IFormInput ) => {
 			if ( input.name === 'componentsHardware' ){ input.options = this.hardwareComponents; }
@@ -102,11 +97,7 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		
 		const currentForm = await this.loadForm( editComputer.componentsHardware );
 		
-		console.log( 'currentForm', currentForm );
-		
 		if ( !currentForm ) { return; }
-
-		console.log( editComputer );
 
 		const modalData : IModalData = {
 			title       : `Computadora`,
@@ -127,7 +118,7 @@ export class ComputersComponent implements OnInit, OnDestroy {
 	}
 	
 	openDeleteComputerModal( deleteComputer: any ){
-		console.log( deleteComputer );
+		
 		const modalData : IModalData = {
 			title       : `Eliminar`,
 			form        : [],
@@ -151,10 +142,8 @@ export class ComputersComponent implements OnInit, OnDestroy {
 	
 	modalService(){
 		this._allSubs[this._allSubs.length] = this._formService.formData$.subscribe( ( response ) => {
-			console.log( response );
 			if ( response.newData === null ) { return; }
 			if ( response.editData === null ) { return; }
-			console.log( 'HERE' );
 			this.saveComputer( this.currentComputer, response.newData );
 		} );
 	}
@@ -164,7 +153,7 @@ export class ComputersComponent implements OnInit, OnDestroy {
 			if ( !response.delete ) { return; }
 			if ( this.currentComputer.totalHardware ) { 
 				this._snackbarService.showSnackbar(
-					'No es posible eliminar la computadora, ya que aún tiene componentes asociados', 
+					'PC_HAS_COMPONENTS', 
 					'warning'
 				);
 				this._helperService.noticeModal$.next( { delete: false } );
@@ -196,13 +185,13 @@ export class ComputersComponent implements OnInit, OnDestroy {
 				this._helperService.noticeModal$.next( { delete: false } );
 				this.currentComputer = new Computer ();
 				this._snackbarService.showSnackbar(
-					'La computadora se elimino correctamente', 
+					'DELETE_COMPUTER', 
 					'success'
 				);
 			},
 			err => {
 				this._snackbarService.showSnackbar(
-					'ERR_DELETE_COMPONENT', 
+					'ERR_DELETE_COMPUTER', 
 					'error'
 				);
 			}
@@ -241,13 +230,14 @@ export class ComputersComponent implements OnInit, OnDestroy {
 				this._formService.formData$.next( { newData: null, editData: null } );
 				this.currentComputer = new Computer ();
 				this._snackbarService.showSnackbar(
-					'La computadora se ha actualizado correctamente', 
+					'SAVE_COMPUTER', 
 					'success'
 				);
 			}, 
 			err =>{
+				const error = ( err?.error?.message === 'PC_DUPLICATE' ) ? 'PC_DUPLICATE' : 'SAVE_COMPUTER';
 				this._snackbarService.showSnackbar(
-					'SAVE_COMPUTERS', 
+					error, 
 					'error'
 				);
 			}
@@ -273,7 +263,6 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		return new Promise<string>( ( resolve, reject ) => {
 			this._componentsService.getFreeComponents().subscribe(
 				data => {
-					console.log( data );
 					this.allFreeComponents = data;
 					this.hardwareComponents = this.allFreeComponents.filter( item => item.categoriaId === 2 )
 						.map( item => { return { text: item.nombre, value: item.id }; } );
@@ -288,7 +277,6 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		return new Promise<string>( ( resolve, reject ) => {
 			this._componentsService.getComponents().subscribe(
 				data => {
-					console.log( data );
 					this.softwareComponents = data.filter( ( item : any ) => item.categoriaId === 1 )
 						.map( ( item : any ) => { return { text: item.nombre, value: item.id }; } );
 					resolve( 'success' );

@@ -64,7 +64,6 @@ export class LoginComponent implements OnInit {
 				this.getData();
 			},
 			error => {
-				console.log( error );
 				this._snackbarService.showSnackbar( error , 'error' );
 			}
 		);

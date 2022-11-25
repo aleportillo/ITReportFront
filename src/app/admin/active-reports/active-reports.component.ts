@@ -35,7 +35,6 @@ export class ActiveReportsComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		console.log( this.activeReports );
 		this.getReports();
 		this.loadService(); 
 		this.modalService();
@@ -51,10 +50,8 @@ export class ActiveReportsComponent implements OnInit {
 	
 	modalService(){
 		this._formService.formData$.subscribe( ( response ) => {
-			console.log( response );
 			if ( response.newData === null ) { return; }
 			if ( response.editData === null ) { return; }
-			console.log( 'HERE' );
 			this.saveReport( this.currentReport, response.newData );
 		} );
 	}
@@ -85,14 +82,14 @@ export class ActiveReportsComponent implements OnInit {
 				this._formService.formData$.next( { newData: null, editData: null } );
 				this.currentReport = new ActiveReport ();
 				this._snackbarService.showSnackbar(
-					'El reporte se ha actualizado correctamente', 
+					'SAVE_REPORT', 
 					'success'
 				);
 				
 			},
 			err => {
 				this._snackbarService.showSnackbar(
-					'SAVE_ROOMS', 
+					'SAVE_REPORT', 
 					'error'
 				);
 			}
@@ -115,7 +112,7 @@ export class ActiveReportsComponent implements OnInit {
 		// -------------------------------------------------- ANCHOR: MODAL
 
 	openDialog( reportEdit : IActiveReport ) {
-		console.log( reportEdit );
+
 		const formReport = JSON.parse( JSON.stringify( report ) );
 		formReport.forEach( ( input : IFormInput ) => {
 

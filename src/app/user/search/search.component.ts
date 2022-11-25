@@ -52,8 +52,6 @@ export class SearchComponent implements OnInit {
 		this.loaderService();
 		this.form = this._formService.createForm( this.inputs );	
 		this.form = this._formService.initForm( this.form, { type: 'computadora' } );
-		// console.log( this.form );
-		
 	}
 
 	// -------------------------------------------------- ANCHOR: API
@@ -72,8 +70,7 @@ export class SearchComponent implements OnInit {
 					this._snackbarService.showSnackbar( 'MULTIPLE_SEARCH', 'error' );
 					return;
 				}
-				console.log( data );
-				
+
 				const idElement = ( this.form.value.type === 'computadora' ) ? 
 					data[FIRST_ELEMENT].gabinete : 
 					data[FIRST_ELEMENT].nombre.toLowerCase().replace( 'sala', '' ).trim();
@@ -84,7 +81,6 @@ export class SearchComponent implements OnInit {
 				this._router.navigate( [`/${ this.form.value.type }/${ idElement }`] );
 			},
 			error => {
-				console.log(error);
 				this._snackbarService.showSnackbar( error , 'error' );
 			}
 		);

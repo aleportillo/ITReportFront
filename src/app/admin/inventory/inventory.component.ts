@@ -55,10 +55,8 @@ export class InventoryComponent implements OnInit {
 	
 	modalService(){
 		this._formService.formData$.subscribe( ( response ) => {
-			console.log( response );
 			if ( response.newData === null ) { return; }
 			if ( response.editData !== null ) { return; }
-			console.log( 'HERE' );
 			this.saveElement( response.newData );
 		} );
 	}
@@ -70,7 +68,6 @@ export class InventoryComponent implements OnInit {
 		return new Promise<string>( ( resolve, reject ) => {
 			this._componentsService.getFreeComponents().subscribe(
 				data => {
-					console.log( data );
 					this.allFreeComponents = data;
 					this.hardwareComponents = this.allFreeComponents.filter( item => item.categoriaId === 2 )
 						.map( item => { return { text: item.nombre, value: item.id }; } );
@@ -85,7 +82,6 @@ export class InventoryComponent implements OnInit {
 		return new Promise<string>( ( resolve, reject ) => {
 			this._componentsService.getComponents().subscribe(
 				data => {
-					console.log( data );
 					this.softwareComponents = data.filter( ( item : any ) => item.categoriaId === 1 )
 						.map( ( item : any ) => { return { text: item.nombre, value: item.id }; } );
 					resolve( 'success' );
@@ -108,7 +104,6 @@ export class InventoryComponent implements OnInit {
 	}
 	
 	saveElement( saveData : any ){
-		console.log( this.allFreeComponents );
 		this.hasNewElementAdded = false;
 		switch ( this.currentSection ){
 			case 'Salas': this.saveRoom( saveData ); break;
@@ -125,12 +120,11 @@ export class InventoryComponent implements OnInit {
 		this._roomsService.saveElement( saveElement ).subscribe(
 			( res ) => {
 				this.hasNewElementAdded = true;
-				console.log( res );
-				this._snackbarService.showSnackbar( 'La sala fue guardada correctamente.', 'success' );
+				this._snackbarService.showSnackbar( 'SAVE_ROOM', 'success' );
 				this._dialog.closeAll();
 			}, 
 			( err ) => {
-				this._snackbarService.showSnackbar( 'SAVE_REPORT', 'error' );
+				this._snackbarService.showSnackbar( 'SAVE_ROOM', 'error' );
 			}
 		);
 	}
@@ -139,28 +133,24 @@ export class InventoryComponent implements OnInit {
 		this._componentsService.saveElement( { ...saveData } ).subscribe(
 			( res ) => {
 				this.hasNewElementAdded = true;
-				console.log( res );
-				this._snackbarService.showSnackbar( 'El componente se ha guardado correctamente.', 'success' );
+				this._snackbarService.showSnackbar( 'SAVE_COMPONENT', 'success' );
 				this._dialog.closeAll();
 			}, 
 			( err ) => {
-				this._snackbarService.showSnackbar( 'SAVE_REPORT', 'error' );
+				this._snackbarService.showSnackbar( 'SAVE_COMPONENT', 'error' );
 			}
 		);
 	}
 	
 	saveComputer( saveData: any ){
-		console.log( saveData );
-		// return;
 		this._computersService.saveElement( { ...saveData } ).subscribe(
 			( res ) => {
 				this.hasNewElementAdded = true;
-				console.log( res );
-				this._snackbarService.showSnackbar( 'La computadora se ha guardado correctamente.', 'success' );
+				this._snackbarService.showSnackbar( 'SAVE_COMPUTER', 'success' );
 				this._dialog.closeAll();
 			}, 
 			( err ) => {
-				this._snackbarService.showSnackbar( 'SAVE_REPORT', 'error' );
+				this._snackbarService.showSnackbar( 'SAVE_COMPUTER', 'error' );
 			}
 		);
 	}
@@ -172,8 +162,6 @@ export class InventoryComponent implements OnInit {
 	async openForm(){
 		
 		const currentForm = await this.loadForm();
-		
-		console.log( 'currentForm', currentForm );
 		
 		if ( !currentForm ) { return; }
 		
@@ -205,9 +193,6 @@ export class InventoryComponent implements OnInit {
 		await this.getFreeComponents();
 		await this.getRooms();
 		await this.getComponents();
-		
-		console.log('HW', this.hardwareComponents);
-		console.log('ROOMS', this.allRooms);
 		
 		if ( this.allRooms.length < 1 ){ 
 			this._snackbarService.showSnackbar( 'LOAD_FORM', 'error' );

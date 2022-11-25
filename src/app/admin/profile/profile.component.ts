@@ -63,13 +63,13 @@ export class ProfileComponent implements OnInit {
 			data => {
 				localStorage.setItem( 'IT_USER', JSON.stringify( data ) );
 				this._helpersService.user$.next( data );
-				this._snackbarService.showSnackbar( 'El perfil se ha actualizado correctamente', 'success' );
+				this._snackbarService.showSnackbar( 'SAVE_PROFILE', 'success' );
 				this.form.get( 'password' )?.reset();
 				this.form.get( 'newPassword' )?.reset();
 			},
 			error => {
 				const stringError = 
-					( error.error.message === 'La contraseña es incorrecta' ) ? 'ERR_PASSWORD' : 'UPDATE_PROFILE' ;
+					( error.error.message === 'ERR_PASSWORD' ) ? 'ERR_PASSWORD' : 'UPDATE_PROFILE' ;
 				this._snackbarService.showSnackbar( stringError , 'error' );
 			}
 		);
