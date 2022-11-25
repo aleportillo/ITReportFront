@@ -266,6 +266,11 @@ export class SectionComponent implements OnInit, OnDestroy {
 			if ( response ){
 				this.backendId = response[FIRST_ELEMENT]?.id;
 				this.sectionResume = response[FIRST_ELEMENT];
+				
+				if ( response.length > 1 ){
+					this.sectionResume = response.find( ( element : any ) => element.gabinete === this.idSection || element.nombre === this.idSection );
+					this.backendId = this.sectionResume?.id;
+				}
 			}
 		} );
 	}

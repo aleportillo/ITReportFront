@@ -36,7 +36,7 @@
             </ng-container>
             <ng-container *ngSwitchCase="'estado'">
                 <p class="column__estado" [attr.estado]="report.estado.toLowerCase()">
-                    {{report.estado}}
+                    {{(report.estado === 'Atendido' ? 'atendiendo' : report.estado ) | firstLetterUppercase}}
                 </p>
             </ng-container>
             <ng-container *ngSwitchCase="'edit'">
