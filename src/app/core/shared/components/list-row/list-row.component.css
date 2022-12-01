@@ -74,6 +74,11 @@ p {
     background-color: var(--status-attending);
 }
 
+.column__estado[estado='resuelto'] {
+    background-color: var(--button-edit-hover);
+}
+
+
 .button.icon.reject{
     margin-bottom: .5rem;
 }

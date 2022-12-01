@@ -48,7 +48,7 @@ export class ViewReport implements IViewReport {
     		}
     		else if ( typeof this[key] === 'boolean' ){
     			this[key] = Boolean ( obj[key] ?? ViewReport.clean[key] );
-    		} else if ( DATE_PROPERTIES.indexOf( key ) ) {
+    		} else if ( DATE_PROPERTIES.includes( key ) ) {
     			this[key] = new Date( obj[key] ?? ViewReport.clean[key] );
     		}
     	} );
