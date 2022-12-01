@@ -8,7 +8,7 @@
         "options"   : []
     },
     {
-        "label"     : "Problema",
+        "label"     : "Problema/Acción",
         "name"      : "incidente",
         "type"      : "select",
         "subtype"   : "normal",

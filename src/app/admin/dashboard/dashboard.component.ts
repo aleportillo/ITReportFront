@@ -14,8 +14,8 @@ export class DashboardComponent implements OnInit {
 	
 	allCards !: IDashboard;
 	keys = [
-		{ label: 'Computadoras', backend: 'computadoras' },
-		{ label: 'Salas', backend: 'salas' },
+		{ label: 'Total de computadoras', backend: 'computadoras' },
+		{ label: 'Total de salas', backend: 'salas' },
 		{ label: 'Total de reportes', backend: 'reportes' },
 		{ label: 'Reportes\r\natendiendose', backend: 'reportesAtendiendose' },
 		{ label: 'Reportes\r\nfinalizados', backend: 'reportesFinalizados' },
