@@ -77,7 +77,7 @@ export class ActiveReportsComponent implements OnInit {
 				
 				const actualDataIndex = this.activeReports.findIndex( activeReport => activeReport.id === actualData.id );
 				this.activeReports[actualDataIndex] = actualData;
-				this.activeReports = this.activeReports.filter( ( activeReport : IActiveReport ) => activeReport.estado !== 'Resuelto' );
+				// this.activeReports = this.activeReports;
 				this._dialog.closeAll();
 				this._formService.formData$.next( { newData: null, editData: null } );
 				this.currentReport = new ActiveReport ();
@@ -100,7 +100,8 @@ export class ActiveReportsComponent implements OnInit {
 	getReports( ){
 		this._activeReportService.getReports().subscribe(
 			data => {
-				data = data.filter( ( activeReport : ActiveReport ) => activeReport.estado !== 'Nuevo' && activeReport.estado !== 'Resuelto' );
+				data = data.filter( ( activeReport : ActiveReport ) => activeReport.estado !== 'Nuevo' );
+				// this.activeReports = data.sort((a: any, b: any )=> b.fechaDeReporte- a.fechaDeReporte);
 				this.activeReports = data;
 			},
 			error => {
