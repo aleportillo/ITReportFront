@@ -89,7 +89,7 @@ export class NewReportsComponent implements OnInit, OnDestroy {
 	getReports( ){
 		this._newReportService.getReports().subscribe(
 			data => {
-				this.newReports = data;
+				this.newReports = data.sort( (a: any, b:any ) => b.fechaDeReporte- a.fechaDeReporte );
 			},
 			error => {
 				this._snackbarService.showSnackbar( 'GET_REPORTS', 'error' );
