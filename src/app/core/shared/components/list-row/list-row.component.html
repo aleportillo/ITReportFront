@@ -24,8 +24,8 @@
             </ng-container>
             <ng-container *ngSwitchCase="'fechaDeActualizacion'">
                 <span class="column__fecha">
-                    <p>Actualización</p>
-                    <p>{{report.fechaActualizacion | date: 'dd/MM/yyyy' }}</p>
+                    <p>Actualizado: {{report.fechaActualizacion | date: 'dd/MM/yyyy' }}</p>
+                    <p>Creado: {{report.fechaDeReporte | date: 'dd/MM/yyyy' }}</p>        
                 </span>
             </ng-container>
             <ng-container *ngSwitchCase="'fechaDeReporte'">
@@ -38,9 +38,21 @@
                 <p class="column__estado" [attr.estado]="report.estado.toLowerCase()">
                     {{(report.estado === 'Atendido' ? 'atendiendo' : report.estado ) | firstLetterUppercase}}
                 </p>
+                <ng-container *ngIf="report.estado.toLowerCase() === 'resuelto'">
+                    <p class="status-description"> *Activo durante: {{((report.fechaActualizacion.getTime() - report.fechaDeReporte.getTime())/(1000*60*60*24)).toFixed(0) }} días</p>
+                </ng-container>
+                <ng-container *ngIf="report.estado.toLowerCase() === 'detenido'">
+                    <p class="status-description">*Hace: {{(( currentDate.getTime() - report.fechaDeReporte.getTime())/(1000*60*60*24)).toFixed(0) }} días</p>
+                </ng-container>
+                <ng-container *ngIf="report.estado.toLowerCase() === 'pendiente'">
+                    <p class="status-description">*Hace: {{(( currentDate.getTime() - report.fechaDeReporte.getTime())/(1000*60*60*24)).toFixed(0) }} días</p>
+                </ng-container>
+                <ng-container *ngIf="report.estado.toLowerCase() === 'atendido' || report.estado.toLowerCase() === 'atendiendo'">
+                    <p class="status-description">*Hace: {{(( currentDate.getTime() - report.fechaActualizacion.getTime())/(1000*60*60*24)).toFixed(0) }} días</p>
+                </ng-container>
             </ng-container>
             <ng-container *ngSwitchCase="'edit'">
-                <button class="button icon edit" (click)="clickButton('editReport');">
+                <button class="button icon edit" (click)="clickButton('editReport');" [disabled]="report.estado.toLowerCase() === 'resuelto'">
                     <img src="./../../../../../assets/icons/icon_edit.svg" alt="">
                 </button>
             </ng-container>

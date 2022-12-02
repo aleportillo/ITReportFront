@@ -88,6 +88,11 @@ p {
     align-content: center;
 }
 
+.status-description{
+    font-size: .8rem;
+    margin-top: 1rem;
+}
+
 @media (max-width: 768px) {
     .row__container{
         grid-template-columns: 100% !important;

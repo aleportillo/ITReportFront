@@ -17,6 +17,8 @@ export class ListRowComponent implements OnInit {
 
 	loaderObject : Loader =  new Loader();
 	isItemEmiting = false;
+	
+	currentDate = new Date();
 
 	constructor(
 		private _helpersService : HelpersService
