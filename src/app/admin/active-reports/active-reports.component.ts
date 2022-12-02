@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { ActiveReport, IActiveReport } from 'src/app/core/models/reports/active-report.model';
 import { IFormInput } from 'src/app/core/models/tools/form-input.model';
 import { Loader } from 'src/app/core/models/tools/loader.model';
@@ -16,7 +17,7 @@ import report from 'src/assets/jsons/update-report.json';
 	templateUrl : './active-reports.component.html',
 	styleUrls   : ['./active-reports.component.css']
 } )
-export class ActiveReportsComponent implements OnInit {
+export class ActiveReportsComponent implements OnInit, OnDestroy {
 
 	rowTemplate = [ '_id', 'categoria', 'fechaDeActualizacion', 'estado', 'edit' ];
 
@@ -25,7 +26,9 @@ export class ActiveReportsComponent implements OnInit {
 	loaderObject : Loader =  new Loader();
 	
 	currentReport !: IActiveReport;
-
+	
+	allSubs: Subscription[] = [];
+	
 	constructor(
 		private _helpersService : HelpersService,
 		private _activeReportService : ActiveReportsService,
@@ -39,17 +42,21 @@ export class ActiveReportsComponent implements OnInit {
 		this.loadService(); 
 		this.modalService();
 	}
+	
+	ngOnDestroy(): void {
+		this.allSubs.forEach(subs => subs.unsubscribe());
+	}
 
 	// -------------------------------------------------- ANCHOR: SUBS
 
 	loadService(){
-		this._helpersService.loader$.subscribe( ( response ) => {
+		this.allSubs[this.allSubs.length] = this._helpersService.loader$.subscribe( ( response ) => {
 			this.loaderObject = response;
 		} );
 	}
 	
 	modalService(){
-		this._formService.formData$.subscribe( ( response ) => {
+		this.allSubs[this.allSubs.length] = this._formService.formData$.subscribe( ( response ) => {
 			if ( response.newData === null ) { return; }
 			if ( response.editData === null ) { return; }
 			this.saveReport( this.currentReport, response.newData );
