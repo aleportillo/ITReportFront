@@ -1,9 +1,17 @@
 <app-loader *ngIf="loaderObject.getRooms; else showInventoryItems" [section]="'page'"></app-loader>
 <ng-template #showInventoryItems>
     <ng-container *ngIf="allCardsInventory.length > 0; else noItemsInventory">
+        <div class="search">
+            <app-input-text
+                [formInput]="inputs[0]"
+                [form]="form"
+            >
+            </app-input-text>
+        </div>
         <div class="section-inventory">
             <app-inventory-card 
                 *ngFor="let cardInventory of allCardsInventory"
+                [ngClass]="{'hidden': !cardInventory.nombre.toLowerCase().includes(form.value.searchText.toLowerCase()) && form.value.searchText}"
                 [inventoryData] = "cardInventory"
                 [fromSection] = "'rooms'"
                 (clickCardEmitter) = "openEditRoomForm($event);"

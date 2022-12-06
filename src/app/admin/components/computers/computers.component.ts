@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ComponentItem } from 'src/app/core/models/inventory/component.model';
@@ -38,6 +39,19 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		}
 	}
 	
+	inputs : IFormInput[] = [
+		{
+			name    : 'searchText',
+			type    : 'text',
+			subtype : 'normal',
+			label   : 'Buscador',
+			optional: true
+		}
+	];
+
+	form : FormGroup  = new FormGroup( {} );
+	
+	
 	// -------------------------------------------------- ANCHOR: LIFECYCLE
 	
 	constructor(
@@ -56,6 +70,7 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		this.noticeService();
 		this.loaderService();
 		// this.getFreeComponents();
+		this.form = this._formService.createForm( this.inputs );
 	}
 	
 	ngOnDestroy() {
