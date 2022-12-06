@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ActiveReport, IActiveReport } from 'src/app/core/models/reports/active-report.model';
@@ -29,6 +30,23 @@ export class ActiveReportsComponent implements OnInit, OnDestroy {
 	
 	allSubs: Subscription[] = [];
 	
+	inputs : IFormInput[] = [
+		{
+			name    : 'filterBy',
+			type    : 'select',
+			subtype : 'normal',
+			options : [
+				{ text: 'Todos los reportes', value: -1 },
+				{ text: 'Reportes pendientes', value: 1 },
+				{ text: 'Reportes detenidos', value: 2 },
+				{ text: 'Reportes resueltos', value: 3 },
+				{ text: 'Reportes atendiendose', value: 5 }
+			]
+		}
+	];
+
+	form : FormGroup  = new FormGroup( {} );
+	
 	constructor(
 		private _helpersService : HelpersService,
 		private _activeReportService : ActiveReportsService,
@@ -41,6 +59,8 @@ export class ActiveReportsComponent implements OnInit, OnDestroy {
 		this.getReports();
 		this.loadService(); 
 		this.modalService();
+		this.form = this._formService.createForm( this.inputs );	
+		this.form = this._formService.initForm( this.form, { filterBy: -1 } );
 	}
 	
 	ngOnDestroy(): void {

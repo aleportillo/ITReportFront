@@ -1,9 +1,16 @@
 <div>
+    <span>
+        <app-input-select
+            [formInput]="inputs[0]"
+            [form]="form">
+        </app-input-select>
+    </span>
     <app-loader *ngIf="loaderObject.getActiveReports; else content" [section]="'page'"></app-loader>
     <ng-template #content>        
         <ng-container *ngIf="activeReports.length > 0; else noReports">
             <app-list-row 
-                *ngFor="let report of activeReports" 
+                *ngFor="let report of activeReports"
+                [ngClass]="{'hidden': report.estadoId != form.value.filterBy && form.value.filterBy!== -1}" 
                 [report]="report"
                 [section]="'active'"
                 [rowTemplate]="rowTemplate"
