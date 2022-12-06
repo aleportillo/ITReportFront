@@ -65,11 +65,19 @@ export class SearchComponent implements OnInit {
 					this._snackbarService.showSnackbar( 'SEARCH', 'error' );
 					return;
 				}
-
-				if ( data.length > LIMIT_REPORTS ){
+				
+				const value = data.find( ( element : any ) => 
+					element.gabinete === this.form.value.textSearch || element.nombre === this.form.value.textSearch 
+				);
+				
+				if(!value && data.length > LIMIT_REPORTS){
 					this._snackbarService.showSnackbar( 'MULTIPLE_SEARCH', 'error' );
 					return;
 				}
+				
+				if(data.length > LIMIT_REPORTS){
+					data[FIRST_ELEMENT] = value;
+				} 
 
 				const idElement = ( this.form.value.type === 'computadora' ) ? 
 					data[FIRST_ELEMENT].gabinete : 
