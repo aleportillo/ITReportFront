@@ -19,31 +19,5 @@
             { "text" : "402", "value": 402},
             { "text" : "403", "value": 403}
         ]
-    },
-    {
-        "name"        : "componentsHardware",
-        "type"        : "multiple",
-        "label"       : "Hardware",
-        "columnSize"  : 2,
-        "optional"    : true,
-        "subtype"     : "normal",
-        "options"     : [
-            { "text" : "1231 Teclado", "value": "401T"},
-            { "text" : "4788 Mouse",   "value": "402M"},
-            { "text" : "2017 Monitor", "value": "403R"}
-        ]
-    },
-    {
-        "name"        : "componentesSoftware",
-        "type"        : "multiple",
-        "label"       : "Software",
-        "columnSize"  : 2,
-        "optional"    : true,
-        "subtype"     : "normal",
-        "options"     : [
-            { "text" : "Java", "value": "java"},
-            { "text" : "Visual Studio",   "value": "VS"},
-            { "text" : "Office", "value": "off"}
-        ]
     }
 ]

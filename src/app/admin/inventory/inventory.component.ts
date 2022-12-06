@@ -24,7 +24,7 @@ export class InventoryComponent implements OnInit {
 	buttonsTemplate = [ 
 		{ text: 'Salas', form: rooms },
 		{ text: 'Computadoras', form: computers },
-		{ text: 'Componentes', form: components }
+		// { text: 'Componentes', form: components }
 	];
 	
 	currentSection : 'Salas' | 'Computadoras' | 'Componentes' | string = 'Computadoras';

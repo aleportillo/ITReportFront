@@ -68,7 +68,6 @@ export class SectionComponent implements OnInit, OnDestroy {
 		{ label: 'Reportes', key: 'reportes' }
 	];
 	buttonsPC = [
-		{ label: 'Componentes', key: 'componentes' },
 		{ label: 'Reportes', key: 'reportes' }
 	];
 	
@@ -105,6 +104,8 @@ export class SectionComponent implements OnInit, OnDestroy {
 
 		if ( this.type === 'sala' ){
 			sessionStorage.setItem( 'IT_REPORT', `/` );
+		} else{
+			this._helpersService.setTrue( 'getUserReports' );
 		}
 
 		this.sectionResume = {

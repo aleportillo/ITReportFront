@@ -55,7 +55,7 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		this.modalService();
 		this.noticeService();
 		this.loaderService();
-		this.getFreeComponents();
+		// this.getFreeComponents();
 	}
 	
 	ngOnDestroy() {
@@ -68,9 +68,9 @@ export class ComputersComponent implements OnInit, OnDestroy {
 
 		const currentForm = computers;
 
-		await this.getFreeComponents();
+		// await this.getFreeComponents();
 		await this.getRooms();
-		await this.getComponents();
+		// await this.getComponents();
 		
 		if ( this.allRooms.length < 1 ){ 
 			this._snackbarService.showSnackbar( 'LOAD_FORM', 'error' );
@@ -80,8 +80,8 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		this.hardwareComponents = this.hardwareComponents.concat( editOptions );
 		
 		currentForm?.forEach( ( input : IFormInput ) => {
-			if ( input.name === 'componentsHardware' ){ input.options = this.hardwareComponents; }
-			if ( input.name === 'componentesSoftware' ){ input.options = this.softwareComponents; }
+			// if ( input.name === 'componentsHardware' ){ input.options = this.hardwareComponents; }
+			// if ( input.name === 'componentesSoftware' ){ input.options = this.softwareComponents; }
 			if ( input.name === 'salaId'   ){ input.options = this.allRooms; }
 		} );
 		
@@ -151,14 +151,14 @@ export class ComputersComponent implements OnInit, OnDestroy {
 	noticeService(){
 		this._allSubs[this._allSubs.length] = this._helperService.noticeModal$.subscribe( ( response ) => {
 			if ( !response.delete ) { return; }
-			if ( this.currentComputer.totalHardware ) { 
-				this._snackbarService.showSnackbar(
-					'PC_HAS_COMPONENTS', 
-					'warning'
-				);
-				this._helperService.noticeModal$.next( { delete: false } );
-				return; 
-			}
+			// if ( this.currentComputer.totalHardware ) { 
+			// 	this._snackbarService.showSnackbar(
+			// 		'PC_HAS_COMPONENTS', 
+			// 		'warning'
+			// 	);
+			// 	this._helperService.noticeModal$.next( { delete: false } );
+			// 	return; 
+			// }
 			this.deleteComputer( this.currentComputer );
 		} );
 	}
@@ -203,26 +203,26 @@ export class ComputersComponent implements OnInit, OnDestroy {
 		for ( const key in newData ) {
 			actualData[key] = newData[key];
 		}
-		actualData.totalHardware = actualData.componentsHardware.length;
-		actualData.totalSoftware = actualData.componentesSoftware.length;
+		// actualData.totalHardware = actualData.componentsHardware.length;
+		// actualData.totalSoftware = actualData.componentesSoftware.length;
 		
 		this._computersService.updateElement( actualData.id, newData ).subscribe(
 			data =>{
 				
 				// SOFTWARE
-				const newSoftwares : any = [];
-				actualData.componentesSoftware.forEach( value => {
-					const newValue = this.softwareComponents.find( software => software.value === value );
-					if ( newValue ){ newSoftwares.push( newValue ); }
-				} );
-				actualData.componentesSoftware = [...newSoftwares];
-				// HARDWARE
-				const newHardwares : any = [];
-				actualData.componentsHardware.forEach( value => {
-					const newValue = this.hardwareComponents.find( hardware => hardware.value === value );
-					if ( newValue ){ newHardwares.push( newValue ); }
-				} );
-				actualData.componentsHardware = [...newHardwares];
+				// const newSoftwares : any = [];
+				// actualData.componentesSoftware.forEach( value => {
+				// 	const newValue = this.softwareComponents.find( software => software.value === value );
+				// 	if ( newValue ){ newSoftwares.push( newValue ); }
+				// } );
+				// actualData.componentesSoftware = [...newSoftwares];
+				// // HARDWARE
+				// const newHardwares : any = [];
+				// actualData.componentsHardware.forEach( value => {
+				// 	const newValue = this.hardwareComponents.find( hardware => hardware.value === value );
+				// 	if ( newValue ){ newHardwares.push( newValue ); }
+				// } );
+				// actualData.componentsHardware = [...newHardwares];
 				
 				const actualDataIndex = this.allCardsInventory.findIndex( card => card.id === actualData.id );
 				this.allCardsInventory[actualDataIndex] = actualData;

@@ -7,7 +7,7 @@
     </h3>
     <p>
         <ng-container *ngIf="inventoryData.totalSoftware || inventoryData.totalSoftware === 0">
-            Software: {{inventoryData.totalSoftware}}
+            <!-- Software: {{inventoryData.totalSoftware}} -->
         </ng-container>
         <ng-container *ngIf="inventoryData.subtitle1 || inventoryData.edificio">
             {{ inventoryData.type === 'pc' ? 'Reportes: ' : '' }}
@@ -22,7 +22,7 @@
             PCs: {{inventoryData.totalPC}}
         </ng-container>
         <ng-container *ngIf="inventoryData.totalHardware || inventoryData.totalHardware === 0">
-            Hardware: {{inventoryData.totalHardware}}
+            <!-- Hardware: {{inventoryData.totalHardware}} -->
         </ng-container>
         <ng-container *ngIf="inventoryData.tipo">
             {{ inventoryData.tipo | firstLetterUppercase }}
