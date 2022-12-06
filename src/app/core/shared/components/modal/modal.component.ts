@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { IFormInput } from 'src/app/core/models/tools/form-input.model';
 import { Loader } from 'src/app/core/models/tools/loader.model';
 import { IModalData } from 'src/app/core/models/tools/modal-data';
@@ -23,7 +24,8 @@ export class ModalComponent implements OnInit {
 		private _formService : FormService,
 		private _dialogRef: MatDialogRef<ModalComponent>,
         @Inject( MAT_DIALOG_DATA ) data : IModalData,
-		private _helpersService : HelpersService
+		private _helpersService : HelpersService,
+		private _router: Router
 	) {
 		this.modalData = data;
 		console.log( data );
@@ -36,6 +38,12 @@ export class ModalComponent implements OnInit {
 	}
 
 	primaryAction(){
+		
+		if ( this.modalData.typeModal === 'confirmation' ){
+			this._dialogRef.close();
+			return;
+		}
+		
 		if ( this.modalData.typeModal === 'notice' ){
 			this._helpersService.noticeModal$.next( { delete: true } );
 			return;
@@ -50,6 +58,11 @@ export class ModalComponent implements OnInit {
 			newData  : { ...this.form.value },
 			editData : ( this.editData ) ? { ...this.editData } : null 
 		} );		
+	}
+	
+	secondaryAction(){
+		this._router.navigate( [`/`] );
+		this._dialogRef.close();
 	}
 	
 	closeModal(){

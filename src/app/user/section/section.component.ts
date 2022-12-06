@@ -127,8 +127,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 			this.search( true );
 		} else {
 			this.loadSubsectionItems( this.subSectionActive );
-		}
-		
+		}		
 	}
 	
 	ngOnDestroy(){
@@ -286,6 +285,10 @@ export class SectionComponent implements OnInit, OnDestroy {
 				this._dialog.closeAll();
 				this._formService.formData$.next( { newData: null, editData: null } );
 				this._snackbarService.showSnackbar( 'SAVE_REPORT_USER' , 'success' );
+				setTimeout(()=>{
+					this.openRedirectDialog();
+				}, 3000);
+				
 			},
 			error => {
 				this._snackbarService.showSnackbar( 'SAVE_REPORT', 'error' );
@@ -399,6 +402,24 @@ export class SectionComponent implements OnInit, OnDestroy {
 		} else {
 			this._snackbarService.showSnackbar( 'LOAD_FORM', 'error' );
 		}
+	}
+	
+	openRedirectDialog(){
+		const modalData : IModalData = {
+			title       : `Seguir reportando`,
+			form        : [],
+			typeSection : '',
+			typeModal   : 'confirmation',
+			labelButton : 'Seguir',
+			noticeData  : `` 
+		}; 
+
+		const dialogConfig = new MatDialogConfig();
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.panelClass = 'form';
+		dialogConfig.data = modalData;
+		this._dialog.open( ModalComponent , dialogConfig );
 	}
 	
 

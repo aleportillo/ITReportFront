@@ -56,6 +56,18 @@
     margin: 0 auto;
 }
 
+.button.confirmation{
+    background: var(--text-light-contrast);
+    color: var(--primary);
+    border: 2px solid;
+    margin: 1rem auto;
+    padding: .3rem 3rem;;
+}
+
+.button.modal.confirmation:hover{
+    background-color: var(--primary-light);
+}
+
 
 .button.modal, .button.save{
     padding: .3rem 3rem;
