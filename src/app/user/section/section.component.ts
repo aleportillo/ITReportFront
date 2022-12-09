@@ -56,10 +56,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 	];
 	pcResume = [
 		{ label: 'Solicitudes', key: 'solicitudes' },
-		{ label: 'Reportes', key: 'reportes' },
-		{ label: 'Componentes', key: 'componentes' },
-		{ label: 'Software', key: 'software' },
-		{ label: 'Hardware', key: 'hardware' },
+		{ label: 'Reportes', key: 'reportes' }
 	];
 
 	// BUTTONS

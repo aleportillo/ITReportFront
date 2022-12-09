@@ -43,9 +43,15 @@
     padding: 1rem;
 }
 
-.page__container .section__resume .section__scroll {
+.page__container .section__resume .section__scroll.sala {
     display: grid;
     grid-template-columns: repeat(5, auto);
+    align-items: center;
+}
+
+.page__container .section__resume .section__scroll.computadora{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
     align-items: center;
 }
 

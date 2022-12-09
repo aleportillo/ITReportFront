@@ -15,7 +15,7 @@
     </header>
     <section class="section__resume">
         <ngx-simplebar>
-            <div class="section__scroll">
+            <div class="section__scroll {{type}}">
                 <div *ngFor="let resume of (type === 'sala' ? salaResume : pcResume)" class="resume">
                     <p>{{resume.label}}</p>
                     <p>{{sectionResume[resume.key]}}</p>
